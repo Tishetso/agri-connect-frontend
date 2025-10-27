@@ -1,0 +1,45 @@
+.sidebar {
+    width: 220px;
+    padding: 20px;
+    background-color: #f0f4f8;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-list li {
+    margin-bottom: 12px;
+}
+
+.nav-list a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-list a:hover {
+    background: brown;
+    padding:5px;
+    border-radius: 5px;
+    color:white;
+    text-decoration: underline;
+    transition-duration: 1s;
+
+}
+
+.nav-icon {
+    font-size: 20px;
+}
+
+.active-link {
+    color: #2e7d32;
+    font-weight: bold;
+    border-left: 4px solid #2e7d32;
+    padding-left: 6px;
+    background-color: #e8f5e9;
+}

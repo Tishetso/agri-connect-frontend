@@ -1,0 +1,90 @@
+.welcome-wrapper {
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+    background-color: #f9fefb;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #2e7d32;
+    color: white;
+}
+
+.logo {
+    font-size: 1.8rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-btn {
+    background-color: silver;
+    color: #2e7d32;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top:-15px;
+    font-weight:bold;
+}
+
+.nav-btn:Hover{
+    background:green;
+    color:white;
+}
+
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(to right, #e8f5e9, #f1f8e9);
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.cta-btn {
+    background-color: #2e7d32;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.about, .contact {
+    padding: 60px 40px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.about h3, .contact h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #e0e0e0;
+    font-size: 0.9rem;
+}

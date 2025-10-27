@@ -1,0 +1,80 @@
+.register-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 40px;
+    background-color: #f9fefb;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.register-container h2 {
+    text-align: center;
+    color: #2e7d32;
+    margin-bottom: 30px;
+}
+
+form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+form input:focus{
+    outline: 1px solid green;
+
+
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 16px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+.submit-btn {
+    width: 100%;
+    font-size: 1rem;
+}
+
+button:hover{
+    background: #3d8a41;
+
+}
+
+.error {
+    color: red;
+    font-size: 0.85em;
+    display: block;
+    margin-top: 4px;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.error.general {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+input.error-input {
+    border: 2px solid red;
+    outline: none;
+}
