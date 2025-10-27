@@ -1,0 +1,53 @@
+.login-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 40px;
+    background-color: #f9fefb;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.login-container h2 {
+    text-align: center;
+    color: #2e7d32;
+    margin-bottom: 30px;
+}
+
+form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.login-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+}
+.forgotPassword-link{
+    margin-top: 20px;
+    text-align: center;
+
+
+
+}
