@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import AlertCard from '../../components/AlertCard';
 import ListingCard from '../../components/ListingCard';
@@ -11,6 +11,57 @@ import { MdDashboard, MdList, MdNotifications, MdChat, MdSettings, MdLogout } fr
 function FarmerDashboard() {
 
     const user = JSON.parse(localStorage.getItem('user'));
+    const [region, setRegion] = useState("Detecting location...");
+    const [weatherAlert, setWeatherAlert] = useState("Loading weather...")
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const { latitude, longitude } = position.coords;
+
+                try {
+                    // Reverse geocode for region name
+                    const locationRes = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+                        { headers: { 'User-Agent': 'FarmerDashboardApp/1.0' } }
+                    );
+                    const locationData = await locationRes.json();
+                    setRegion(locationData.address.city || locationData.address.state || "Unknown region");
+
+                    // Fetch 5-day forecast from OpenWeather
+                    const weatherRes = await fetch(
+                        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=f4e5ef235e73a1f068116f135490d905&units=metric`
+                    );
+                    //log raw response status
+                    console.log("Weather API status:", weatherRes.status);
+
+                    if (!weatherRes.ok){
+                        throw new Error(`OpenWeather error: ${weatherRes.status}`);
+                    }
+
+                    const weatherData = await weatherRes.json();
+
+                    //log the entire JSON response
+                    console.log("Weather API data:", weatherData);
+
+                    // Example: check if rain is expected in next 2 days
+                    const rainForecast = weatherData.list.find(item =>
+                        item.weather.some(w => w.main.toLowerCase().includes("rain"))
+                    );
+
+                    if (rainForecast) {
+                        setWeatherAlert("🌧️ Rain expected in 2 days");
+                    } else {
+                        setWeatherAlert("☀️ No rain expected soon");
+                    }
+                } catch (err) {
+                    console.error("Weather fetch failed:", err);
+                    setWeatherAlert("Weather data unavailable");
+                }
+            });
+        }
+    }, []);
+
     return (
         <div className="dashboard-container" style={{ display: 'flex' }}>
             {/* Sidebar Navigation */}
@@ -56,8 +107,8 @@ function FarmerDashboard() {
                 {/* TopBar */}
                 <header style={{ marginBottom: '20px' }}>
                     <h2>Welcome back,  {user.name} 👋</h2>
-                    <p>You’re logged in from <strong>{user.region}</strong>. Here’s what’s happening in your area today.</p>
-                    <p>🌧️ Rain expected in 2 days | 🐛 Armyworm risk nearby</p>
+                    <p>You’re logged in from <strong>{region}</strong>. Here’s what’s happening in your area today.</p>
+                    <p>{weatherAlert} | 🐛 Armyworm risk nearby</p>
                 </header>
 
                 {/* AlertsSection */}
