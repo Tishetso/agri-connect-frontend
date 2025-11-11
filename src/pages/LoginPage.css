@@ -1,9 +1,10 @@
 .login-container {
     max-width: 400px;
-    margin: auto;
+    margin: 200px auto;
     padding: 40px;
     background-color: #f9fefb;
     border-radius: 10px;
+    /*border: 1px solid grey;*/
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     font-family: 'Segoe UI', sans-serif;
 }
