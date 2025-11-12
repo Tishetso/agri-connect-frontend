@@ -7,6 +7,7 @@ import OrderStatusCard from '../../components/OrderStatusCard';
 import CommunityPost from '../../components/CommunityPost';
 import './FarmerDashboard.css';
 import { MdDashboard, MdList, MdNotifications, MdChat, MdSettings, MdLogout } from 'react-icons/md';
+import WeatherData from "../../components/WeatherData";
 
 function FarmerDashboard() {
 
@@ -20,17 +21,22 @@ function FarmerDashboard() {
                 const { latitude, longitude } = position.coords;
 
                 try {
-                    // Reverse geocode for region name
-                    const locationRes = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
-                        { headers: { 'User-Agent': 'FarmerDashboardApp/1.0' } }
+                    //Reverse geocode using OpenWeather (no CORS issues)
+                    const geoRes = await fetch(
+                        `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid={process.env.REACT_APP_WEATHER_KEY}`
                     );
-                    const locationData = await locationRes.json();
-                    setRegion(locationData.address.city || locationData.address.state || "Unknown region");
+                    const geoData = await geoRes.json();
+                    const locationName =
+                        geoData[0]?.local_names?.en ||   // suburb/town name if available
+                        geoData[0]?.name ||              // fallback to municipality
+                        geoData[0]?.state ||             // fallback to province
+                        "an Unknown region";
+                    setRegion(locationName)
+                    /*setRegion(geoData[0]?.name || "Unknown region");*/
 
                     // Fetch 5-day forecast from OpenWeather
                     const weatherRes = await fetch(
-                        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=f4e5ef235e73a1f068116f135490d905&units=metric`
+                        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid={process.env.REACT_APP_WEATHER_KEY}&units=metric`
                     );
                     //log raw response status
                     console.log("Weather API status:", weatherRes.status);
@@ -110,6 +116,11 @@ function FarmerDashboard() {
                     <p>You’re logged in from <strong>{region}</strong>. Here’s what’s happening in your area today.</p>
                     <p>{weatherAlert} | 🐛 Armyworm risk nearby</p>
                 </header>
+
+                {/* Weather Section */}
+                <section>
+                    <WeatherData latitude={-25.5559} longitude={28.0944} />
+                </section>
 
                 {/* AlertsSection */}
                 <section>
