@@ -21,14 +21,46 @@ function LoginPage() {
                 body: JSON.stringify(formData)
             });
 
-            const data = await res.json();
+            // const data = await res.json();
+            // if (res.ok){
+            //     localStorage.setItem('user', JSON.stringify({
+            //         'token': data.token, role: data.role, name: data.name, region: data.region
+            //     }));
+            //     navigate(`/${data.role}`);
+            // }else{
+            //     alert("Invalid user.");
+            // }
+
+            let data;
+            const text = await res.text(); // read once
+
+            try{
+                //parsing as JSON
+                data = JSON.parse(text);
+
+            }catch {
+                //fallback to plain text if not json
+               data = { error: text};
+            }
+
             if (res.ok){
-                localStorage.setItem('user', JSON.stringify({
-                    'token': data.token, role: data.role, name: data.name, region: data.region
-                }));
+                //save user info to localstorage
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify({
+                        token: data.token,
+                        role: data.role,
+                        name: data.name,
+                        region: data.region,
+                    })
+                );
+
+                //navigate to role-based dashboard
                 navigate(`/${data.role}`);
+
             }else{
-                alert("Invalid user.");
+                //show backend error message
+                alert(data.error || "Login failed. Please try again.")
             }
         }catch(err){
             console.error(err)
