@@ -23,7 +23,7 @@ function FarmerDashboard() {
                 try {
                     //Reverse geocode using OpenWeather (no CORS issues)
                     const geoRes = await fetch(
-                        `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid={process.env.REACT_APP_WEATHER_KEY}`
+                        `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${process.env.REACT_APP_WEATHER_KEY}`
                     );
                     const geoData = await geoRes.json();
                     const locationName =
@@ -36,7 +36,7 @@ function FarmerDashboard() {
 
                     // Fetch 5-day forecast from OpenWeather
                     const weatherRes = await fetch(
-                        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid={process.env.REACT_APP_WEATHER_KEY}&units=metric`
+                        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_KEY}&units=metric`
                     );
                     //log raw response status
                     console.log("Weather API status:", weatherRes.status);

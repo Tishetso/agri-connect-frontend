@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-/*import "./WeatherData.css";*/
+import "./WeatherData.css";
 
 function WeatherData({ latitude, longitude }) {
     const [current, setCurrent] = useState(null);
@@ -70,16 +70,25 @@ function WeatherData({ latitude, longitude }) {
             <section className="current-weather">
                 <h4>Current Conditions:</h4>
 
-                <p>🌡️ Temperature: {current.main.temp}°C</p>
-                <p>🌡️ Feels Like: {current.main.feels_like}°C</p>
-                <p>💧 Humidity: {current.main.humidity}%</p>
-                <p>🌬️ Wind Speed: {current.wind.speed} m/s</p>
-                <p>☁️Condition: {current.weather[0].description}</p>
-                <img
-                    src={`https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`}
+                <div className="weather-top">
 
-                    alt={current.weather[0].description}
-                />
+
+
+                    <img
+                        src={`https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`}
+
+                        alt={current.weather[0].description}
+                    />
+                    <div className = "weather-main">
+                        <h2 className = "temp"> {current.main.temp}°C</h2>
+                        <p className = "feels">🌡️ Feels Like: {current.main.feels_like}°C</p>
+                        <p className = "condition">{current.weather[0].description}</p>
+                    </div>
+                </div>
+                    <p>💧 Humidity: {current.main.humidity}%</p>
+                    <p>🌬️ Wind Speed: {current.wind.speed} m/s</p>
+
+
             </section>
 
             {/* Forecast */}
