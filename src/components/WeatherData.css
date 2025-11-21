@@ -21,6 +21,9 @@
 
     margin: 20px auto;
     max-width:90%;
+    position: relative;
+    overflow: hidden;
+    cursor:pointer;
 }
 
 .current-weather h4{
@@ -74,4 +77,110 @@
 
 .current-weather p{
     margin: 6px 0;
+}
+
+.forecast{
+    margin-top:25px;
+}
+/*list itself*/
+.forecast ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+.forecast li:hover{
+    background:#2c444c;
+
+}
+
+
+.forecast-card{
+    background: linear-gradient(135deg, #545454, #1e293b);
+    padding: 10px;
+    border-radius:14px;
+    color:white;
+    text-align:center;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.25);
+
+
+    font-family: "Segoe UI",Arial,sans-serif;
+    transition: transform 0.2s ease;
+}
+
+
+/*Weather animations and styles*/
+.sun, .clouds, .rain, .fog, .snow, .storm{
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.6s ease;
+    position: absolute;
+    inset: 0;
+}
+/*Clear sky*/
+.weather-card.sun.active .sun{
+    opacity:1;
+    background: radial-gradient(circle at top right, rgba(255,255,0,0.7), transparent);
+}
+/*Cloudy*/
+.weather-card.clouds-active .clouds{
+    opacity:1;
+
+}
+/*Raining*/
+.weather-card.rain-active .rain{
+    opacity:1;
+    background-image: linear-gradient(to bottom, transparent, rgba(255,255,255,0.7));
+    animation: rainFall 0.5s linear infinite;
+}
+@keyframes rainFall {
+    from { background-position-y: 0; }
+    to { background-position-y: 100px; }
+}
+
+/*snow Animations*/
+.snow{
+    position: absolute;
+    inset:0;
+    background-image: radial-gradient(white 2px, transparent 2px);
+    background-size: 20px 20px;
+    animation: snowfall 3s linear infinite;
+    opacity:0;
+
+}
+@keyframes snowfall{
+    0%{background-position-y:0;}
+    100%{background-position-y:20px;}
+}
+.weather-card.snow-active .snow{
+    opacity: 1;
+}
+
+/*fog*/
+.weather-card.for-active .fog{
+    opacity:1;
+    background: rgba(200, 200, 200, 0.4);
+    backdrop-filter: blur(4px);
+}
+/*thunderstorm lightning effect*/
+.storm{
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,0.8);
+    opacity:0;
+    animation:lightningflash 3s ease-in-out infinite;
+}
+
+/*@keyframes lightningflash{
+    0%,95%,100%{opacity:0;}
+    96% {opacity: 0.5;}
+    97% {opacity:0;}
+    98% {opacity:0.7;}
+}*/
+
+.weather-card.storm-active .storm{
+    opacity:1;
 }

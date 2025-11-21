@@ -8,6 +8,19 @@ function WeatherData({ latitude, longitude }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    function getWeatherClass(condition){
+        const main = condition.toLowerCase();
+
+        if(main.includes("clear"))return "sun-active";
+        if (main.includes("cloud")) return "clouds-active";
+        if(main.includes("rain") || main.includes("drizzle")) return "rain-active";
+        if (main.includes("thunder")) return "storm-active";
+        if (main.includes("snow")) return "snow-active";
+        if (main.includes("fog") || main.includes("mist") || main.includes("haze")) return "fog-active";
+
+        return "";//fallback
+    }
+
     useEffect(() => {
         const fetchWeather = async () => {
             try {
@@ -33,12 +46,18 @@ function WeatherData({ latitude, longitude }) {
                     const day = item.dt_txt.split(" ")[0];
                     if (!grouped[day]) grouped[day] = [];
                     grouped[day].push(item);
+
                 });
-                Object.keys(grouped).slice(0, 5).forEach(day => {
+                Object.keys(grouped).slice(1, 6).forEach(day => {
                     const temps = grouped[day].map(i => i.main.temp);
                     const avgTemp = (temps.reduce((a, b) => a+b, 0) / temps.length).toFixed(1);
                     const condition = grouped[day][0].weather[0].description;
-                    dailyForecast.push({day, avgTemp, condition});
+
+                    //Convert date String to day name
+                    const dayName = new Date(day).toLocaleDateString("en-US",{weekday:"short"});
+
+
+                    dailyForecast.push({day,dayName, avgTemp, condition});
                 });
 
                 setCurrent(currentData);
@@ -67,7 +86,14 @@ function WeatherData({ latitude, longitude }) {
             <h3>🌦️ Weather Data</h3>
 
             {/* Current Weather */}
-            <section className="current-weather">
+            <section className={`current-weather weather-card ${getWeatherClass(current.weather[0].main)}`}>
+                <div className = "sun"></div>
+                <div className = "clouds"></div>
+                <div className = "rain"></div>
+                <div className = "fog"></div>
+                <div className = "snow"></div>
+                <div className = "storm"></div>
+
                 <h4>Current Conditions:</h4>
 
                 <div className="weather-top">
@@ -98,7 +124,10 @@ function WeatherData({ latitude, longitude }) {
                 <ul>
                     {forecast.map((f, idx) => (
                         <li key={idx} className = "forecast-card">
-                            <strong>{f.day}</strong>: {f.avgTemp}°C, {f.condition}
+                            <strong>{f.dayName} : {f.day}</strong>:
+                            <div className="temp">{f.avgTemp}°C</div>
+                            <div className = "condition">{f.condition}</div>
+
                         </li>
                     ))}
                 </ul>
