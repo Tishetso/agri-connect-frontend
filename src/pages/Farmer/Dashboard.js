@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { NavLink } from 'react-router-dom';
 import AlertCard from '../../components/AlertCard';
 import ListingCard from '../../components/ListingCard';
 import ChatbotWidget from '../../components/ChatbotWidget';
 import OrderStatusCard from '../../components/OrderStatusCard';
 import CommunityPost from '../../components/CommunityPost';
 import './FarmerDashboard.css';
-import { MdDashboard, MdList, MdNotifications, MdChat, MdSettings, MdLogout } from 'react-icons/md';
 import WeatherData from "../../components/WeatherData";
+import Sidebar from "../../components/Sidebar";
 
 function FarmerDashboard() {
 
@@ -70,48 +69,14 @@ function FarmerDashboard() {
 
     return (
         <div className="dashboard-container" style={{ display: 'flex' }}>
-            {/* Sidebar Navigation */}
-            <aside className="sidebar">
-                <nav>
-                    <ul className="nav-list">
-                        <li>
-                            <NavLink to="/farmer" className={({ isActive }) => isActive ? 'active-link' : ''}>
-                                <MdDashboard className="nav-icon" /> Dashboard
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/farmer/listings">
-                                <MdList className="nav-icon" /> My Listings
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/farmer/alerts">
-                                <MdNotifications className="nav-icon" /> Alerts
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/farmer/chatroom">
-                                <MdChat className="nav-icon" /> Chatroom
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/settings">
-                                <MdSettings className="nav-icon" /> Settings
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/logout">
-                                <MdLogout className="nav-icon" /> Logout
-                            </NavLink>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
+            {/* Sidebar component */}
+            <Sidebar/>
+
 
             {/* Main Panel */}
-            <main style={{ flex: 1, padding: '20px' }}>
+            <main className="main-content">
                 {/* TopBar */}
-                <header style={{ marginBottom: '20px' }}>
+                <header >
                     <h2>Welcome back,  {user.name} 👋</h2>
                     <p>You’re logged in from <strong>{region}</strong>. Here’s what’s happening in your area today.</p>
                     <p>{weatherAlert} | 🐛 Armyworm risk nearby</p>
