@@ -27,7 +27,7 @@
 }
 
 .nav-list a:hover {
-    background: brown;
+    background: #2c444c;
     padding:5px;
     border-radius: 5px;
     color:white;
@@ -123,4 +123,45 @@ adjust main content*/
 }
 .sidebar.collapsed .toggle-btn{
     top:18px;
+}
+
+.user-profile{
+    position:absolute;
+    bottom: 20px;
+    width:100%;
+    text-align:center;
+    padding:20px 0;
+    border-top: 1px solid #ccc;
+    background: #e6eef3;
+}
+
+.profile-pic{
+    width:70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+
+}
+
+.user-name{
+    margin:5px 0 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.user-role{
+    margin: 0;
+    font-size:13px;
+    color: #666;
+}
+
+.sidebar.collapsed .user-info{
+    display:none;
+}
+
+.sidebar.collapsed .profile-pic{
+    width: 50px;
+    height:50px;
+
 }

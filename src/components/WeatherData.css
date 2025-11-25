@@ -132,13 +132,13 @@
 }
 /*Raining*/
 .weather-card.rain-active .rain{
-    opacity:1;
+    opacity: .1;
     background-image: linear-gradient(to bottom, transparent, rgba(255,255,255,0.7));
-    animation: rainFall 0.5s linear infinite;
+    animation: rainFall 5s linear infinite;
 }
 @keyframes rainFall {
     from { background-position-y: 0; }
-    to { background-position-y: 100px; }
+    to { background-position-y: 300px; }
 }
 
 /*snow Animations*/

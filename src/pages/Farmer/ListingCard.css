@@ -1,0 +1,26 @@
+.listing-card{
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.status{
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-top: 10px;
+
+}
+
+.status.available{
+    background:#e8f5e9;
+    color: #2e7d32;
+}
+
+
+.status.sold{
+    background: #ffebee;
+    color: #c62828;
+}
