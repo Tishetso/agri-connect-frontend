@@ -55,6 +55,21 @@ function Sidebar() {
                     </li>
                 </ul>
 
+                {/*add a user profile*/}
+                <div className="user-profile">
+
+                    <img src = "/farmer.png" alt = "User" className = "profile-pic"/>
+
+                    {!collapsed && (
+                        <div className="user-info">
+                            <h4 className="user-name"> Tishetso Mphelane</h4>
+                            <p className="user-role">Farmer</p>
+                        </div>
+
+                    )}
+
+                </div>
+
 
             </nav>
         </aside>

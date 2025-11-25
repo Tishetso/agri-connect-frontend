@@ -8,6 +8,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ListingsPage from "./pages/Farmer/ListingsPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/farmer/listings" element={<ListingsPage/>}/>
 
 
 

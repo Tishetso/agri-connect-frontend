@@ -1,0 +1,22 @@
+.listings-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom: 20px;
+
+}
+
+.add-btn{
+    padding: 8px 14px;
+    background: #2c444c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor:pointer;
+}
+
+.listings-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
