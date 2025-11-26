@@ -7,7 +7,9 @@ function ListingsPage() {
 
     const [listings, setListings] = useState([
         { id: 1, crop: "Tomatoes", quantity: "50kg", price: 300, status: "Available", transport: "Delivery" },
-        { id: 2, crop: "Spinach", quantity: "20 bunches", price: 100, status: "Sold", transport: "Collect" }
+        { id: 2, crop: "Spinach", quantity: "20 bunches", price: 100, status: "Sold", transport: "Collect" },
+        { id: 3, crop: "Spinach", quantity: "20 bunches", price: 100, status: "Available", transport: "Collect" },
+        { id: 4, crop: "Spinach", quantity: "20 bunches", price: 100, status: "Available", transport: "Collect" }
     ]);
 
     const [showModal, setShowModal] = useState(false);
