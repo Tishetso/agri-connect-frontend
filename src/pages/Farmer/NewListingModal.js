@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./NewListingModal.css";
 
-function NewListingModal({ closeModal, addListing }) {
+function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
 
     const [formData, setFormData] = useState({
+        id: null,
         product: "",
         quantity: "",
         price: "",
@@ -13,6 +14,26 @@ function NewListingModal({ closeModal, addListing }) {
 
     const [previewUrls, setPreviewUrls] = useState([]); //image preview
 
+    //Pre-fill data when editing
+    useEffect(() => {
+        if(itemToEdit){
+            setFormData({
+                id: itemToEdit.id,
+                product: itemToEdit.product,
+                quantity: itemToEdit.quantity,
+                price: itemToEdit.price,
+                images: itemToEdit.images || []
+            });
+
+            //convert file objects to preview urls
+            if (itemToEdit.images && itemToEdit.images.length > 0 ) {
+                const urls = itemToEdit.images.map(img => URL.createObjectURL(img));
+                setPreviewUrls(urls);
+            }
+
+
+        }
+    }, [itemToEdit]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,13 +62,33 @@ function NewListingModal({ closeModal, addListing }) {
         setPreviewUrls(previews);
     };
 
+    //adding a useEffect for edit listings
+    useEffect(() => {
+        if (itemToEdit) {
+            setFormData(itemToEdit);
+            if (itemToEdit.images) {
+                const previews = itemToEdit.images.map(img =>
+                    typeof img === "string"
+                        ? img
+                        : URL.createObjectURL(img)
+                );
+                setPreviewUrls(previews);
+            }
+        }
+    }, [itemToEdit]);
+
     const handleSubmit = () => {
         if(formData.images.length === 0){
             alert("Please upload at least 1 image.");
             return;
         }
 
-        addListing(formData);
+        if(itemToEdit){
+            editListing(formData)
+        }else{
+            addListing(formData);
+        }
+
         closeModal();
     };
 
@@ -55,7 +96,7 @@ function NewListingModal({ closeModal, addListing }) {
         <div className="modal-overlay">
             <div className="modal-content">
 
-                <h3>Add New Listing</h3>
+                <h3>{itemToEdit ? "Edit Listing" : "Add New Listing"}</h3>
 
                 <label>Product</label>
                 <input name="product" onChange={handleChange} />
@@ -82,18 +123,11 @@ function NewListingModal({ closeModal, addListing }) {
                 )}
 
 
-                {/*Show selected image names
-                {formData.images.length > 0 && (
-                    <div className="image-preview-list">
-                        {formData.images.map((img, index) => (
-                            <p key={index}>{img.name}</p>
-                        ))}
-                    </div>
-                )}*/}
+
 
                 <div className="modal-actions">
                     <button className="cancel-btn" onClick={closeModal}>Cancel</button>
-                    <button className="save-btn" onClick={handleSubmit}>Save</button>
+                    <button className="save-btn" onClick={handleSubmit}>{itemToEdit ? "Save Changes" : "Save"}</button>
                 </div>
 
             </div>

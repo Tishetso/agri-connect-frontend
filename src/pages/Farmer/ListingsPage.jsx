@@ -13,10 +13,29 @@ function ListingsPage() {
     ]);
 
     const [showModal, setShowModal] = useState(false);
+    const [editItem, setEditItem] = useState(null);
 
+    //add listing
     const addListing = (newItem) => {
         setListings([...listings, { id: listings.length + 1, ...newItem }]);
     };
+    // Delete listing
+    const deleteListing = (id) => {
+        setListings(listings.filter(l => l.id !== id));
+    };
+    //open modal for editing
+    const openEditModal = (item) => {
+        setEditItem(item);
+        setShowModal(true);
+    }
+
+    //save edit
+    const editListing = (updatedItem) => {
+        setListings(listings.map(l =>
+            l.id === updatedItem.id ? updatedItem : l
+        ));
+    };
+
 
     return (
         <div className="listings-page">
@@ -30,14 +49,23 @@ function ListingsPage() {
 
             <div className="listings-grid">
                 {listings.map(item => (
-                    <ListingCard key={item.id} data={item} />
+                    <ListingCard
+                        key={item.id}
+                        data={item}
+                        deleteListing={deleteListing}
+                        openEditModal={openEditModal}/>
                 ))}
             </div>
 
             {showModal && (
                 <NewListingModal
-                    closeModal={() => setShowModal(false)}
+                    closeModal={() => {
+                        setShowModal(false);
+                        setEditItem(null);
+                }}
                     addListing={addListing}
+                    editListing={editListing}
+                    itemToEdit={editItem}
                 />
             )}
         </div>
