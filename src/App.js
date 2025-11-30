@@ -9,6 +9,9 @@ import LoginPage from "./pages/LoginPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ListingsPage from "./pages/Farmer/ListingsPage";
+import Alerts from "./components/Alerts";
+import Chatroom from "./components/Chatroom";
+import SettingsPage from "./components/SettingsPage";
 
 function App() {
   return (
@@ -24,6 +27,11 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/farmer/listings" element={<ListingsPage/>}/>
+            <Route path="/farmer/alerts" element={<Alerts/>}/>
+            <Route path="/farmer/chatroom" element={<Chatroom/>}/>
+            <Route path="/settings" element={<SettingsPage/>}/>
+
+
 
 
 
