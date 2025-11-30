@@ -1,0 +1,68 @@
+.alerts-page {
+    padding: 20px;
+    width: 100%;
+}
+
+.alerts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.alert-actions button {
+    margin-left: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.alert-actions button svg {
+    margin-right: 5px;
+}
+
+.alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.alert-card {
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-card.unread {
+    border-color: #2196F3;
+    background: #EAF4FF;
+}
+
+.alert-card.read {
+    border-color: #9E9E9E;
+    background: #F2F2F2;
+}
+
+.alert-buttons button {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.empty-alerts {
+    text-align: center;
+    padding: 50px 0;
+    color: #777;
+}

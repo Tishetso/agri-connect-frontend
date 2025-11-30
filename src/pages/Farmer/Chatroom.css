@@ -1,0 +1,45 @@
+.chatroom-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-window {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    background: #fafafa;
+    margin-bottom: 15px;
+}
+
+.chat-message {
+    padding: 5px 0;
+}
+
+.sender {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.chat-input-box {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input-box input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.chat-input-box button {
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}

@@ -16,8 +16,8 @@ function ListingsPage() {
     const [editItem, setEditItem] = useState(null);
 
     //add listing
-    const addListing = (newItem) => {
-        setListings([...listings, { id: listings.length + 1, ...newItem }]);
+    const addListing = (newItem) => {//hardcorded status
+        setListings([...listings, { id: listings.length + 1 , status:newItem.status || "Available", ...newItem }]);
     };
     // Delete listing
     const deleteListing = (id) => {
