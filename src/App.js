@@ -12,12 +12,18 @@ import ListingsPage from "./pages/Farmer/ListingsPage";
 import Alerts from "./components/Alerts";
 import Chatroom from "./components/Chatroom";
 import SettingsPage from "./components/SettingsPage";
+import FarmerLayout from "./layouts/FarmerLayout";
 
 function App() {
   return (
       <Router>
         <Routes>
-          <Route path="/farmer" element={<FarmerDashboard />} />
+          <Route path="/farmer" element={
+            <FarmerLayout>
+              <FarmerDashboard/>
+            </FarmerLayout>
+          }
+          />
           <Route path="/consumer" element={<ConsumerDashboard />} />
           <Route path="/admin" element={<AdminPanel />} />
             <Route path="/logout" element={<LogoutHandler />} />
@@ -26,10 +32,29 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/farmer/listings" element={<ListingsPage/>}/>
-            <Route path="/farmer/alerts" element={<Alerts/>}/>
-            <Route path="/farmer/chatroom" element={<Chatroom/>}/>
-            <Route path="/settings" element={<SettingsPage/>}/>
+            <Route path="/farmer/listings" element={
+              <FarmerLayout>
+                <ListingsPage/>
+              </FarmerLayout>
+            }
+            />
+            <Route path="/farmer/alerts" element={
+              <FarmerLayout>
+                <Alerts/>
+                </FarmerLayout>
+              }
+              />
+            <Route path="/farmer/chatroom" element={
+              <FarmerLayout>
+                <Chatroom/>
+                </FarmerLayout>
+                }/>
+            <Route path="/settings" element={
+              <FarmerLayout>
+              <SettingsPage/>
+              </FarmerLayout>
+            }
+            />
 
 
 

@@ -6,7 +6,7 @@ import OrderStatusCard from '../../components/OrderStatusCard';
 import CommunityPost from '../../components/CommunityPost';
 import './FarmerDashboard.css';
 import WeatherData from "../../components/WeatherData";
-import Sidebar from "../../components/Sidebar";
+
 
 function FarmerDashboard() {
 
@@ -17,7 +17,7 @@ function FarmerDashboard() {
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(async (position) => {
-                const { latitude, longitude } = position.coords;
+                const {latitude, longitude} = position.coords;
 
                 try {
                     //Reverse geocode using OpenWeather (no CORS issues)
@@ -40,7 +40,7 @@ function FarmerDashboard() {
                     //log raw response status
                     console.log("Weather API status:", weatherRes.status);
 
-                    if (!weatherRes.ok){
+                    if (!weatherRes.ok) {
                         throw new Error(`OpenWeather error: ${weatherRes.status}`);
                     }
 
@@ -68,72 +68,66 @@ function FarmerDashboard() {
     }, []);
 
     return (
-        <div className="dashboard-container" style={{ display: 'flex' }}>
-            {/* Sidebar component */}
-            <Sidebar/>
+        <>
+            {/* TopBar */}
+            <header>
+                <h2>Welcome back, {user.name} 👋</h2>
+                <p>You’re logged in from <strong>{region}</strong>. Here’s what’s happening in your area today.</p>
+                <p>{weatherAlert} | 🐛 Armyworm risk nearby</p>
+            </header>
 
+            {/* Weather Section */}
+            <section>
+                <WeatherData latitude={-25.5559} longitude={28.0944}/>
+            </section>
 
-            {/* Main Panel */}
-            <main className="main-content">
-                {/* TopBar */}
-                <header >
-                    <h2>Welcome back,  {user.name} 👋</h2>
-                    <p>You’re logged in from <strong>{region}</strong>. Here’s what’s happening in your area today.</p>
-                    <p>{weatherAlert} | 🐛 Armyworm risk nearby</p>
-                </header>
+            {/* AlertsSection */}
+            <section>
+                <h3>AgriAlerts</h3>
+                <AlertCard
+                    type="Pest"
+                    severity="High"
+                    message="Armyworm risk in your area"
+                    action="Apply organic pesticide within 48 hours"
+                />
+                <AlertCard
+                    type="Weather"
+                    severity="Medium"
+                    message="Rain expected in 2 days"
+                    action="Delay irrigation"
+                />
+            </section>
 
-                {/* Weather Section */}
-                <section>
-                    <WeatherData latitude={-25.5559} longitude={28.0944} />
-                </section>
+            {/* ProduceSummary */}
+            <section>
+                <h3>My Produce</h3>
+                <button style={{marginBottom: '10px'}}>+ New Listing</button>
+                <ListingCard crop="Tomatoes" quantity="50kg" price="R300" status="Available"/>
+                <ListingCard crop="Spinach" quantity="20 bunches" price="R100" status="Sold"/>
+            </section>
 
-                {/* AlertsSection */}
-                <section>
-                    <h3>AgriAlerts</h3>
-                    <AlertCard
-                        type="Pest"
-                        severity="High"
-                        message="Armyworm risk in your area"
-                        action="Apply organic pesticide within 48 hours"
-                    />
-                    <AlertCard
-                        type="Weather"
-                        severity="Medium"
-                        message="Rain expected in 2 days"
-                        action="Delay irrigation"
-                    />
-                </section>
+            {/* OrderTracker */}
+            <section>
+                <h3>Order Tracker</h3>
+                <OrderStatusCard buyer="GreenGrocer SA" item="Tomatoes" status="In Transit"/>
+                <OrderStatusCard buyer="Local Market" item="Spinach" status="Delivered"/>
+            </section>
 
-                {/* ProduceSummary */}
-                <section>
-                    <h3>My Produce</h3>
-                    <button style={{ marginBottom: '10px' }}>+ New Listing</button>
-                    <ListingCard crop="Tomatoes" quantity="50kg" price="R300" status="Available" />
-                    <ListingCard crop="Spinach" quantity="20 bunches" price="R100" status="Sold" />
-                </section>
+            {/* ChatbotWidget */}
+            <section>
+                <h3>Ask AgriBot</h3>
+                <ChatbotWidget/>
+            </section>
 
-                {/* OrderTracker */}
-                <section>
-                    <h3>Order Tracker</h3>
-                    <OrderStatusCard buyer="GreenGrocer SA" item="Tomatoes" status="In Transit" />
-                    <OrderStatusCard buyer="Local Market" item="Spinach" status="Delivered" />
-                </section>
+            {/* CommunityFeed */}
+            <section>
+                <h3>Community Feed</h3>
+                <CommunityPost author="Farmer Lerato" content="Best time to plant maize this season?"/>
+                <CommunityPost author="Farmer Sipho" content="Looking to swap pumpkin seeds!"/>
+                <button>Join Discussion</button>
+            </section>
 
-                {/* ChatbotWidget */}
-                <section>
-                    <h3>Ask AgriBot</h3>
-                    <ChatbotWidget />
-                </section>
-
-                {/* CommunityFeed */}
-                <section>
-                    <h3>Community Feed</h3>
-                    <CommunityPost author="Farmer Lerato" content="Best time to plant maize this season?" />
-                    <CommunityPost author="Farmer Sipho" content="Looking to swap pumpkin seeds!" />
-                    <button>Join Discussion</button>
-                </section>
-            </main>
-        </div>
+        </>
     );
 }
 

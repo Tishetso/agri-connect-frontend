@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./NewListingModal.css";
-
+import {createListing} from "src/api/listingApi"
+/*import { createListing } from "../../api/listingApi";*/
 function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
 
     const [formData, setFormData] = useState({
@@ -25,11 +26,15 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
                 images: itemToEdit.images || []
             });
 
-            //convert file objects to preview urls
+            if (itemToEdit.imageUrls){
+                setPreviewUrls(itemToEdit.imageUrls.map(url => `http://localhost:8080/${url}`));
+            }
+
+           /* //convert file objects to preview urls
             if (itemToEdit.images && itemToEdit.images.length > 0 ) {
                 const urls = itemToEdit.images.map(img => URL.createObjectURL(img));
                 setPreviewUrls(urls);
-            }
+            }*/
 
 
         }
@@ -62,7 +67,7 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
         setPreviewUrls(previews);
     };
 
-    //adding a useEffect for edit listings
+    /*//adding a useEffect for edit listings
     useEffect(() => {
         if (itemToEdit) {
             setFormData(itemToEdit);
@@ -75,21 +80,38 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
                 setPreviewUrls(previews);
             }
         }
-    }, [itemToEdit]);
+    }, [itemToEdit]);*/
 
-    const handleSubmit = () => {
-        if(formData.images.length === 0){
+    const handleSubmit = async () => {
+        if(formData.images.length === 0 && !itemToEdit){
             alert("Please upload at least 1 image.");
             return;
         }
 
-        if(itemToEdit){
+       /* if(itemToEdit){
             editListing(formData)
         }else{
             addListing(formData);
+        }*/
+        try{
+            if(itemToEdit){
+                editListing(formData);
+            }else{
+                //Create a listing on backend
+                const savedListing = await createListing(formData);
+
+                //frontend updates with fresh backend data
+                addListing(savedListing);
+            }
+
+            closeModal();
+
+        }catch(error){
+            console.error(error);
+            alert("Error saving listing");
         }
 
-        closeModal();
+
     };
 
     return (
