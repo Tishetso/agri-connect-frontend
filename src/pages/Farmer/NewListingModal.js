@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./NewListingModal.css";
-import {createListing} from "src/api/listingApi"
+import {createListing} from "../../api/listingApi";
 /*import { createListing } from "../../api/listingApi";*/
 function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
 
@@ -44,8 +44,43 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    //function to compress
+    const compressImage = (file) => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1200;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > MAX_WIDTH) {
+                        height = (MAX_WIDTH / width) * height;
+                        width = MAX_WIDTH;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob((blob) => {
+                        const compressedFile = new File([blob], file.name, {
+                            type: 'image/jpeg',
+                            lastModified: Date.now(),
+                        });
+                        resolve(compressedFile);
+                    }, 'image/jpeg', 0.8); // 80% quality
+                };
+            };
+        });
+    };
     //handle image upload //with preview
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const files = Array.from(e.target.files);
 
         //limit to 3 images
@@ -53,6 +88,11 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
             alert("You can upload a maximum of 3 images");
             return;
         }
+
+        //compressing the files
+        const compressedFiles = await Promise.all(files.map(f => compressImage(f)));
+        setFormData({ ...formData, images: compressedFiles});
+        setPreviewUrls(compressedFiles.map(f => URL.createObjectURL(f)));
 
         //creating preview Urls
         const previews = files.map(file => URL.createObjectURL(file));
@@ -67,20 +107,6 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
         setPreviewUrls(previews);
     };
 
-    /*//adding a useEffect for edit listings
-    useEffect(() => {
-        if (itemToEdit) {
-            setFormData(itemToEdit);
-            if (itemToEdit.images) {
-                const previews = itemToEdit.images.map(img =>
-                    typeof img === "string"
-                        ? img
-                        : URL.createObjectURL(img)
-                );
-                setPreviewUrls(previews);
-            }
-        }
-    }, [itemToEdit]);*/
 
     const handleSubmit = async () => {
         if(formData.images.length === 0 && !itemToEdit){
@@ -88,17 +114,21 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
             return;
         }
 
-       /* if(itemToEdit){
-            editListing(formData)
-        }else{
-            addListing(formData);
-        }*/
+
         try{
             if(itemToEdit){
                 editListing(formData);
             }else{
                 //Create a listing on backend
-                const savedListing = await createListing(formData);
+                const data = new FormData();
+                data.append("product",formData.product);
+                data.append("quantity",formData.quantity);
+                data.append("price", Number(formData.price));
+
+                formData.images.forEach((img) => {
+                    data.append("images",img);
+                });
+                const savedListing = await createListing(data);
 
                 //frontend updates with fresh backend data
                 addListing(savedListing);
@@ -107,7 +137,12 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
             closeModal();
 
         }catch(error){
-            console.error(error);
+            console.error("SAVE ERROR:", error);
+
+            if (error.response) {
+                console.error("STATUS:", error.response.status);
+                console.error("BACKEND ERROR:", error.response.data);
+            }
             alert("Error saving listing");
         }
 

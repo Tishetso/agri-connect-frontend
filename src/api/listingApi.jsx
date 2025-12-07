@@ -1,3 +1,35 @@
+import axios from "axios";
+
+export const createListing = async (data) =>{
+    const stored =(localStorage.getItem("user"));
+    if (!stored) throw new Error("Not logged in");
+
+    const user = JSON.parse(stored);
+    const token = user?.token || user?.user?.token;
+
+
+
+    if(!token){
+        throw new Error("User not logged in");
+    }
+    console.log("Token being sent:", token);
+
+    const response = await axios.post(
+        "http://localhost:8080/api/listings/create",
+        data,
+        {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+        }
+    );
+
+    return response.data;
+}
+
+
+/*;
+
 export async function createListing(formData){
     const data = new FormData();
 
@@ -19,4 +51,4 @@ export async function createListing(formData){
     }
 
     return await response.json(); //backend return the saved listing
-}
+}*/

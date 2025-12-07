@@ -34,6 +34,7 @@ function LoginPage() {
             let data;
             const text = await res.text(); // read once
 
+
             try{
                 //parsing as JSON
                 data = JSON.parse(text);
@@ -45,6 +46,8 @@ function LoginPage() {
 
             if (res.ok){
                 //save user info to localstorage
+                localStorage.clear();
+
                 localStorage.setItem(
                     "user",
                     JSON.stringify({
@@ -54,6 +57,7 @@ function LoginPage() {
                         region: data.region,
                     })
                 );
+
 
                 //navigate to role-based dashboard
                 navigate(`/${data.role}`);
