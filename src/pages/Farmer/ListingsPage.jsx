@@ -1,61 +1,116 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ListingCard from "./ListingCard";
 import NewListingModal from "./NewListingModal";
 import "./ListingsPage.css";
+import { createListing, fetchMyListings, deleteListing } from "../../api/listingApi";
 
 function ListingsPage() {
 
-    const [listings, setListings] = useState([
-        { id: 1, crop: "Tomatoes", quantity: "50kg", price: 300, status: "Available", transport: "Delivery" },
-        { id: 2, crop: "Spinach", quantity: "20 bunches", price: 100, status: "Sold", transport: "Collect" },
-        { id: 3, crop: "Spinach", quantity: "20 bunches", price: 100, status: "Available", transport: "Collect" },
-        { id: 4, crop: "Spinach", quantity: "20 bunches", price: 100, status: "Available", transport: "Collect" }
-    ]);
-
+    const [listings, setListings] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editItem, setEditItem] = useState(null);
 
-    //add listing
-    const addListing = (newItem) => {//hardcorded status
-        setListings([...listings, { id: listings.length + 1 , status:newItem.status || "Available", ...newItem }]);
-    };
-    // Delete listing
-    const deleteListing = (id) => {
-        setListings(listings.filter(l => l.id !== id));
-    };
-    //open modal for editing
-    const openEditModal = (item) => {
-        setEditItem(item);
-        setShowModal(true);
+    //load current user's listing on mount
+    useEffect(() => {
+        loadMyListings();
+    }, []);
+
+    const loadMyListings = async () => {
+        try{
+            setLoading(true);
+            const data = await fetchMyListings(); //api call function imported //returns listings of the logged in user
+            setListings(data);
+        }catch (err){
+            console.error("Failed to load listings: ", err);
+            alert("Could not load your listings. Are your logged in?");
+        }finally{
+            setLoading(false);
+        }
     }
 
-    //save edit
-    const editListing = (updatedItem) => {
-        setListings(listings.map(l =>
-            l.id === updatedItem.id ? updatedItem : l
-        ));
+    const addListing = async (formData) => {
+        try{
+            const savedListing = await createListing(formData); //this the api call
+            setListings(prev => [...prev, savedListing]);
+            setShowModal(false);
+        }catch (err){
+            alert("Failed to create a listing.");
+            console.error(err);
+
+        }
     };
+
+    //handling delete
+    const deleteListing = async (id) => {
+        if (!window.confirm("delete this listing?")) return;
+
+        try{
+            await deleteListing(id);//=> l l
+            setListings( prev => prev.filter(l => l.id !== id));
+        }catch (err){
+            alert("failed to delete listing");
+        }
+    };
+
+    const editListing = (item) => {
+        setEditItem(item);
+        setShowModal(true);
+    };
+
+
+    //update a listing
+    const updateListing = async (updatedData) => {
+        try{
+            const updated = await updateListing(updatedData.id, updatedData.formData);
+            setListings(prev => prev.map( l => (l.id ===updated.id ? updated : l)));
+            setShowModal(false);
+            setEditItem(null);
+        }catch(err){
+            alert("Failed to update listing");
+        }
+    };
+
+    if (loading)
+        return <div className = "loading">Loading your listings...</div>;
+
+    //open modal for editing
+ /*   const openEditModal = (item) => {
+        setEditItem(item);
+        setShowModal(true);
+    }*/
 
 
     return (
         <div className="listings-page">
 
             <div className="listings-header">
-                <h2>My Produce Listings</h2>
+                <h2>My Produce Listings({listings.length})</h2>
                 <button className="add-btn" onClick={() => setShowModal(true)}>
                     + New Listing
                 </button>
             </div>
 
-            <div className="listings-grid">
-                {listings.map(item => (
-                    <ListingCard
+
+
+            {listings.length === 0 ? (
+                <div className="empty-state">
+                    <p>No listings yet. Create your first one!</p>
+                </div>
+            ): (
+                <div className="listings-grid">
+                    {listings.map(item => (
+                        <ListingCard
                         key={item.id}
                         data={item}
-                        deleteListing={deleteListing}
-                        openEditModal={openEditModal}/>
-                ))}
-            </div>
+                        onDelete={deleteListing}
+                        onEdit={editListing}
+                        />
+                    ))}
+                </div>
+            )}
+
+
 
             {showModal && (
                 <NewListingModal
@@ -64,7 +119,7 @@ function ListingsPage() {
                         setEditItem(null);
                 }}
                     addListing={addListing}
-                    editListing={editListing}
+                    updateListing={updateListing}
                     itemToEdit={editItem}
                 />
             )}
