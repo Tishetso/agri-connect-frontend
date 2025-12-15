@@ -1,42 +1,65 @@
-import axios from "axios";
-
 const API_URL = "http://localhost:8080/api/listings";
 
-const getHeaders = () => {
+const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    return user?.token ? {
-        Authorization: `Bearer ${user.token}`
-    }: {};
+    return user?.token;
 };
-//Fetching items
-export const fetchMyListings = async () => {
-    const res = await axios.get(`${API_URL}/myListings`, { headers : getHeaders() });
-    return res.data;
 
-};
-//calling create
-export const createListing = async (formData) => {
-    const res = await axios.post(`${API_URL}/create`, formData, {
+export const fetchMyListings = async () => {
+    const token = getToken();
+    const res = await fetch(`${API_URL}/myListings`, {
         headers: {
-            ...getHeaders(),
-            "Content-Type" : "multipart/form-data", //prevents Axios from breaking FormData
+            Authorization: `Bearer ${token}`,
         },
-        transformRequest: [(data) => data], //Dont let Axios touch the FormData
-        });
-    return res.data;
+    });
+    if (!res.ok) throw new Error("Failed to fetch listings");
+    return res.json();
 };
-//deleting a list
-export const deleteListing = async (id) => {
-    await axios.delete(`${API_URL}/${id}`, {headers: getHeaders()});
+
+export const createListing = async (formData) => {
+    const token = getToken();
+    const res = await fetch(`${API_URL}/create`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            // DO NOT set Content-Type AT ALL
+            // DO NOT set any other headers
+        },
+        body: formData,  // This is the key — body must be FormData
+    });
+
+    if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Server error response:", errorText);
+        throw new Error(`Failed: ${res.status} - ${errorText || "No response body"}`);
+    }
+
+    return res.json();
 };
 
 export const updateListing = async (id, formData) => {
-    const res = await axios.put(`${API_URL}/${id}`, formData, {
-        headers : {
-            ...getHeaders(),
-            "Content-Type": "multipart/form-data",
+    const token = getToken();
+    const res = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
         },
-        transformRequest: [(data) => data],
-        });
-    return res.data;
+        body: formData,
+    });
+    if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Failed: ${res.status} - ${errorText}`);
+    }
+    return res.json();
+};
+
+export const deleteListing = async (id) => {
+    const token = getToken();
+    const res = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) throw new Error("Failed to delete");
 };

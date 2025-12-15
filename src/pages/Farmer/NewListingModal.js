@@ -85,14 +85,16 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
     const handleImageChange = async (e) => {
         const files = Array.from(e.target.files);
         if (files.length > 3) {
-            alert("You can upload a maximum of 3 images");
+            alert("Max 3 images");
             return;
         }
 
+        // Compress and store only the compressed File objects
         const compressed = await Promise.all(files.map(compressImage));
-        setFormData({ ...formData, images: compressed });
+        setFormData(prev => ({ ...prev, images: compressed }));
 
-        const previews = compressed.map((f) => URL.createObjectURL(f));
+        // Preview URLs from compressed files
+        const previews = compressed.map(f => URL.createObjectURL(f));
         setPreviewUrls(previews);
     };
 
@@ -108,37 +110,34 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
             data.append("quantity", formData.quantity);
             data.append("price", Number(formData.price));
 
-            //send existing images to keep (as JSSON string
-            if (itemToEdit && itemToEdit.imageUrls){
-                data.append("existingImages", JSON.stringify(itemToEdit.imageUrls));
-            }
-
-            // Only append new images (File objects)
-            formData.images.forEach((file) => {
-                if (file instanceof File) {
-                    data.append("images", file);
-                }
+            // DEBUG: Check what is in formData.images
+            console.log("Images in formData:", formData.images);
+            formData.images.forEach((file, index) => {
+                console.log(`Image ${index}:`, file.name, file.size, file.type, file instanceof File);
             });
 
-            let savedListing;
 
-            if (itemToEdit) {
-                // EDIT: Use PUT
-                savedListing = await updateListing(itemToEdit.id, data);
-                editListing(savedListing); // Update parent state
-            } else {
-                // CREATE: Use POST
-                savedListing = await createListing(data);
-                addListing(savedListing);
+            // ONLY APPEND NEW FILES (File objects)
+            formData.images.forEach((file) => {
+                data.append("images", file);  // file is already compressed File object
+            });
+
+            // DEBUG: Check FormData contents
+            for (let pair of data.entries()) {
+                console.log(pair[0] + ':', pair[1]);
             }
 
+            let savedListing;
+            if (itemToEdit) {
+                savedListing = await updateListing(itemToEdit.id, data);
+            } else {
+                savedListing = await createListing(data);
+            }
+
+            addListing(savedListing);
             closeModal();
         } catch (error) {
             console.error("SAVE ERROR:", error);
-            if (error.response) {
-                console.error("STATUS:", error.response.status);
-                console.error("BACKEND ERROR:", error.response.data);
-            }
             alert("Error saving listing");
         }
     };
