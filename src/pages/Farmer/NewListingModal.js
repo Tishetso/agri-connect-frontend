@@ -1,42 +1,40 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./NewListingModal.css";
-import {createListing} from "../../api/listingApi";
-/*import { createListing } from "../../api/listingApi";*/
-function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
+import { createListing, updateListing } from "../../api/listingApi";
 
+function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
     const [formData, setFormData] = useState({
         id: null,
         product: "",
         quantity: "",
         price: "",
-        images:[]
-
+        images: [], // File objects only (new uploads)
     });
 
-    const [previewUrls, setPreviewUrls] = useState([]); //image preview
+    const [previewUrls, setPreviewUrls] = useState([]);
 
-    //Pre-fill data when editing
+    // Pre-fill when editing
     useEffect(() => {
-        if(itemToEdit){
+        if (itemToEdit) {
             setFormData({
                 id: itemToEdit.id,
-                product: itemToEdit.product,
-                quantity: itemToEdit.quantity,
-                price: itemToEdit.price,
-                images: itemToEdit.images || []
+                product: itemToEdit.product || "",
+                quantity: itemToEdit.quantity || "",
+                price: itemToEdit.price || "",
+                images: [], // We don't store old File objects — only previews
             });
 
-            if (itemToEdit.imageUrls){
-                setPreviewUrls(itemToEdit.imageUrls.map(url => `http://localhost:8080/${url}`));
+            // Show existing images from server
+            if (itemToEdit.imageUrls && itemToEdit.imageUrls.length > 0) {
+                const fullUrls = itemToEdit.imageUrls.map(
+                    (filename) => `http://localhost:8080/${filename}`
+                );
+                setPreviewUrls(fullUrls);
             }
-
-           /* //convert file objects to preview urls
-            if (itemToEdit.images && itemToEdit.images.length > 0 ) {
-                const urls = itemToEdit.images.map(img => URL.createObjectURL(img));
-                setPreviewUrls(urls);
-            }*/
-
-
+        } else {
+            // Reset for new listing
+            setFormData({ id: null, product: "", quantity: "", price: "", images: [] });
+            setPreviewUrls([]);
         }
     }, [itemToEdit]);
 
@@ -44,7 +42,6 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    //function to compress
     const compressImage = (file) => {
         return new Promise((resolve) => {
             const reader = new FileReader();
@@ -53,7 +50,7 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
-                    const canvas = document.createElement('canvas');
+                    const canvas = document.createElement("canvas");
                     const MAX_WIDTH = 1200;
                     let width = img.width;
                     let height = img.height;
@@ -65,128 +62,126 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
 
                     canvas.width = width;
                     canvas.height = height;
-                    const ctx = canvas.getContext('2d');
+                    const ctx = canvas.getContext("2d");
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    canvas.toBlob((blob) => {
-                        const compressedFile = new File([blob], file.name, {
-                            type: 'image/jpeg',
-                            lastModified: Date.now(),
-                        });
-                        resolve(compressedFile);
-                    }, 'image/jpeg', 0.8); // 80% quality
+                    canvas.toBlob(
+                        (blob) => {
+                            resolve(
+                                new File([blob], file.name, {
+                                    type: "image/jpeg",
+                                    lastModified: Date.now(),
+                                })
+                            );
+                        },
+                        "image/jpeg",
+                        0.8
+                    );
                 };
             };
         });
     };
-    //handle image upload //with preview
+
     const handleImageChange = async (e) => {
         const files = Array.from(e.target.files);
-
-        //limit to 3 images
-        if(files.length > 3){
+        if (files.length > 3) {
             alert("You can upload a maximum of 3 images");
             return;
         }
 
-        //compressing the files
-        const compressedFiles = await Promise.all(files.map(f => compressImage(f)));
-        setFormData({ ...formData, images: compressedFiles});
-        setPreviewUrls(compressedFiles.map(f => URL.createObjectURL(f)));
+        const compressed = await Promise.all(files.map(compressImage));
+        setFormData({ ...formData, images: compressed });
 
-        //creating preview Urls
-        const previews = files.map(file => URL.createObjectURL(file));
-
-
-
-        setFormData({
-            ...formData,
-            images:files,
-        });
-
+        const previews = compressed.map((f) => URL.createObjectURL(f));
         setPreviewUrls(previews);
     };
 
-
     const handleSubmit = async () => {
-        if(formData.images.length === 0 && !itemToEdit){
+        if (formData.images.length === 0 && !itemToEdit) {
             alert("Please upload at least 1 image.");
             return;
         }
 
+        try {
+            const data = new FormData();
+            data.append("product", formData.product);
+            data.append("quantity", formData.quantity);
+            data.append("price", Number(formData.price));
 
-        try{
-            if(itemToEdit){
-                editListing(formData);
-            }else{
-                //Create a listing on backend
-                const data = new FormData();
-                data.append("product",formData.product);
-                data.append("quantity",formData.quantity);
-                data.append("price", Number(formData.price));
+            //send existing images to keep (as JSSON string
+            if (itemToEdit && itemToEdit.imageUrls){
+                data.append("existingImages", JSON.stringify(itemToEdit.imageUrls));
+            }
 
-                formData.images.forEach((img) => {
-                    data.append("images",img);
-                });
-                const savedListing = await createListing(data);
+            // Only append new images (File objects)
+            formData.images.forEach((file) => {
+                if (file instanceof File) {
+                    data.append("images", file);
+                }
+            });
 
-                //frontend updates with fresh backend data
+            let savedListing;
+
+            if (itemToEdit) {
+                // EDIT: Use PUT
+                savedListing = await updateListing(itemToEdit.id, data);
+                editListing(savedListing); // Update parent state
+            } else {
+                // CREATE: Use POST
+                savedListing = await createListing(data);
                 addListing(savedListing);
             }
 
             closeModal();
-
-        }catch(error){
+        } catch (error) {
             console.error("SAVE ERROR:", error);
-
             if (error.response) {
                 console.error("STATUS:", error.response.status);
                 console.error("BACKEND ERROR:", error.response.data);
             }
             alert("Error saving listing");
         }
-
-
     };
 
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-
                 <h3>{itemToEdit ? "Edit Listing" : "Add New Listing"}</h3>
 
                 <label>Product</label>
-                <input name="product" onChange={handleChange} />
+                <input name="product" value={formData.product} onChange={handleChange} />
 
                 <label>Quantity</label>
-                <input name="quantity" onChange={handleChange} />
+                <input name="quantity" value={formData.quantity} onChange={handleChange} />
 
                 <label>Price (R)</label>
-                <input name="price" type="number" onChange={handleChange} />
+                <input
+                    name="price"
+                    type="number"
+                    value={formData.price}
+                    onChange={handleChange}
+                />
 
-                 {/*Image upload*/}
                 <label>Upload Images (Max 3)</label>
-                <input type="file" accept="image/*" multiple onChange={handleImageChange}/>
+                <input type="file" accept="image/*" multiple onChange={handleImageChange} />
 
-                {/*Thumbnail preview*/}
+                {/* Preview: shows old + new images */}
                 {previewUrls.length > 0 && (
                     <div className="preview-container">
                         {previewUrls.map((url, index) => (
                             <div key={index} className="preview-image-wrapper">
-                                <img src={url} alt="preview" className="preview-image"/>
+                                <img src={url} alt={`preview ${index}`} className="preview-image" />
                             </div>
                         ))}
                     </div>
                 )}
 
-
-
-
                 <div className="modal-actions">
                     <button className="cancel-btn" onClick={closeModal}>Cancel</button>
-                    <button className="save-btn" onClick={handleSubmit}>{itemToEdit ? "Save Changes" : "Save"}</button>
+                    <button className="save-btn" onClick={handleSubmit}>
+                        {itemToEdit ? "Save Changes" : "Save"}
+                    </button>
                 </div>
-
             </div>
         </div>
     );
