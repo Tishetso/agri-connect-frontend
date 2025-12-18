@@ -18,14 +18,17 @@ export const fetchMyListings = async () => {
 
 export const createListing = async (formData) => {
     const token = getToken();
+    console.log("=== Sending request to:", `${API_URL}/create`);
+    console.log("=== FormData is:", formData instanceof FormData);
+
     const res = await fetch(`${API_URL}/create`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
-            // DO NOT set Content-Type AT ALL
-            // DO NOT set any other headers
+            // IMPORTANT: Do NOT include Content-Type header
+            // The browser will set it automatically with the correct boundary
         },
-        body: formData,  // This is the key — body must be FormData
+        body: formData,
     });
 
     if (!res.ok) {

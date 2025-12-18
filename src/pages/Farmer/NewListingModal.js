@@ -105,10 +105,10 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
         }
 
         try {
-            const data = new FormData();
-            data.append("product", formData.product);
-            data.append("quantity", formData.quantity);
-            data.append("price", Number(formData.price));
+            const formDataToSend = new FormData();  // ← Clearer name
+            formDataToSend.append("product", formData.product);
+            formDataToSend.append("quantity", formData.quantity);
+            formDataToSend.append("price", formData.price);  // Don't convert to Number here
 
             // DEBUG: Check what is in formData.images
             console.log("Images in formData:", formData.images);
@@ -116,29 +116,29 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
                 console.log(`Image ${index}:`, file.name, file.size, file.type, file instanceof File);
             });
 
-
-            // ONLY APPEND NEW FILES (File objects)
+            // Append image files
             formData.images.forEach((file) => {
-                data.append("images", file);  // file is already compressed File object
+                formDataToSend.append("images", file);
             });
 
             // DEBUG: Check FormData contents
-            for (let pair of data.entries()) {
+            console.log("=== FormData Contents ===");
+            for (let pair of formDataToSend.entries()) {
                 console.log(pair[0] + ':', pair[1]);
             }
 
             let savedListing;
             if (itemToEdit) {
-                savedListing = await updateListing(itemToEdit.id, data);
+                savedListing = await updateListing(itemToEdit.id, formDataToSend);
             } else {
-                savedListing = await createListing(data);
+                savedListing = await createListing(formDataToSend);
             }
 
             addListing(savedListing);
             closeModal();
         } catch (error) {
             console.error("SAVE ERROR:", error);
-            alert("Error saving listing");
+            alert(`Error saving listing: ${error.message}`);
         }
     };
 
