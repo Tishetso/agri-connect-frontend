@@ -26,9 +26,14 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
 
             // Show existing images from server
             if (itemToEdit.imageUrls && itemToEdit.imageUrls.length > 0) {
-                const fullUrls = itemToEdit.imageUrls.map(
-                    (filename) => `http://localhost:8080/${filename}`
-                );
+                const fullUrls = itemToEdit.imageUrls.map((filename) => {
+                    // Check if it's already a full URL
+                    if (filename.startsWith('http')) {
+                        return filename;
+                    }
+                    // Otherwise construct the correct URL with /uploads/
+                    return `http://localhost:8080/uploads/${filename}`;  // ← FIX: Add /uploads/
+                });
                 setPreviewUrls(fullUrls);
             }
         } else {
@@ -110,8 +115,33 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
             formDataToSend.append("quantity", formData.quantity);
             formDataToSend.append("price", formData.price);  // Don't convert to Number here
 
+            if (itemToEdit && formData.images.length === 0){
+                //extract filenames from url,just the filename
+                const existingFilenames = itemToEdit.imageUrls.map(url => {
+                    //if its full url extract the filename
+                    if(url.includes('/uploads/')){
+                        return url.split('/uploads/')[1];
+                    }
+                    //if its already a filename use it as
+                    return url;
+
+                });
+                //send existing filenames as JSON string
+                formDataToSend.append("existingImages", JSON.stringify(existingFilenames));
+                console.log("Keeping existing images:", existingFilenames);
+            }
+
+            //append new image files if any
+            if (formData.images.length > 0 ){
+                console.log("images in formData", formData.images);
+                formData.images.forEach((file, index) => {
+                    console.log(`Image ${index}:`, file.name, file.size, file.type, file instanceof File);
+                    formDataToSend.append("images", file);
+                });
+            }
+
             // DEBUG: Check what is in formData.images
-            console.log("Images in formData:", formData.images);
+            /*console.log("Images in formData:", formData.images);
             formData.images.forEach((file, index) => {
                 console.log(`Image ${index}:`, file.name, file.size, file.type, file instanceof File);
             });
@@ -119,7 +149,7 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
             // Append image files
             formData.images.forEach((file) => {
                 formDataToSend.append("images", file);
-            });
+            });*/
 
             // DEBUG: Check FormData contents
             console.log("=== FormData Contents ===");
@@ -130,11 +160,18 @@ function NewListingModal({ closeModal, addListing, editListing, itemToEdit }) {
             let savedListing;
             if (itemToEdit) {
                 savedListing = await updateListing(itemToEdit.id, formDataToSend);
+                editListing(savedListing); //call editListing
             } else {
+                //only require images for new listings
+                if (formData.images.length ===0 ){
+                    alert("Please upload at least 1 image");
+                    return;
+                }
                 savedListing = await createListing(formDataToSend);
+                addListing(savedListing); //calling addListing for new items
             }
 
-            addListing(savedListing);
+            //addListing(savedListing);
             closeModal();
         } catch (error) {
             console.error("SAVE ERROR:", error);
