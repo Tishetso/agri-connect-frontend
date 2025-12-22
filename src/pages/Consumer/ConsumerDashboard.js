@@ -35,7 +35,7 @@ function ConsumerDashboard() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/settings">
+                            <NavLink to="/consumer/settings">
                                 <MdSettings className="nav-icon" /> Settings
                             </NavLink>
                         </li>
