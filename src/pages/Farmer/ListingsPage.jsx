@@ -21,6 +21,10 @@ function ListingsPage() {
             const data = await fetchMyListings();
             console.log("Image URLs:", data.imageUrls);
             console.log("First image:", data.imageUrls?.[0]);
+            console.log('==========================');
+            console.log(localStorage.getItem("user"));
+            console.log(JSON.parse(localStorage.getItem("user")));
+            console.log('==========================');
             setListings(data);
         } catch (err) {
             console.error("Failed to load listings: ", err);

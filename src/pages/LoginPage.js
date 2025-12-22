@@ -21,16 +21,6 @@ function LoginPage() {
                 body: JSON.stringify(formData)
             });
 
-            // const data = await res.json();
-            // if (res.ok){
-            //     localStorage.setItem('user', JSON.stringify({
-            //         'token': data.token, role: data.role, name: data.name, region: data.region
-            //     }));
-            //     navigate(`/${data.role}`);
-            // }else{
-            //     alert("Invalid user.");
-            // }
-
             let data;
             const text = await res.text(); // read once
 
@@ -57,6 +47,8 @@ function LoginPage() {
                         region: data.region,
                     })
                 );
+
+
 
 
                 //navigate to role-based dashboard
