@@ -23,7 +23,7 @@ function Sidebar() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/farmer/listings" className={({ isActive }) => isActive ? 'active-link' : ''}>>
+                        <NavLink to="/farmer/listings" className={({ isActive }) => isActive ? 'active-link' : ''}>
                             <MdList className="nav-icon" />
                             {!collapsed && "My Listings"}
                         </NavLink>
