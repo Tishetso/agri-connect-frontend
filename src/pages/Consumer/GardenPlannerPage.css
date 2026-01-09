@@ -1,0 +1,71 @@
+.garden-planner-page {
+    padding: 20px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+}
+
+.page-header h2 {
+    margin: 0 0 10px 0;
+    color: white;
+    font-size: 28px;
+}
+
+.page-header p {
+    margin: 0;
+    color: white;
+    font-size: 14px;
+}
+
+.planner-section {
+    margin-bottom: 40px;
+}
+
+.planner-section h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.tips-section h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.tip-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tip-card h4 {
+    margin: 0 0 10px 0;
+    color: #27ae60;
+    font-size: 18px;
+}
+
+.tip-card p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 14px;
+    line-height: 1.5;
+}

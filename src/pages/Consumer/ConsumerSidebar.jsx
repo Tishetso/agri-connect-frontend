@@ -1,50 +1,47 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { MdDashboard, MdList, MdNotifications, MdChat, MdSettings, MdLogout, MdMenu, MdClose } from "react-icons/md";
+import { MdStore, MdLocalFlorist, MdShoppingCart, MdChat, MdSettings, MdLogout, MdMenu, MdClose } from "react-icons/md";
 
-function Sidebar() {
-
+function ConsumerSidebar() {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
-
         <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
-         {/*toggling button*/}
-            <button className = "toggle-btn" onClick={() => setCollapsed(!collapsed)}>
+            {/* Toggling button */}
+            <button className="toggle-btn" onClick={() => setCollapsed(!collapsed)}>
                 {collapsed ? <MdMenu /> : <MdClose />}
             </button>
 
             <nav>
                 <ul className="nav-list">
                     <li>
-                        <NavLink to="/farmer" className={({ isActive }) => isActive ? 'active-link' : ''}>
-                            <MdDashboard className="nav-icon" />
-                            {!collapsed && "Dashboard"}
+                        <NavLink to="/consumer" className={({ isActive }) => isActive ? 'active-link' : ''}>
+                            <MdStore className="nav-icon" />
+                            {!collapsed && "Marketplace"}
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/farmer/listings" className={({ isActive }) => isActive ? 'active-link' : ''}>
-                            <MdList className="nav-icon" />
-                            {!collapsed && "My Listings"}
+                        <NavLink to="/consumer/garden" className={({ isActive }) => isActive ? 'active-link' : ''}>
+                            <MdLocalFlorist className="nav-icon" />
+                            {!collapsed && "Garden Planner"}
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/farmer/alerts">
-                            <MdNotifications className="nav-icon" />
-                            {!collapsed && "Alerts"}
+                        <NavLink to="/consumer/orders">
+                            <MdShoppingCart className="nav-icon" />
+                            {!collapsed && "My Orders"}
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/farmer/chatroom">
+                        <NavLink to="/consumer/chatroom">
                             <MdChat className="nav-icon" />
                             {!collapsed && "Chatroom"}
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/farmer/settings">
+                        <NavLink to="/consumer/settings">
                             <MdSettings className="nav-icon" />
                             {!collapsed && "Settings"}
-
                         </NavLink>
                     </li>
                     <li>
@@ -55,25 +52,21 @@ function Sidebar() {
                     </li>
                 </ul>
 
-                {/*add a user profile*/}
+                {/* User profile section */}
                 <div className="user-profile">
+                    <img src="/farmer.png" alt="User" className="profile-pic" />
 
-                    <img src = "/farmer.png" alt = "User" className = "profile-pic"/>
 
                     {!collapsed && (
                         <div className="user-info">
-                            <h4 className="user-name"> Tishetso Mphelane</h4>
-                            <p className="user-role">Farmer</p>
+                            <h4 className="user-name">Consumer Name</h4>
+                            <p className="user-role">Consumer</p>
                         </div>
-
                     )}
-
                 </div>
-
-
             </nav>
         </aside>
     );
 }
 
-export default Sidebar;
+export default ConsumerSidebar;
