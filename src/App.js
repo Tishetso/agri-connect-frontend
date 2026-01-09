@@ -14,6 +14,10 @@ import Chatroom from "./components/Chatroom";
 import SettingsPage from "./components/SettingsPage";
 import FarmerLayout from "./layouts/FarmerLayout";
 import ConsumerLayout from "./layouts/ConsumerLayout";
+import ConsumerSettings from "./pages/Consumer/ConsumerSettings";
+import ConsumerChatroom from "./pages/Consumer/ConsumerChatroom";
+import OrdersPage from "./pages/Consumer/OrdersPage";
+import GardenPlannerPage from "./pages/Consumer/GardenPlannerPage";
 
 function App() {
   return (
@@ -59,25 +63,25 @@ function App() {
           />
           <Route path="/consumer/garden" element={
             <ConsumerLayout>
-              {/* GardenPlannerPage component */}
+             <GardenPlannerPage/>
             </ConsumerLayout>
           }
           />
           <Route path="/consumer/orders" element={
             <ConsumerLayout>
-              {/* OrdersPage component */}
+              <OrdersPage/>
             </ConsumerLayout>
           }
           />
           <Route path="/consumer/chatroom" element={
             <ConsumerLayout>
-              <Chatroom/>
+              <ConsumerChatroom/>
             </ConsumerLayout>
           }
           />
           <Route path="/consumer/settings" element={
             <ConsumerLayout>
-              <SettingsPage/>
+              <ConsumerSettings/>
             </ConsumerLayout>
           }
           />
