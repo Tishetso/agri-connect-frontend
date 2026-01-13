@@ -6,6 +6,11 @@ function Sidebar() {
 
     const [collapsed, setCollapsed] = useState(false);
 
+    //get user data from localstorage
+    const user = JSON.parse(localStorage.getItem('user')) || {name: 'Farmer', surname: '', role: 'farmer'};
+
+    const fullName = user.surname ? `${user.name} ${user.surname}` : user.name;
+
     return (
 
         <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
@@ -62,7 +67,7 @@ function Sidebar() {
 
                     {!collapsed && (
                         <div className="user-info">
-                            <h4 className="user-name"> Tishetso Mphelane</h4>
+                            <h4 className="user-name"> {fullName}</h4>
                             <p className="user-role">Farmer</p>
                         </div>
 

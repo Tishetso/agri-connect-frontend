@@ -12,6 +12,7 @@ function LoginPage() {
     };
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         try{
@@ -44,6 +45,7 @@ function LoginPage() {
                         token: data.token,
                         role: data.role,
                         name: data.name,
+                        surname: data.surname,
                         region: data.region,
                     })
                 );

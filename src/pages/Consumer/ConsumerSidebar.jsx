@@ -5,6 +5,12 @@ import { MdStore, MdLocalFlorist, MdShoppingCart, MdChat, MdSettings, MdLogout, 
 function ConsumerSidebar() {
     const [collapsed, setCollapsed] = useState(false);
 
+    //get user data from local storage
+    const user = JSON.parse(localStorage.getItem('user')) || {name: 'Consumer', role: 'consumer'};
+
+    // Combine name and surname for full name display
+    const fullName = user.surname ? `${user.name} ${user.surname}` : user.name;
+
     return (
         <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
             {/* Toggling button */}
@@ -17,7 +23,7 @@ function ConsumerSidebar() {
                     <li>
                         <NavLink to="/consumer" className={({ isActive }) => isActive ? 'active-link' : ''}>
                             <MdStore className="nav-icon" />
-                            {!collapsed && "Marketplace"}
+                            {!collapsed && "Dashboard"}
                         </NavLink>
                     </li>
                     <li>
@@ -59,7 +65,7 @@ function ConsumerSidebar() {
 
                     {!collapsed && (
                         <div className="user-info">
-                            <h4 className="user-name">Consumer Name</h4>
+                            <h4 className="user-name">{fullName}</h4>
                             <p className="user-role">Consumer</p>
                         </div>
                     )}
