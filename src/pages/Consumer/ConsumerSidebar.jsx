@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { MdStore, MdLocalFlorist, MdShoppingCart, MdChat, MdSettings, MdLogout, MdMenu, MdClose } from "react-icons/md";
+import {
+    MdStore,
+    MdLocalFlorist,
+    MdShoppingCart,
+    MdChat,
+    MdSettings,
+    MdLogout,
+    MdMenu,
+    MdClose,
+    MdDashboard
+} from "react-icons/md";
 
 function ConsumerSidebar() {
     const [collapsed, setCollapsed] = useState(false);
@@ -22,14 +32,14 @@ function ConsumerSidebar() {
                 <ul className="nav-list">
                     <li>
                         <NavLink to="/consumer" className={({ isActive }) => isActive ? 'active-link' : ''}>
-                            <MdStore className="nav-icon" />
+                            <MdDashboard className="nav-icon" />
                             {!collapsed && "Dashboard"}
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/consumer/garden" className={({ isActive }) => isActive ? 'active-link' : ''}>
-                            <MdLocalFlorist className="nav-icon" />
-                            {!collapsed && "Garden Planner"}
+                        <NavLink to="/consumer/marketplace">
+                            <MdStore className="nav-icon" />
+                            {!collapsed && "Marketplace"}
                         </NavLink>
                     </li>
                     <li>
@@ -38,6 +48,14 @@ function ConsumerSidebar() {
                             {!collapsed && "My Orders"}
                         </NavLink>
                     </li>
+
+                    <li>
+                        <NavLink to="/consumer/garden" className={({ isActive }) => isActive ? 'active-link' : ''}>
+                            <MdLocalFlorist className="nav-icon" />
+                            {!collapsed && "Garden Planner"}
+                        </NavLink>
+                    </li>
+
                     <li>
                         <NavLink to="/consumer/chatroom">
                             <MdChat className="nav-icon" />

@@ -18,6 +18,7 @@ import ConsumerSettings from "./pages/Consumer/ConsumerSettings";
 import ConsumerChatroom from "./pages/Consumer/ConsumerChatroom";
 import OrdersPage from "./pages/Consumer/OrdersPage";
 import GardenPlannerPage from "./pages/Consumer/GardenPlannerPage";
+import MarketplacePage from "./pages/Consumer/MarketplacePage";
 
 function App() {
   return (
@@ -58,6 +59,12 @@ function App() {
           <Route path="/consumer" element={
             <ConsumerLayout>
               <ConsumerDashboard/>
+            </ConsumerLayout>
+          }
+          />
+          <Route path="/consumer/marketplace" element={
+            <ConsumerLayout>
+              <MarketplacePage/>
             </ConsumerLayout>
           }
           />

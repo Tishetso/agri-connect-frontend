@@ -75,7 +75,7 @@ function ConsumerDashboard() {
 
             {/* Marketplace */}
             <section>
-                <h3>Browse Produce</h3>
+                <h3>Featured Produce</h3>
                 <ProduceCard crop="Tomatoes" quantity="50kg" price="R300" seller="Farmer Thabo" />
                 <ProduceCard crop="Pumpkin" quantity="10 units" price="R150" seller="Farmer Naledi" />
             </section>
