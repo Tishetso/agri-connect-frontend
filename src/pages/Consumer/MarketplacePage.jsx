@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProduceCard from '../../components/ProduceCard';
+import ProduceCard from './ProduceCard';
 import './MarketplacePage.css';
 
 function MarketplacePage() {
@@ -15,7 +15,7 @@ function MarketplacePage() {
         const fetchProduce = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:8080/api/produce', {
+                const response = await fetch('http://localhost:8080/api/marketplace', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -42,8 +42,8 @@ function MarketplacePage() {
 
     // Filter produce based on search and filters
     const filteredProduce = produceList.filter(item => {
-        const matchesSearch = item.crop_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.farmer_name?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = item.product?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.farmerName?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory === 'all' || item.category?.toLowerCase() === selectedCategory.toLowerCase();
 
         return matchesSearch && matchesCategory;
@@ -58,7 +58,7 @@ function MarketplacePage() {
                     <p>Browse fresh produce from local farmers</p>
                 </header>
                 <div className="loading-state">
-                    <p>Loading produce...</p>
+                    <p>Loading Marketplace...</p>
                 </div>
             </div>
         );
@@ -152,12 +152,13 @@ function MarketplacePage() {
                     filteredProduce.map(item => (
                         <ProduceCard
                             key={item.id}
-                            crop={item.crop_name}
+                            crop={item.product}
                             quantity={item.quantity}
                             price={`R${item.price}`}
-                            seller={item.farmer_name}
+                            seller={item.farmerName}
                             location={item.location}
                             status={item.status}
+                            imageUrls={item.imageUrls}
                         />
                     ))
                 ) : (

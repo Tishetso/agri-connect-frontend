@@ -1,0 +1,182 @@
+.produce-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.produce-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Section */
+.produce-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.produce-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.produce-card:hover .produce-image {
+    transform: scale(1.05);
+}
+
+.status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: #27ae60;
+    color: #fff;
+}
+
+.status-badge.sold {
+    background: #95a5a6;
+}
+
+.status-badge.reserved {
+    background: #f39c12;
+}
+
+/* Details Section */
+.produce-details {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.produce-name {
+    margin: 0;
+    font-size: 20px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Info Rows */
+.produce-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.value {
+    color: #34495e;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.value.price {
+    color: #27ae60;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Seller Info */
+.seller-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid #ecf0f1;
+}
+
+.seller-row,
+.location-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seller-icon,
+.location-icon {
+    font-size: 16px;
+}
+
+.seller-name,
+.location-name {
+    color: #34495e;
+    font-size: 13px;
+}
+
+/* Action Buttons */
+.card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.card-actions button {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.card-actions button:active {
+    transform: scale(0.98);
+}
+
+.btn-contact {
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+.btn-contact:hover {
+    background: #bdc3c7;
+}
+
+.btn-order {
+    background: #27ae60;
+    color: #fff;
+}
+
+.btn-order:hover {
+    background: #229954;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .produce-image-container {
+        height: 180px;
+    }
+
+    .produce-name {
+        font-size: 18px;
+    }
+
+    .value.price {
+        font-size: 16px;
+    }
+}
