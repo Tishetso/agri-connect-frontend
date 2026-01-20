@@ -67,7 +67,7 @@ function ConsumerDashboard() {
         <>
             {/* TopBar */}
             <header style={{ marginBottom: '20px' }}>
-                <h2>Welcome, {firstName} 🛒</h2>
+                <h2>Welcome, {firstName} 👋</h2>
                 <p>You're browsing from <strong>{region}</strong></p>
 
                 <p>🌦️ {weatherTip}</p>
