@@ -56,6 +56,7 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
                     <button className="btn-contact">Contact Farmer</button>
                     <button className="btn-order">Order Now</button>
                 </div>
+
             </div>
         </div>
     );
