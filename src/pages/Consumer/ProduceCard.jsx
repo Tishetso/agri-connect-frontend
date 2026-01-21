@@ -1,11 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './ProduceCard.css';
 
-function ProduceCard({ crop, quantity, price, seller, location, status, imageUrls }) {
+function ProduceCard({ crop, quantity, price, seller, location, status, imageUrls, id, farmerName }) {
+    const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+    const [addingToCart, setAddingToCart] = useState(false);
+
     // Get the first image or use a placeholder
     const imageUrl = imageUrls && imageUrls.length > 0
         ? `http://localhost:8080/uploads/${imageUrls[0]}`
         : '/placeholder-produce.png';
+
+    const handleAddToCart = async () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (!user || !user.token){
+            alert("Please login to add items to cart");
+            window.location.href = '/login';
+            return;
+        }
+
+        setAddingToCart(true);
+    }
+
 
     return (
         <div className="produce-card">
