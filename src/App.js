@@ -19,12 +19,15 @@ import ConsumerChatroom from "./pages/Consumer/ConsumerChatroom";
 import OrdersPage from "./pages/Consumer/OrdersPage";
 import GardenPlannerPage from "./pages/Consumer/GardenPlannerPage";
 import MarketplacePage from "./pages/Consumer/MarketplacePage";
+import CartPage from "./pages/Consumer/Cart";
 
 function App() {
   return (
       <Router>
         <Routes>
+
           {/* Farmer Routes */}
+
           <Route path="/farmer" element={
             <FarmerLayout>
               <FarmerDashboard/>
@@ -56,6 +59,7 @@ function App() {
           />
 
           {/* Consumer Routes */}
+
           <Route path="/consumer" element={
             <ConsumerLayout>
               <ConsumerDashboard/>
@@ -65,6 +69,12 @@ function App() {
           <Route path="/consumer/marketplace" element={
             <ConsumerLayout>
               <MarketplacePage/>
+            </ConsumerLayout>
+          }
+          />
+          <Route path="/consumer/cart" element={
+            <ConsumerLayout>
+              <CartPage/>
             </ConsumerLayout>
           }
           />

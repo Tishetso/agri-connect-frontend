@@ -42,6 +42,14 @@ function ConsumerSidebar() {
                             {!collapsed && "Marketplace"}
                         </NavLink>
                     </li>
+                  {/*Added 2026-Jan-22*/}
+                    <li>
+                        <NavLink to="/consumer/cart" className={({isActive}) => isActive ? 'active-link' : ''}>
+                            <MdShoppingCart className="nav-icon"/>
+                            {!collapsed && "My Cart"}
+                        </NavLink>
+
+                    </li>
                     <li>
                         <NavLink to="/consumer/orders">
                             <MdShoppingCart className="nav-icon" />

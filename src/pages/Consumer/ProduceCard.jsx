@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import GuestCheckoutModal from './GuestCheckoutModal';
 import './ProduceCard.css';
 
 function ProduceCard({ crop, quantity, price, seller, location, status, imageUrls, id, farmerName }) {
@@ -20,10 +21,64 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
         }
 
         setAddingToCart(true);
-    }
+
+        try{
+            const response = await fetch('http://localhost:8080/api/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({
+                    listingId: id,
+                    quantity: 1
+                })
+
+
+            });
+
+            if (!response.ok){
+                throw new Error('Failed to add to cart');
+            }
+
+            alert('Added to cart successfully!');
+        }catch(error){
+            console.error('Error adding to cart ', error);
+            alert('Failed to add to cart. Please try again.');
+        }finally{
+            setAddingToCart(false);
+        }
+    };
+
+    /*This ⚠️⚠️⚠️⚠️⚠️⚠️ Be on the look out*/
+    const handleOrderClick = () => {
+        //Checks if user is logged in
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user && user.token){
+            //User is logged in - redirect to cart
+            window.location.href = '/consumer/cart';
+        }else{
+            setShowCheckoutModal(true);
+        }
+    };
+
+    const handleCheckoutSuccess = (data) => {
+        alert(`Order placed successfully! Order ID: ${data.orderId}`);
+    };
+
+    const listingData = {
+        id,
+        product: crop,
+        quantity,
+        price: price.replace('R', ''),
+        farmerName: farmerName || seller,
+        location
+    };
 
 
     return (
+        <>
         <div className="produce-card">
             <div className="produce-image-container">
                 <img
@@ -69,13 +124,36 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
                 </div>
 
                 <div className="card-actions">
-                    <button className="btn-contact">Contact Farmer</button>
-                    <button className="btn-order">Order Now</button>
+                    {/*<button className="btn-contact">Contact Farmer</button>*/}
+                    <button className = "btn-add-cart"
+                            onClick={handleAddToCart}
+                            disabled={addingToCart}
+                            >
+                        {addingToCart ? 'Adding...' : 'Add to Cart'}
+                    </button>
+
+                    {/*<button className="btn-order">Order Now</button>*/}
+                    <button
+                        className = "btn-order" onClick={handleOrderClick}>
+                        Buy Now
+                    </button>
                 </div>
 
             </div>
         </div>
+
+            {showCheckoutModal && (
+                <GuestCheckoutModal
+                    listing={listingData}
+                    onClose={() => setShowCheckoutModal(false)}
+                    onSuccess={handleCheckoutSuccess}
+                    />
+            )}
+
+        </>
     );
+
+
 }
 
 export default ProduceCard;
