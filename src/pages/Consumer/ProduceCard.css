@@ -147,15 +147,29 @@
 .card-actions button:active {
     transform: scale(0.98);
 }
-
+/*
 .btn-contact {
     background: #ecf0f1;
     color: #2c3e50;
+}*/
+    .card-actions button:disabled {
+        background: #95a5a6;
+        cursor: not-allowed;
+    }
+
+    .btn-add-cart {
+        background: #3498db;
+        color: #fff;
+    }
+
+.btn-add-cart:hover:not(:disabled) {
+    background: #2980b9;
 }
 
-.btn-contact:hover {
+
+/*.btn-contact:hover {
     background: #bdc3c7;
-}
+}*/
 
 .btn-order {
     background: #27ae60;
