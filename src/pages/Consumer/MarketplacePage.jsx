@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProduceCard from './ProduceCard';
-import './MarketplacePage.css';
+import './MarketplacePage.css'
 
 function MarketplacePage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -152,6 +152,7 @@ function MarketplacePage() {
                     filteredProduce.map(item => (
                         <ProduceCard
                             key={item.id}
+                            id={item.id}
                             crop={item.product}
                             quantity={item.quantity}
                             price={`R${item.price}`}

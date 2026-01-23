@@ -6,18 +6,25 @@
     margin-bottom: 30px;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 15px;
+
 }
 
 .page-header h2 {
     margin: 0 0 10px 0;
     color: white;
-    font-size: 28px;
+    font-size: 12px;
+    font-weight:bold;
+}
+
+.page-header h2{
+    color:white;
 }
 
 .page-header p {
     margin: 0;
     color: #7f8c8d;
     font-size: 14px;
+
 }
 
 /* Search and Filters Section */

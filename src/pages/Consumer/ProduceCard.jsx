@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import GuestCheckoutModal from './GuestCheckoutModal';
 import './ProduceCard.css';
+import toast from 'react-hot-toast';
 
 function ProduceCard({ crop, quantity, price, seller, location, status, imageUrls, id, farmerName }) {
     const [showCheckoutModal, setShowCheckoutModal] = useState(false);
@@ -39,12 +40,19 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
 
             if (!response.ok){
                 throw new Error('Failed to add to cart');
-            }
 
-            alert('Added to cart successfully!');
+            }
+            //Success!
+            toast.success('Added to cart successfully! 🛒', {
+                duration: 4000,
+                position: 'top-center', //optional override
+            });
+
         }catch(error){
             console.error('Error adding to cart ', error);
-            alert('Failed to add to cart. Please try again.');
+            toast.error('Failed to add to cart. Please try again.',{
+                duration:5000,
+            });
         }finally{
             setAddingToCart(false);
         }

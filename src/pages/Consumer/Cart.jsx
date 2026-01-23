@@ -1,4 +1,8 @@
 import {useEffect, useState} from "react";
+import './Cart.css';
+import {confirmAction} from '../../utils/confirm';
+import {confirmActionDelete} from "../../utils/confirmActionDelete";
+import toast from 'react-hot-toast';
 
 function CartPage(){
     const[carts, setCarts] = useState([]);
@@ -62,12 +66,22 @@ function CartPage(){
     };
 
     const removeItem = async (cartItemId) => {
-        if(!window.confirm("Remove this item from cart")) return;
+
+        const confirmed = await confirmActionDelete({
+                title:'Remove this item',
+            text:'This item will be permanently removed from your cart.',
+            confirmButtonText: 'Yes, remove it',
+            cancelButtonText: 'Keep it',
+            icon: 'warning',
+
+        });
+
+        if(!confirmed) return;
 
         try{
             const user = JSON.parse(localStorage.getItem('user'));
 
-            const response = await fetch(`http://localhost:8080/api/cart/item${cartItemId}`, {
+            const response = await fetch(`http://localhost:8080/api/cart/item/${cartItemId}`, {
                 method: 'DELETE',
                 headers:{
                     'Authorization': `Bearer ${user.token}`
@@ -78,18 +92,29 @@ function CartPage(){
                 throw new Error('Failed to remove item');
             }
 
+            //success delete
+            toast.success('Item removed from cart');
+
             //Refresh carts
 
             fetchCarts();
         }catch(err){
             console.error('Error removing item', err);
-            alert("Failed to remove item");
+           toast.error(err.message || 'Failed to remove item. Please try again.');
         }
     };
 
+
     const clearCart = async (cartId) => {
 
-        if(!window.confirm("Clear entire cart? This cannot be undone")) return;
+    const confirmed = await confirmAction({
+        title:'Clear entire cart?',
+        text:'This cannot be undone. ALL items will be removed.',
+        confirmButtonText: 'Yes, clear it',
+        icon: 'warning',
+    });
+
+    if (!confirmed) return;
 
         try{
             const user = JSON.parse(localStorage.getItem('user'));
@@ -105,11 +130,14 @@ function CartPage(){
                 throw new Error('Failed to clear cart');
             }
 
+            //success- show toast
+            toast.success('Cart cleared successfully');
+
             //refresh carts
             fetchCarts();
         }catch(err){
             console.error('Error clearing cart', err);
-            alert("Failed to clear cart");
+            toast.error('Failed to clear cart. Please try again.');
         }
     };
 
@@ -150,7 +178,7 @@ function CartPage(){
                 </header>
                 <div className = "empty-cart">
                     <p>Your cart is empty</p>
-                    <a href = "/consumer" className = "btn-browse">Browse Marketplace</a>
+                    <a href = "/consumer/marketplace" className = "btn-browse">Browse Marketplace</a>
                 </div>
             </div>
         );
@@ -160,16 +188,19 @@ function CartPage(){
         <div className="cart-page">
             <header className="page-header">
                 <h2>🛒 My Shopping Carts</h2>
-                <p>You have {carts.length} {carts.length === 1 ? 'cart' : 'carts'} from different farmers</p>
+
             </header>
+            <div className = "cart-msg">
+            <p>{carts.length === 1 ? "You have 1 cart from:" : `You have ${carts.length} carts from different farmers`}</p>
+            </div>
 
             <div className="carts-container">
                 {carts.map(cart => (
                     <div key={cart.id} className="cart-card">
                         <div className="cart-header">
                             <div className="farmer-info">
-                                <h3>{cart.farmerName}</h3>
-                                <p className="farmer-location">📍 {cart.farmerRegion}</p>
+                                <h3>Farmer name: <br/>{cart.farmerName}</h3>
+                                <p className="farmer-location">Region 📍 {cart.farmerRegion}</p>
                             </div>
                             <button
                                 className="btn-clear-cart"
@@ -234,12 +265,12 @@ function CartPage(){
                                 <p className="total-items">{cart.totalItems} {cart.totalItems === 1 ? 'item' : 'items'}</p>
                                 <p className="total-price">Total: <strong>R{cart.totalPrice.toFixed(2)}</strong></p>
                             </div>
-                            {/*<button
+                            <button
                                 className="btn-checkout"
-                                onClick={() => handleCheckout(cart)}
+                                /*onClick={() => handleCheckout(cart)}*/
                             >
                                 Checkout
-                            </button>*/}
+                            </button>
                         </div>
                     </div>
                 ))}
