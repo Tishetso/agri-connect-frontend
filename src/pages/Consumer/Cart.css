@@ -12,14 +12,15 @@
 
 .page-header h2 {
     margin: 0 0 10px 0;
-    color: #2c3e50;
+    color: white;
     font-size: 28px;
 }
 
-.page-header p {
+.cart-msg p {
     margin: 0;
     color: #7f8c8d;
     font-size: 14px;
+    margin-bottom:5px;
 }
 
 /* Loading and Error States */
@@ -139,8 +140,8 @@
 }
 
 .item-image {
-    width: 80px;
-    height: 80px;
+    width: 10px;
+    height: 10px;
     border-radius: 6px;
     overflow: hidden;
     background: #f0f0f0;
@@ -223,6 +224,7 @@
     font-size: 20px;
     cursor: pointer;
     transition: background 0.2s;
+    padding:5px;
 }
 
 .btn-remove:hover {

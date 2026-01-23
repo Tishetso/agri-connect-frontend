@@ -20,9 +20,13 @@ import OrdersPage from "./pages/Consumer/OrdersPage";
 import GardenPlannerPage from "./pages/Consumer/GardenPlannerPage";
 import MarketplacePage from "./pages/Consumer/MarketplacePage";
 import CartPage from "./pages/Consumer/Cart";
+import {Toaster} from 'react-hot-toast';
 
 function App() {
+
   return (
+      <>
+
       <Router>
         <Routes>
 
@@ -115,7 +119,38 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </Router>
+
+        {/*//Toaster*/}
+        <Toaster
+            position = "top-right"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                borderRadius: '10px',
+                background:'#333',
+                color:'#fff',
+              },
+            }}
+          />
+
+
+      </>
   );
+
+
+
 }
 
 export default App;
+/*
+  <Toaster
+      position = "top-right"
+      toastOptions={{
+        duration: 3000,
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      }}
+  />*/
