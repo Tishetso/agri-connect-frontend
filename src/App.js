@@ -21,6 +21,7 @@ import GardenPlannerPage from "./pages/Consumer/GardenPlannerPage";
 import MarketplacePage from "./pages/Consumer/MarketplacePage";
 import CartPage from "./pages/Consumer/Cart";
 import {Toaster} from 'react-hot-toast';
+import CheckoutPage from "./pages/Consumer/CheckoutPage";
 
 function App() {
 
@@ -82,6 +83,11 @@ function App() {
             </ConsumerLayout>
           }
           />
+          <Route path = "/consumer/checkout/:cartId" element={
+            <ConsumerLayout>
+              <CheckoutPage/>
+            </ConsumerLayout>
+          }/>
           <Route path="/consumer/garden" element={
             <ConsumerLayout>
              <GardenPlannerPage/>

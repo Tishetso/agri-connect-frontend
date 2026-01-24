@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import GuestCheckoutModal from './GuestCheckoutModal';
 import './ProduceCard.css';
 import toast from 'react-hot-toast';
+import {useNavigate} from "react-router-dom";
 
 function ProduceCard({ crop, quantity, price, seller, location, status, imageUrls, id, farmerName }) {
     const [showCheckoutModal, setShowCheckoutModal] = useState(false);
@@ -69,6 +70,8 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
         }else{
             setShowCheckoutModal(true);
         }
+        /*useNavigate('/consumer/checkout/')*/
+
     };
 
     const handleCheckoutSuccess = (data) => {
