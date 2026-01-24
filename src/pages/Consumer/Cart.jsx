@@ -2,9 +2,11 @@ import {useEffect, useState} from "react";
 import './Cart.css';
 import {confirmAction} from '../../utils/confirm';
 import {confirmActionDelete} from "../../utils/confirmActionDelete";
+import {useNavigate} from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 function CartPage(){
+    const navigate = useNavigate();
     const[carts, setCarts] = useState([]);
     const [Loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -42,6 +44,7 @@ function CartPage(){
     };
 
     const updateQuantity = async (cartItemId, newQuantity) => {
+/*Has unwanted page reloads*/
         try{
             const user = JSON.parse(localStorage.getItem('user'));
             const response = await fetch(`http://localhost:8080/api/cart/item/${cartItemId}`, {
@@ -141,12 +144,11 @@ function CartPage(){
         }
     };
 
-    //To be implemented
 
-   /* const handleCheckout = (cart) => {
-        // Navigate to checkout page (to be implemented)
-        alert(`Checkout for ${cart.farmerName}'s cart - Total: R${cart.totalPrice.toFixed(2)}`);
-    }*/
+
+  const handleCheckout = (cartId => {
+      navigate(`/consumer/checkout/${cartId}`);
+    })
 
     if (Loading){
         return(
@@ -267,7 +269,7 @@ function CartPage(){
                             </div>
                             <button
                                 className="btn-checkout"
-                                /*onClick={() => handleCheckout(cart)}*/
+                                onClick={() => handleCheckout(cart.id)}
                             >
                                 Checkout
                             </button>
