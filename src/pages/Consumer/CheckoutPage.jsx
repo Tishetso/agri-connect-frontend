@@ -118,9 +118,9 @@ function CheckoutPage() {
         <div className="checkout-page">
             <header className="page-header">
                 <h2>🛒 Checkout</h2>
-                <p>Complete your order from {cart.farmerName}</p>
             </header>
 
+            <div className = "from"><p>Complete your order from {cart.farmerName}</p></div>
             <div className="checkout-container">
                 {/* Order Summary */}
                 <div className="order-summary-section">
