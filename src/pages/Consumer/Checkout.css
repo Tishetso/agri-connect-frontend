@@ -16,10 +16,17 @@
     font-size: 28px;
 }
 
-.page-header p {
+/*.page-header p {
     margin: 0;
     color: #7f8c8d;
     font-size: 14px;
+}*/
+.from p{
+    margin:0 0 5px 0; /* top right bottom left */
+    color: #7f8c8d;
+    font-size: 14px;
+    font-style : italic;
+
 }
 
 .loading-state {
