@@ -10,7 +10,7 @@
 
 .page-header h2 {
     margin: 0 0 10px 0;
-    color: #2c3e50;
+    color: white;
     font-size: 28px;
 }
 
@@ -20,6 +20,50 @@
     font-size: 14px;
 }
 
+/* Loading and Error States */
+.loading-state,
+.error-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #7f8c8d;
+}
+
+.error-state {
+    color: #e74c3c;
+}
+
+/* Empty State */
+.empty-orders {
+    text-align: center;
+    padding: 80px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.empty-orders p {
+    margin: 0 0 20px 0;
+    color: #7f8c8d;
+    font-size: 18px;
+}
+
+.btn-browse {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #27ae60;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-browse:hover {
+    background: #229954;
+}
+
+/* Orders Sections */
 .active-orders,
 .completed-orders {
     margin-bottom: 40px;
@@ -30,35 +74,196 @@
     color: #2c3e50;
     margin-bottom: 20px;
     font-size: 22px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
-.active-orders h3::before {
-    content: '📦';
-    font-size: 24px;
-}
-
-.completed-orders h3::before {
-    content: '✅';
-    font-size: 24px;
-}
-
+/* Orders List */
 .orders-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
-/* If you need additional styling for empty states */
-.orders-list:empty::after {
-    content: 'No orders yet';
-    display: block;
-    text-align: center;
-    color: #95a5a6;
-    padding: 40px;
+/* Order Card */
+.order-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Order Header */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.order-info h4 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+.order-date {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.confirmed {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-badge.in.transit,
+.status-badge.in-transit {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-badge.delivered {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Order Details */
+.order-details {
+    margin-bottom: 20px;
+}
+
+.farmer-info,
+.items-summary,
+.order-total {
+    margin-bottom: 15px;
+}
+
+.farmer-info p,
+.order-total p {
+    margin: 5px 0;
+    color: #34495e;
+    font-size: 14px;
+}
+
+.items-summary p {
+    margin: 0 0 8px 0;
+    color: #34495e;
+    font-weight: 500;
+}
+
+.items-summary ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+}
+
+.items-summary li {
+    margin: 5px 0;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.payment-method {
+    color: #7f8c8d !important;
+    font-size: 13px !important;
+}
+
+.delivered-date,
+.cancellation-reason {
+    margin-top: 10px;
+    padding: 10px;
     background: #f8f9fa;
-    border-radius: 8px;
-    border: 2px dashed #ddd;
+    border-radius: 6px;
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+.cancellation-reason {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Order Actions */
+.order-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.order-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.order-actions button:active {
+    transform: scale(0.98);
+}
+
+.btn-view {
+    background: #3498db;
+    color: #fff;
+}
+
+.btn-view:hover {
+    background: #2980b9;
+}
+
+.btn-cancel {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background: #c0392b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .orders-page {
+        padding: 15px;
+    }
+
+    .order-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .order-actions {
+        flex-direction: column;
+    }
+
+    .order-actions button {
+        width: 100%;
+    }
 }
