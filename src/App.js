@@ -22,6 +22,7 @@ import MarketplacePage from "./pages/Consumer/MarketplacePage";
 import CartPage from "./pages/Consumer/Cart";
 import {Toaster} from 'react-hot-toast';
 import CheckoutPage from "./pages/Consumer/CheckoutPage";
+import FarmerOrdersPage from "./pages/Farmer/FarmerOrdersPage";
 
 function App() {
 
@@ -42,6 +43,12 @@ function App() {
           <Route path="/farmer/listings" element={
             <FarmerLayout>
               <ListingsPage/>
+            </FarmerLayout>
+          }/*FarmerOrdersPage*/
+          />
+          <Route path="/farmer/orders" element={
+            <FarmerLayout>
+              <FarmerOrdersPage/>
             </FarmerLayout>
           }
           />
