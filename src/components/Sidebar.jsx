@@ -1,6 +1,16 @@
 import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
-import { MdDashboard, MdList, MdNotifications, MdChat, MdSettings, MdLogout, MdMenu, MdClose } from "react-icons/md";
+import {
+    MdDashboard,
+    MdList,
+    MdNotifications,
+    MdChat,
+    MdSettings,
+    MdLogout,
+    MdMenu,
+    MdClose,
+    MdShoppingCart
+} from "react-icons/md";
 
 function Sidebar() {
 
@@ -31,6 +41,12 @@ function Sidebar() {
                         <NavLink to="/farmer/listings" className={({ isActive }) => isActive ? 'active-link' : ''}>
                             <MdList className="nav-icon" />
                             {!collapsed && "My Listings"}
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/farmer/orders" className={({ isActive }) => isActive ? 'active-link' : ''}>
+                            <MdShoppingCart className="nav-icon" />
+                            {!collapsed && "Orders"}
                         </NavLink>
                     </li>
                     <li>
