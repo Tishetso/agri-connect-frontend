@@ -10,7 +10,7 @@
 
 .page-header h2 {
     margin: 0 0 10px 0;
-    color: white;
+    color: red;
     font-size: 28px;
 }
 
@@ -97,7 +97,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Order Header */
+/* Order Header - CRITICAL: Status must be visible */
 .order-header {
     display: flex;
     justify-content: space-between;
@@ -105,6 +105,12 @@
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid #e0e0e0;
+    gap: 15px;
+}
+
+.order-info {
+    flex: 1;
+    min-width: 0; /* Allow text to wrap */
 }
 
 .order-info h4 {
@@ -119,39 +125,48 @@
     font-size: 13px;
 }
 
-/* Status Badge */
+/* Status Badge - CRITICAL: Must always be visible */
 .status-badge {
-    padding: 6px 14px;
+    display: inline-block;
+    padding: 8px 16px;
     border-radius: 20px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .status-badge.pending {
     background: #fff3cd;
     color: #856404;
+    border: 1px solid #ffc107;
 }
 
 .status-badge.confirmed {
     background: #d1ecf1;
     color: #0c5460;
+    border: 1px solid #17a2b8;
 }
 
-.status-badge.in.transit,
 .status-badge.in-transit {
     background: #cce5ff;
     color: #004085;
+    border: 1px solid #007bff;
 }
 
 .status-badge.delivered {
     background: #d4edda;
     color: #155724;
+    border: 1px solid #28a745;
 }
 
 .status-badge.cancelled {
     background: #f8d7da;
     color: #721c24;
+    border: 1px solid #dc3545;
 }
 
 /* Order Details */
@@ -255,8 +270,19 @@
     }
 
     .order-header {
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .order-info {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .status-badge {
+        order: 2;
+        margin-left: auto;
     }
 
     .order-actions {

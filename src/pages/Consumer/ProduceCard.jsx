@@ -66,11 +66,8 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
 
         if (user && user.token){
             //User is logged in - redirect to cart
-            window.location.href = '/consumer/cart';
-        }else{
-            setShowCheckoutModal(true);
+
         }
-        /*useNavigate('/consumer/checkout/')*/
 
     };
 

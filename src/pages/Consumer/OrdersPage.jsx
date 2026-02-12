@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './OrdersPage.css';
 import toast from 'react-hot-toast';
 import { confirmAction } from '../../utils/confirm';
 
 function OrdersPage() {
-    const navigate = useNavigate();
+
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -76,9 +75,9 @@ function OrdersPage() {
         }
     };
 
-    const viewOrderDetails = (orderId) => {
-        // Navigate to order details page (to be implemented)
-        navigate(`/consumer/orders/${orderId}`);
+    // Helper function to get status class name
+    const getStatusClassName = (status) => {
+        return status.toLowerCase().replace(/\s+/g, '-');
     };
 
     // Separate active and completed orders
@@ -146,7 +145,7 @@ function OrdersPage() {
                                             Placed on {new Date(order.createdAt).toLocaleDateString()}
                                         </p>
                                     </div>
-                                    <span className={`status-badge ${order.status.toLowerCase()}`}>
+                                    <span className={`status-badge ${getStatusClassName(order.status)}`}>
                                         {order.status}
                                     </span>
                                 </div>
@@ -175,12 +174,6 @@ function OrdersPage() {
                                 </div>
 
                                 <div className="order-actions">
-                                    <button
-                                        className="btn-view"
-                                        onClick={() => viewOrderDetails(order.id)}
-                                    >
-                                        View Details
-                                    </button>
                                     {order.status === 'Pending' && (
                                         <button
                                             className="btn-cancel"
@@ -208,8 +201,9 @@ function OrdersPage() {
                                         <p className="order-date">
                                             Placed on {new Date(order.createdAt).toLocaleDateString()}
                                         </p>
+
                                     </div>
-                                    <span className={`status-badge ${order.status.toLowerCase()}`}>
+                                    <span className={`status-badge ${getStatusClassName(order.status)}`}>
                                         {order.status}
                                     </span>
                                 </div>
@@ -234,6 +228,7 @@ function OrdersPage() {
                                         <p><strong>Total:</strong> R{order.grandTotal.toFixed(2)}</p>
                                     </div>
 
+                                    {/* Additional status info */}
                                     {order.status === 'Delivered' && order.deliveredAt && (
                                         <p className="delivered-date">
                                             Delivered on {new Date(order.deliveredAt).toLocaleDateString()}
@@ -245,15 +240,6 @@ function OrdersPage() {
                                             Reason: {order.cancellationReason}
                                         </p>
                                     )}
-                                </div>
-
-                                <div className="order-actions">
-                                    <button
-                                        className="btn-view"
-                                        onClick={() => viewOrderDetails(order.id)}
-                                    >
-                                        View Details
-                                    </button>
                                 </div>
                             </div>
                         ))}
