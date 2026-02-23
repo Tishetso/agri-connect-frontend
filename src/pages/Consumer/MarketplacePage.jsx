@@ -9,6 +9,7 @@ function MarketplacePage() {
     const [produceList, setProduceList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [consumerCoords, setConsumerCoords] = useState(null);
 
     // Fetch produce data from backend
     useEffect(() => {
@@ -39,6 +40,26 @@ function MarketplacePage() {
 
         fetchProduce();
     }, []);
+
+    useEffect(() => {
+        const fallbackToProfile = () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user?.latitude && user?.longitude) {
+                setConsumerCoords({ lat: user.latitude, lng: user.longitude });
+            }
+        };
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => setConsumerCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+                fallbackToProfile // browser denied → use profile
+            );
+        } else {
+            fallbackToProfile(); // no geolocation support
+        }
+    }, []);
+
+
 
     // Filter produce based on search and filters
     const filteredProduce = produceList.filter(item => {
@@ -79,6 +100,8 @@ function MarketplacePage() {
             </div>
         );
     }
+
+
 
     return (
         <div className="marketplace-page">
@@ -160,6 +183,9 @@ function MarketplacePage() {
                             location={item.location}
                             status={item.status}
                             imageUrls={item.imageUrls}
+                            farmerLat={item.latitude}      /* {/!* ✅ Add these three *!/}*/
+                            farmerLng={item.longitude}
+                            consumerCoords={consumerCoords}
                         />
                     ))
                 ) : (

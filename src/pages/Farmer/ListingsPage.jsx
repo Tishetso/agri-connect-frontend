@@ -77,6 +77,7 @@ function ListingsPage() {
                     + New Listing
                 </button>
             </div>
+            <p className = "no-change">You cannot delete, rather edit then change that particular item <br/>click the image to zoom</p>
 
             {listings.length === 0 ? (
                 <div className="empty-state">

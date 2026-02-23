@@ -63,7 +63,7 @@ function ListingCard({ data, onDelete, onEdit }) {
 
             <div className="card-actions">
                 <button className="edit-btn" onClick={() => onEdit(data)}>Edit</button>
-                <button className="delete-btn" onClick={() => onDelete(data.id)}>Delete</button>
+                <button className="delete-btn" disabled onClick={() => onDelete(data.id)}>Delete</button>
             </div>
         </div>
     );

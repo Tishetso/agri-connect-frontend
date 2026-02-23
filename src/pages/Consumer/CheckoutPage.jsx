@@ -9,12 +9,26 @@ function CheckoutPage() {
     const [cart, setCart] = useState(null);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [saveInfo, setSaveInfo] = useState(true); //toggle to save delivery address
     const [formData, setFormData] = useState({
         deliveryAddress: '',
         contactNumber: '',
         deliveryNotes: '',
         paymentMethod: 'cash'
     });
+
+    //Load saved delivery info on mount
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user){
+            setFormData(prev => ({
+                ...prev,
+                deliveryAddress: user.savedDeliveryAddress || '',
+                contactNumber: user.savedContactNumber || '',
+                deliveryNotes: user.savedDeliveryNotes || '',
+            }));
+        }
+    }, []);
 
     useEffect(() => {
         fetchCartDetails();
@@ -73,7 +87,8 @@ function CheckoutPage() {
                 deliveryAddress: formData.deliveryAddress,
                 contactNumber: formData.contactNumber,
                 deliveryNotes: formData.deliveryNotes,
-                paymentMethod: formData.paymentMethod
+                paymentMethod: formData.paymentMethod,
+                saveDeliveryInfo: saveInfo //send this to backend
             };
 
             const response = await fetch('http://localhost:8080/api/orders/create', {
@@ -91,6 +106,17 @@ function CheckoutPage() {
             }
 
             const order = await response.json();
+
+            //update localStorage with saved info (for immediate use)
+            if(saveInfo){
+                const updatedUser = {
+                    ...user,
+                    savedDeliveryAddress: formData.deliveryAddress,
+                    savedContactNumber: formData.contactNumber,
+                    savedDeliveryNotes: formData.deliveryNotes
+                };
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+            }
 
             toast.success('Order placed successfully!');
             navigate('/consumer/orders');
@@ -207,7 +233,18 @@ function CheckoutPage() {
                                 onChange={handleChange}
                                 rows="2"
                                 placeholder="Any special instructions for delivery"
+                                required
                             />
+                        </div>
+
+                        <div className = "checkbox-group">
+                            <label className = "checkbox-label">
+                                <input type = "checkbox" checked={saveInfo} onChange={(e) => setSaveInfo(e.target.checked)}/>
+                                <span>💾 Save delivery information for future orders</span>
+                            </label>
+                            <p className="checkbox-hint">
+                                Your delivery address and contact will be pre-filled next time
+                            </p>
                         </div>
 
                         <div className="form-group">

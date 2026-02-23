@@ -2,9 +2,23 @@ import React, {useState} from 'react';
 import GuestCheckoutModal from './GuestCheckoutModal';
 import './ProduceCard.css';
 import toast from 'react-hot-toast';
-import {useNavigate} from "react-router-dom";
 
-function ProduceCard({ crop, quantity, price, seller, location, status, imageUrls, id, farmerName }) {
+// Add this helper function at the top, outside the component
+function getDistanceKm(lat1, lng1, lat2, lng2) {
+    if (!lat1 || !lng1 || !lat2 || !lng2) return null;
+    const R = 6371;
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLng = ((lng2 - lng1) * Math.PI) / 180;
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))).toFixed(1);
+}
+
+function ProduceCard({ crop, quantity, price, seller, location, status, imageUrls, id, farmerName, farmerLat, farmerLng, consumerCoords}) {
+    const distance = getDistanceKm(consumerCoords?.lat, consumerCoords?.lng, farmerLat, farmerLng)
     const [showCheckoutModal, setShowCheckoutModal] = useState(false);
     const [addingToCart, setAddingToCart] = useState(false);
 
@@ -60,15 +74,44 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
     };
 
     /*This ⚠️⚠️⚠️⚠️⚠️⚠️ Be on the look out*/
-    const handleOrderClick = () => {
-        //Checks if user is logged in
+    const handleOrderClick = async () => {
         const user = JSON.parse(localStorage.getItem('user'));
 
-        if (user && user.token){
-            //User is logged in - redirect to cart
+        if (user && user.token) {
+            // User is logged in - add to cart and redirect to checkout
+            setAddingToCart(true);
 
+            try {
+                const response = await fetch('http://localhost:8080/api/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    },
+                    body: JSON.stringify({
+                        listingId: id,
+                        quantity: 1
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add to cart');
+                }
+
+                // Redirect instead to cart
+                window.location.href = '/consumer/cart';
+
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                toast.error('Failed to process order. Please try again.', {
+                    duration: 5000,
+                });
+                setAddingToCart(false);
+            }
+        } else {
+            // User not logged in - show guest checkout modal
+            setShowCheckoutModal(true);
         }
-
     };
 
     const handleCheckoutSuccess = (data) => {
@@ -127,6 +170,7 @@ function ProduceCard({ crop, quantity, price, seller, location, status, imageUrl
                         <div className="location-row">
                             <span className="location-icon">📍</span>
                             <span className="location-name">{location}</span>
+                            {distance && <span className = "distance-badge">{distance} km away</span>}
                         </div>
                     )}
                 </div>

@@ -180,6 +180,26 @@
     background: #229954;
 }
 
+/* ✅ Distance Badge Styles */
+.distance-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 8px;
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.distance-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(52, 152, 219, 0.4);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .produce-image-container {
@@ -192,5 +212,16 @@
 
     .value.price {
         font-size: 16px;
+    }
+
+    /* ✅ Make distance badge smaller on mobile */
+    .distance-badge {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        margin-left: 4px;
+    }
+
+    .location-row {
+        flex-wrap: wrap;
     }
 }

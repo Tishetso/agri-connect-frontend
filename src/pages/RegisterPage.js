@@ -25,6 +25,7 @@ function RegisterPage() {
         password: '',
         confirmPassword: '',
         idNumber: '',
+        region: '',
         general: ''
     });
 
@@ -98,11 +99,30 @@ function RegisterPage() {
             return;
         }
 
+        //Validate store address and location
+        if (!formData.region || !formData.region.trim()){
+            setErrors(prev => ({ ...prev, region: 'Store address is required'}));
+            return;
+        }
+
+        if (!formData.coordinates.lat || !formData.coordinates.lng) {
+            setErrors(prev => ({ ...prev, general: 'Please use the "Use My Location" button to confirm your location' }));
+            return;
+        }
+
         try {
+            const payload = {
+                ...formData,
+                latitude: formData.coordinates.lat,
+                longitude: formData.coordinates.lng,
+            };
+            delete payload.coordinates; // remove the nested object
+
+
             const res = await fetch('http://localhost:8080/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload) //sending payload not formData
             });
 
             if (res.ok) {
@@ -165,8 +185,10 @@ function RegisterPage() {
                     <option value="admin">Admin</option>
                 </select>
 
-                <label>Region</label>
-                <input type="text" name="region" value={formData.region} onChange={handleChange} placeholder="e.g. Vhembe, Limpopo" />
+                {/* store address*/}
+                <label>Store Address</label>
+                <textarea className = "txt-area" name="region" value={formData.region} onChange={handleChange} placeholder="e.g. Soshanguve East XX ext 4 8889" rows={2}/>
+                {errors.region && <span className="error">{errors.region}</span>}
 
                 <button type="button" onClick={getLocation}>📍 Use My Location</button>
 
