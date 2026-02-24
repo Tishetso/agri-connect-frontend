@@ -186,18 +186,20 @@ function RegisterPage() {
                 </select>
 
                 {/* store address*/}
-                <label>Store Address</label>
+                <label>Address</label>
                 <textarea className = "txt-area" name="region" value={formData.region} onChange={handleChange} placeholder="e.g. Soshanguve East XX ext 4 8889" rows={2}/>
                 {errors.region && <span className="error">{errors.region}</span>}
 
                 <button type="button" onClick={getLocation}>📍 Use My Location</button>
 
-                {formData.coordinates.lat && (
-                    <p>Location captured: {formData.coordinates.lat}, {formData.coordinates.lng}</p>
+                {formData.coordinates.lat ? (
+                    <p>Location captured</p>
+                ) : (
+                    errors.general && <span className = "error general">{errors.general}</span>
                 )}
 
-                {errors.general && <span className="error general">{errors.general}</span>}
-
+                {/*//They finally found the magic*/}
+                
                 <button type="submit" className="submit-btn">Register</button>
             </form>
         </div>

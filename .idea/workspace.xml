@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1741c0e5-c9ac-4a18-afbf-a0f5be361cf1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/Admin/AdminDashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Driver/DriverDashboard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/Checkout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/Checkout.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/CheckoutPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/CheckoutPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/MarketplacePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/MarketplacePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ProduceCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ProduceCard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ProduceCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ProduceCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Farmer/ListingCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Farmer/ListingCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Farmer/ListingsPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Farmer/ListingsPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Farmer/ListingsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Farmer/ListingsPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/RegisterPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/RegisterPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Admin/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Admin/AdminDashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/RegisterPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/RegisterPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +55,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tishe\agrilink-frontend\src\pages" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -85,7 +84,8 @@
       <workItem from="1770886576797" duration="10898000" />
       <workItem from="1771337664578" duration="976000" />
       <workItem from="1771837136318" duration="1226000" />
-      <workItem from="1771838445703" duration="17654000" />
+      <workItem from="1771838445703" duration="18565000" />
+      <workItem from="1771914749809" duration="6707000" />
     </task>
     <servers />
   </component>
