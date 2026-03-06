@@ -1,12 +1,22 @@
 .login-container {
-    max-width: 400px;
+  /*  max-width: 400px;
     margin: 200px auto;
     padding: 40px;
     background-color: #f9fefb;
     border-radius: 10px;
-    /*border: 1px solid grey;*/
+    !*border: 1px solid grey;*!
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', sans-serif;*/
+    width:50%;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: rgba(249, 254, 251, 0.92);   /* higher opacity so form is clearly readable */
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    backdrop-filter: blur(6px);     /* modern glass effect — supported in most browsers */
+    position: relative;
+    z-index: 1;
 }
 
 .login-container h2 {
@@ -51,4 +61,20 @@ form input {
 
 
 
+}
+
+.login-page-wrapper{
+    min-height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+
+    /*Full page background*/
+    background-image: url('../../public/LoginBackground.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;/* //parallax-like effect on scroll*/
 }

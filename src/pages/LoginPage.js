@@ -69,6 +69,7 @@ function LoginPage() {
     };
 
     return (
+        <div className = "login-page-wrapper">
         <div className="login-container">
             <h2>Login to AgriConnect</h2>
             <form onSubmit={handleSubmit}>
@@ -87,6 +88,7 @@ function LoginPage() {
             <p className="forgotPassword-link">
                 Forgot Password? <a href="/forgot-password">Reset it here</a>
             </p>
+        </div>
         </div>
     );
 }

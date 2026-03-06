@@ -1,0 +1,289 @@
+.driver-registration {
+    padding: 24px;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.registration-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Header */
+.registration-header {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+}
+
+.registration-header h1 {
+    margin: 0 0 12px 0;
+    color: #2c3e50;
+    font-size: 32px;
+}
+
+.registration-header p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 16px;
+}
+
+/* Benefits Section */
+.benefits-section {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+}
+
+.benefits-section h2 {
+    margin: 0 0 24px 0;
+    color: #2c3e50;
+    font-size: 24px;
+    text-align: center;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.benefit-card {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.benefit-card:hover {
+    transform: translateY(-4px);
+}
+
+.benefit-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.benefit-card h3 {
+    margin: 0 0 8px 0;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+/* Form Section */
+.form-section {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+}
+
+.form-section h2 {
+    margin: 0 0 24px 0;
+    color: #2c3e50;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+/* Terms Section */
+.terms-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.terms-section h3 {
+    margin: 0 0 16px 0;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+.terms-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.terms-section li {
+    padding: 8px 0;
+    color: #34495e;
+    font-size: 14px;
+}
+
+/* Info Box */
+.info-box {
+    background: #ebf5fb;
+    border-left: 4px solid #3498db;
+    padding: 16px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+.info-box p {
+    margin: 0;
+    color: #1f618d;
+    font-size: 14px;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn-cancel,
+.btn-submit {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel {
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+.btn-cancel:hover {
+    background: #bdc3c7;
+}
+
+.btn-submit {
+    background: #3498db;
+    color: white;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: #2980b9;
+}
+
+.btn-submit:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* FAQ Section */
+.faq-section {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.faq-section h2 {
+    margin: 0 0 24px 0;
+    color: #2c3e50;
+    font-size: 24px;
+}
+
+.faq-item {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.faq-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.faq-item h3 {
+    margin: 0 0 12px 0;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+.faq-item p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .driver-registration {
+        padding: 16px;
+    }
+
+    .registration-header {
+        padding: 24px 20px;
+    }
+
+    .registration-header h1 {
+        font-size: 24px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-section,
+    .benefits-section,
+    .faq-section {
+        padding: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-submit {
+        width: 100%;
+    }
+}

@@ -142,6 +142,7 @@ function RegisterPage() {
     };
 
     return (
+        <div className= "register-page-wrapper">
         <div className="register-container">
             <h2>Create Your Account</h2>
             <form onSubmit={handleSubmit}>
@@ -202,6 +203,7 @@ function RegisterPage() {
                 
                 <button type="submit" className="submit-btn">Register</button>
             </form>
+        </div>
         </div>
     );
 }

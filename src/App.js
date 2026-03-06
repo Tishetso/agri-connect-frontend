@@ -23,6 +23,9 @@ import CartPage from "./pages/Consumer/Cart";
 import {Toaster} from 'react-hot-toast';
 import CheckoutPage from "./pages/Consumer/CheckoutPage";
 import FarmerOrdersPage from "./pages/Farmer/FarmerOrdersPage";
+import DriverRegistration from "./pages/Driver/DriverRegistration";
+import DriverDashboard from "./pages/Driver/DriverDashboard";
+import DriverLandingPage from "./pages/Driver/DriverLandingPage";
 
 function App() {
 
@@ -123,6 +126,12 @@ function App() {
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminPanel />} />
 
+          {/*Driver routes*/}
+          <Route path="/driver/register" element={<DriverRegistration/>}/>
+          <Route path="/driver/dashboard" element={<DriverDashboard/>}/>
+          <Route path ="/driver/landing" element={<DriverLandingPage/>}/>
+
+
           {/* Auth Routes */}
           <Route path="/logout" element={<LogoutHandler />} />
           <Route path="/" element={<WelcomePage />} />
@@ -130,6 +139,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+
         </Routes>
       </Router>
 
