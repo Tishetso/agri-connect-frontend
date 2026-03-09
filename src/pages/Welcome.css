@@ -163,6 +163,7 @@
 
 /* Hero Stats */
 .hero-stats {
+    color:black;
     display: flex;
     justify-content: center;
     gap: 60px;
@@ -173,16 +174,18 @@
     text-align: center;
 }
 
-.stat-number {
+.stat-numberHero {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #2e7d32;
+/*    color: #2e7d32;*/
+    color:#1b5e20;
     margin-bottom: 8px;
 }
 
-.stat-label {
+.stat-labelHero {
+    color: #1b5e20;
     font-size: 1rem;
-    color: #666;
+   /* color: #666;*/
 }
 
 /* ============================================

@@ -6,7 +6,7 @@ function BenefitsSection() {
         {
             icon: '💰',
             title: 'Great Earnings',
-            description: 'Earn R10-R50 per delivery with guaranteed weekly payouts directly to your bank account.'
+            description: 'Earn R10-R15 per delivery with guaranteed instant payouts directly to your bank account.'
         },
         {
             icon: '⏰',
@@ -23,11 +23,11 @@ function BenefitsSection() {
             title: 'Make an Impact',
             description: 'Support local farmers and bring fresh, healthy produce to your community.'
         },
-        {
+       /* {
             icon: '🛡️',
             title: 'Insurance Covered',
             description: 'Delivery insurance provided by AgriConnect for all your trips.'
-        },
+        },*/
         {
             icon: '📞',
             title: '24/7 Support',

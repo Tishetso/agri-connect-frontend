@@ -41,7 +41,7 @@ function WelcomePage() {
                     </p>
                     <div className="hero-buttons">
                         <button onClick={() => navigate('/register')} className="cta-btn primary">
-                            Get Started
+                            Get Started as Farmer/Consumer
                         </button>
                         <button onClick={() => navigate('/marketplace')} className="cta-btn secondary">
                             Browse Marketplace
@@ -51,16 +51,16 @@ function WelcomePage() {
                     {/* Quick Stats */}
                     <div className="hero-stats">
                         <div className="stat">
-                            <div className="stat-number">500+</div>
-                            <div className="stat-label">Local Farmers</div>
+                            <div className="stat-numberHero">500+</div>
+                            <div className="stat-labelHero">Local Farmers</div>
                         </div>
                         <div className="stat">
-                            <div className="stat-number">2000+</div>
-                            <div className="stat-label">Happy Consumers</div>
+                            <div className="stat-numberHero">2000+</div>
+                            <div className="stat-labelHero">Happy Consumers</div>
                         </div>
                         <div className="stat">
-                            <div className="stat-number">100+</div>
-                            <div className="stat-label">Active Drivers</div>
+                            <div className="stat-numberHero">100+</div>
+                            <div className="stat-labelHero">Active Drivers</div>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@ function WelcomePage() {
                             <ol className="how-steps">
                                 <li>Browse fresh produce from local farmers</li>
                                 <li>Add items to your cart and checkout</li>
-                                <li>Choose delivery time and location</li>
+                                <li>Enter delivery desired destination</li>
                                 <li>Our driver delivers fresh produce to your door</li>
                                 <li>Enjoy farm-fresh food at home</li>
                             </ol>
@@ -187,7 +187,7 @@ function WelcomePage() {
                                 <li>Prepare orders for pickup</li>
                                 <li>Our drivers pick up and deliver to customers</li>
                             </ol>
-                            <button onClick={() => navigate('/register')} className="how-btn">
+                            <button onClick={() => navigate('/login')} className="how-btn">
                                 Sell Your Produce
                             </button>
                         </div>
@@ -315,7 +315,7 @@ function WelcomePage() {
                     <p>
                         AgriConnect was built to solve a critical problem: farmers have great
                         produce but struggle to reach customers, and consumers want fresh local
-                        food but can't easily access it.
+                        food but can't easily access it from the comfort of their home.
                     </p>
                     <p>
                         We created a platform that brings them together with a reliable delivery

@@ -2,54 +2,104 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DriverRegistration.css';
 import toast from 'react-hot-toast';
+import {isValidSouthAfricanID} from "../../utils/Validation";
 
 function DriverRegistration() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
     const [formData, setFormData] = useState({
-        vehicleType: 'bike',
+        name: '',
+        surname: '',
+        idNumber: '',
+        email: '',
+        phoneNumber: '',     // ← only one phone field
+        address: '',
+        vehicleType: 'bicycle',
         licenseNumber: '',
-        vehicleRegistration: '',
-        phoneNumber: ''
+        vehicleRegistration: ''
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData(prev => {
+            const newData = { ...prev, [name]: value };
+
+            // Clear license & reg when switching to bicycle
+            if (name === 'vehicleType' && value === 'bicycle') {
+                newData.licenseNumber = '';
+                newData.vehicleRegistration = '';
+            }
+
+            return newData;
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
+        if (!isValidSouthAfricanID(formData.idNumber)){
+            toast.error('Please enter a valid South African ID Number');
+            return;
+        }
+
         try {
             const user = JSON.parse(localStorage.getItem('user'));
+            if (!user || !user.token) {
+                toast.error('Please login first');
+                navigate('/login');
+                return;
+            }
+
+            const submissionData = {
+                name: formData.name,
+                surname: formData.surname,
+                idNumber: formData.idNumber,
+                email: formData.email,
+                phoneNumber: formData.phoneNumber,
+                address: formData.address,
+                vehicleType: formData.vehicleType,
+                licenseNumber: formData.vehicleType === 'bicycle' ? 'N/A' : formData.licenseNumber,
+                vehicleRegistration: formData.vehicleType === 'bicycle' ? 'BICYCLE' : formData.vehicleRegistration,
+            };
+
+            console.log('Submitting driver data:', submissionData);
 
             const response = await fetch('http://localhost:8080/api/driver/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${user.token}`,
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(submissionData),
             });
+
+            const responseText = await response.text();
+            console.log('Response:', response.status, responseText);
 
             if (response.ok) {
                 toast.success('Registration submitted! Awaiting admin verification.');
-                setTimeout(() => {
-                    navigate('/driver/dashboard');
-                }, 2000);
+                setTimeout(() => navigate('/driver/dashboard'), 2000);
             } else {
-                const error = await response.json();
-                toast.error(error.error || 'Registration failed');
+                let errorMsg = 'Registration failed';
+                try {
+                    const err = JSON.parse(responseText);
+                    errorMsg = err.error || err.message || errorMsg;
+                } catch {
+                    errorMsg = responseText || response.statusText || errorMsg;
+                }
+                toast.error(errorMsg);
             }
-        } catch (error) {
-            console.error('Error registering driver:', error);
-            toast.error('Failed to submit registration. Please try again.');
+        } catch (err) {
+            console.error('Registration error:', err);
+            toast.error('Failed to submit. Please try again.');
         } finally {
             setLoading(false);
         }
     };
+
+    const isMotorized = ['motorcycle', 'car', 'van', 'truck'].includes(formData.vehicleType);
 
     return (
         <div className="driver-registration">
@@ -59,47 +109,91 @@ function DriverRegistration() {
                     <p>Join AgriConnect and start earning by delivering fresh produce</p>
                 </header>
 
-                {/* Benefits Section */}
-                <section className="benefits-section">
-                    <h2>Why Drive with AgriConnect?</h2>
-                    <div className="benefits-grid">
-                        <div className="benefit-card">
-                            <span className="benefit-icon">💰</span>
-                            <h3>Earn More</h3>
-                            <p>Competitive rates with weekly payouts</p>
-                        </div>
-                        <div className="benefit-card">
-                            <span className="benefit-icon">⏰</span>
-                            <h3>Flexible Hours</h3>
-                            <p>Work when you want, control your schedule</p>
-                        </div>
-                        <div className="benefit-card">
-                            <span className="benefit-icon">📱</span>
-                            <h3>Easy to Use</h3>
-                            <p>Simple app, instant order notifications</p>
-                        </div>
-                        <div className="benefit-card">
-                            <span className="benefit-icon">🌱</span>
-                            <h3>Make Impact</h3>
-                            <p>Support local farmers and communities</p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Registration Form */}
-                <section className="form-section">
-                    <h2>Driver Information</h2>
+                <div className="application-form">
                     <form onSubmit={handleSubmit}>
+                        <h2>Driver Application</h2>
+
+                        {/* Personal Details */}
                         <div className="form-group">
-                            <label htmlFor="vehicleType">Vehicle Type *</label>
+                            <label>First Name *</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Surname *</label>
+                            <input
+                                type="text"
+                                name="surname"
+                                value={formData.surname}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>ID Number *</label>
+                            <input
+                                type="text"
+                                name="idNumber"
+                                value={formData.idNumber}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Email Address *</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Phone Number (for contact & deliveries) *</label>
+                            <input
+                                type="tel"
+                                name="phoneNumber"
+                                value={formData.phoneNumber}
+                                onChange={handleChange}
+                                required
+                                placeholder="+27 123 456 789"
+                            />
+                            <small>We'll use this number for delivery coordination and updates</small>
+                        </div>
+
+                        <div className="form-group">
+                            <label>Physical Address *</label>
+                            <input
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                required
+                                placeholder="e.g. Soshanguve West LK Ext 11 Dumileko 2025"
+                            />
+                        </div>
+
+                        {/* Vehicle Section */}
+                        <div className="form-group">
+                            <label>Vehicle Type *</label>
                             <select
-                                id="vehicleType"
                                 name="vehicleType"
                                 value={formData.vehicleType}
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="bike">Bike/Motorcycle</option>
+                                <option value="bicycle">Bicycle</option>
+                                <option value="motorcycle">Motorcycle</option>
                                 <option value="car">Car</option>
                                 <option value="van">Van</option>
                                 <option value="truck">Truck</option>
@@ -107,65 +201,62 @@ function DriverRegistration() {
                             <small>Select the vehicle you'll use for deliveries</small>
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="licenseNumber">Driver's License Number *</label>
-                            <input
-                                type="text"
-                                id="licenseNumber"
-                                name="licenseNumber"
-                                value={formData.licenseNumber}
-                                onChange={handleChange}
-                                required
-                                placeholder="e.g., 12345678"
-                            />
-                            <small>Your valid driver's license number</small>
-                        </div>
+                        {isMotorized && (
+                            <>
+                                <div className="form-group">
+                                    <label>Driver's License Number *</label>
+                                    <input
+                                        type="text"
+                                        name="licenseNumber"
+                                        value={formData.licenseNumber}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="e.g. 12345678"
+                                    />
+                                </div>
 
-                        <div className="form-group">
-                            <label htmlFor="vehicleRegistration">Vehicle Registration Number *</label>
-                            <input
-                                type="text"
-                                id="vehicleRegistration"
-                                name="vehicleRegistration"
-                                value={formData.vehicleRegistration}
-                                onChange={handleChange}
-                                required
-                                placeholder="e.g., ABC 123 GP"
-                            />
-                            <small>Your vehicle's registration/license plate number</small>
-                        </div>
+                                <div className="form-group">
+                                    <label>Vehicle Registration Number *</label>
+                                    <input
+                                        type="text"
+                                        name="vehicleRegistration"
+                                        value={formData.vehicleRegistration}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="e.g. ABC 123 GP"
+                                    />
+                                </div>
+                            </>
+                        )}
 
-                        <div className="form-group">
-                            <label htmlFor="phoneNumber">Contact Phone Number *</label>
-                            <input
-                                type="tel"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                value={formData.phoneNumber}
-                                onChange={handleChange}
-                                required
-                                placeholder="+27 123 456 789"
-                            />
-                            <small>For delivery coordination and support</small>
-                        </div>
-
-                        {/* Terms and Conditions */}
+                        {/* Requirements */}
                         <div className="terms-section">
-                            <h3>Requirements</h3>
+                            <h3>Requirements for {formData.vehicleType === 'bicycle' ? 'Bicycle' : 'Motorized'} Drivers</h3>
                             <ul>
-                                <li>✅ Valid driver's license</li>
-                                <li>✅ Registered vehicle with valid insurance</li>
-                                <li>✅ Smartphone with internet access</li>
-                                <li>✅ Clean driving record</li>
-                                <li>✅ Age 18 or older</li>
+                                {formData.vehicleType === 'bicycle' ? (
+                                    <>
+                                        <li>✅ Valid ID Number</li>
+                                        <li>✅ Reliable bicycle in good condition</li>
+                                        <li>✅ Smartphone with internet access</li>
+                                        <li>✅ Ability to carry up to 15kg</li>
+                                        <li>✅ Helmet (for safety)</li>
+                                        <li>✅ Selfie</li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li>✅ Valid driver's license</li>
+                                        <li>✅ Registered vehicle with valid insurance</li>
+                                        <li>✅ Smartphone with internet access</li>
+                                        <li>✅ Clean driving record</li>
+                                        <li>✅ Age 18 or older</li>
+                                        <li>✅ Selfie</li>
+                                    </>
+                                )}
                             </ul>
                         </div>
 
                         <div className="info-box">
-                            <p>
-                                ℹ️ Your application will be reviewed by our team.
-                                We'll verify your documents and notify you within 2-3 business days.
-                            </p>
+                            <p>ℹ️ Your application will be reviewed by our team. We'll verify your documents and notify you within 2-3 business days.</p>
                         </div>
 
                         <div className="form-actions">
@@ -173,53 +264,21 @@ function DriverRegistration() {
                                 type="button"
                                 className="btn-cancel"
                                 onClick={() => navigate(-1)}
+                                disabled={loading}
                             >
                                 Cancel
                             </button>
+
                             <button
                                 type="submit"
                                 className="btn-submit"
-                                disabled={loading}
+                               /* disabled={loading}*/
                             >
                                 {loading ? 'Submitting...' : 'Submit Application'}
                             </button>
                         </div>
                     </form>
-                </section>
-
-                {/* FAQ Section */}
-                <section className="faq-section">
-                    <h2>Frequently Asked Questions</h2>
-
-                    <div className="faq-item">
-                        <h3>How much can I earn?</h3>
-                        <p>
-                            Drivers typically earn R10-R50 per delivery depending on distance.
-                            Most drivers complete 5-15 deliveries per day.
-                        </p>
-                    </div>
-
-                    <div className="faq-item">
-                        <h3>When do I get paid?</h3>
-                        <p>
-                            Earnings are processed weekly and deposited directly to your bank account every Monday.
-                        </p>
-                    </div>
-
-                    <div className="faq-item">
-                        <h3>What areas can I deliver to?</h3>
-                        <p>
-                            You can deliver anywhere within your region. The app will show you available orders in your area.
-                        </p>
-                    </div>
-
-                    <div className="faq-item">
-                        <h3>Do I need insurance?</h3>
-                        <p>
-                            Yes, you must have valid vehicle insurance. We also provide additional delivery insurance coverage.
-                        </p>
-                    </div>
-                </section>
+                </div>
             </div>
         </div>
     );

@@ -3,12 +3,13 @@ import './RequirementsSection.css';
 
 function RequirementsSection() {
     const requirements = [
-        'Valid driver\'s license',
+        'Valid ID Number',
         'Vehicle (bike, car, van, or truck)',
-        'Valid vehicle registration & insurance',
+        'Valid vehicle registration',
         'Smartphone with internet',
-        'Must be 18 years or older',
-        'Clean driving record'
+        'Proof of ID certified copy',
+        'Clean driving record',
+        'Selfie'
     ];
 
     return (

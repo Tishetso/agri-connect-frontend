@@ -21,25 +21,7 @@ function DriverLandingPage() {
         city: ''
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
 
-    const handleQuickApply = async (e) => {
-        e.preventDefault();
-
-        const user = JSON.parse(localStorage.getItem('user'));
-
-        if (!user) {
-            localStorage.setItem('driverApplication', JSON.stringify(formData));
-            toast.success('Please create an account first!');
-            navigate('/register');
-            return;
-        }
-
-        navigate('/driver/register');
-    };
 
     return (
         <div className="driver-landing">
@@ -64,17 +46,17 @@ function DriverLandingPage() {
                             <span>🎉 Now Hiring Drivers in Your Area</span>
                         </div>
                         <h1 className="hero-title">
-                            Earn <span className="highlight">R500+</span> Per Day
+                            Earn <span className="highlight">Per Day</span>
                             <br />Delivering Fresh Produce
                         </h1>
-                        <p className="hero-subtitle">
+                        <p className="hero-subtitle2">
                             Join AgriConnect and be your own boss. Flexible hours, weekly payouts,
                             and make a real impact supporting local farmers.
                         </p>
 
                         <div className="hero-stats">
                             <div className="stat-item">
-                                <div className="stat-number">R10-R50</div>
+                                <div className="stat-number">R10-R15</div>
                                 <div className="stat-label">Per Delivery</div>
                             </div>
                             <div className="stat-item">
@@ -82,12 +64,12 @@ function DriverLandingPage() {
                                 <div className="stat-label">Deliveries/Day</div>
                             </div>
                             <div className="stat-item">
-                                <div className="stat-number">Weekly</div>
+                                <div className="stat-number">Instant</div>
                                 <div className="stat-label">Payouts</div>
                             </div>
                         </div>
 
-                        <a href="#apply" className="btn-hero-cta">
+                        <a href="/driver/register" className="btn-hero-cta">
                             Apply Now - It's Free! →
                         </a>
 
@@ -143,86 +125,12 @@ function DriverLandingPage() {
                                 </div>
                                 <div className="info-point">
                                     <span className="point-icon">💳</span>
-                                    <span>No signup or monthly fees</span>
-                                </div>
-                                <div className="info-point">
-                                    <span className="point-icon">🎁</span>
-                                    <span>R100 bonus after first 5 deliveries</span>
+                                    <span>Signup and No monthly fees</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="application-form">
-                            <form onSubmit={handleQuickApply}>
-                                <h3>Apply Now</h3>
 
-                                <div className="form-group">
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Full Name *"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="form-group">
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Email Address *"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="form-group">
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        placeholder="Phone Number *"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="form-group">
-                                    <select
-                                        name="vehicleType"
-                                        value={formData.vehicleType}
-                                        onChange={handleChange}
-                                        required
-                                    >
-                                        <option value="bike">Bike/Motorcycle</option>
-                                        <option value="car">Car</option>
-                                        <option value="van">Van</option>
-                                        <option value="truck">Truck</option>
-                                    </select>
-                                </div>
-
-                                <div className="form-group">
-                                    <input
-                                        type="text"
-                                        name="city"
-                                        placeholder="City *"
-                                        value={formData.city}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <button type="submit" className="btn-submit" disabled={loading}>
-                                    {loading ? 'Processing...' : 'Get Started →'}
-                                </button>
-
-                                <p className="form-note">
-                                    By applying, you agree to our Terms of Service and Privacy Policy
-                                </p>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -235,7 +143,7 @@ function DriverLandingPage() {
                     <div className="final-cta-content">
                         <h2>Start Your Journey Today</h2>
                         <p>Join thousands of drivers earning money on their own terms</p>
-                        <a href="#apply" className="btn-final-cta">Apply Now - It's Free!</a>
+                        <a href="/driver/register" className="btn-final-cta">Apply Now - It's Free!</a>
                     </div>
                 </div>
             </section>

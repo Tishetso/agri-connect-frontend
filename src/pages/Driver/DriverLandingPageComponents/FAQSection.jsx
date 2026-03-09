@@ -6,12 +6,12 @@ function FAQSection() {
         {
             icon: '💰',
             question: 'How much can I earn?',
-            answer: 'Drivers typically earn R10-R50 per delivery depending on distance. Most active drivers complete 5-15 deliveries per day, earning R300-R750 daily.'
+            answer: 'Drivers typically earn R10-R15 per delivery depending on distance. Most active drivers complete 5-15 deliveries per day, earning R200+ daily.'
         },
         {
             icon: '📅',
             question: 'When do I get paid?',
-            answer: 'Earnings are processed weekly and deposited directly to your bank account every Monday for the previous week\'s deliveries.'
+            answer: 'Earnings are processed Instantly and deposited directly to your bank account.'
         },
         {
             icon: '⏰',
@@ -27,12 +27,12 @@ function FAQSection() {
             icon: '📍',
             question: 'Where can I deliver?',
             answer: 'You can deliver anywhere within your region. The app shows available orders in your area, and you choose which ones to accept.'
-        },
+        }/*,
         {
             icon: '🛡️',
             question: 'Do I need insurance?',
             answer: 'Yes, you must have valid vehicle insurance. We also provide additional delivery insurance coverage for all trips at no cost to you.'
-        }
+        }*/
     ];
 
     return (

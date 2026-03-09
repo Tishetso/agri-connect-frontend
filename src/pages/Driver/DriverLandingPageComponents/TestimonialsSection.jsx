@@ -5,7 +5,7 @@ function TestimonialsSection() {
     const testimonials = [
         {
             rating: 5,
-            text: 'I make R600 a day working just 6 hours. The app is super easy to use and the support team is always helpful. Best side hustle ever!',
+            text: 'The app is super easy to use and the support team is always helpful. Best side hustle ever!',
             author: {
                 name: 'Thabo Maputle',
                 meta: 'Driver since Jan 2024 · Johannesburg',
@@ -23,7 +23,7 @@ function TestimonialsSection() {
         },
         {
             rating: 5,
-            text: 'After losing my job, AgriConnect gave me a way to provide for my family. Now I earn more than my old salary with better work-life balance.',
+            text: 'AgriConnect gave me a way to provide for my family, with better work-life balance.',
             author: {
                 name: 'Sipho Ndlovu',
                 meta: 'Driver since Nov 2023 · Durban',
