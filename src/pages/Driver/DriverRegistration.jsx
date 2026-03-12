@@ -17,8 +17,13 @@ function DriverRegistration() {
         address: '',
         vehicleType: 'bicycle',
         licenseNumber: '',
-        vehicleRegistration: ''
+        vehicleRegistration: '',
+        coordinates: { lat: '', lng: ''}, //added coordinates
+        password: '',
+        confirmPassword: '',
     });
+
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,7 +40,34 @@ function DriverRegistration() {
         });
     };
 
+    if (formData.password !== formData.confirmPassword) {
+        toast.error('Passwords do not match');
+        setLoading(false);
+        return;
+    }
+    if (formData.password.length < 8) {
+        toast.error('Password must be at least 8 characters');
+        setLoading(false);
+        return;
+    }
+
+    // ✅ Get current location
+    const getLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                setFormData(prev => ({
+                    ...prev,
+                    coordinates: { lat: pos.coords.latitude, lng: pos.coords.longitude }
+                }));
+                toast.success('Location captured! ✅');
+            },
+            (error) => toast.error('Location access denied or unavailable.'),
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    };
+
     const handleSubmit = async (e) => {
+        setErrors(prev => ({}));
         e.preventDefault();
         setLoading(true);
 
@@ -44,15 +76,23 @@ function DriverRegistration() {
             return;
         }
 
+        // ✅ Validate coordinates
+        if (!formData.coordinates.lat || !formData.coordinates.lng) {
+            setErrors(prev => ({ ...prev, general: 'Please use the "Use My Location" button to confirm your location' }));
+            toast.error('Please capture your location first');
+            setLoading(false);
+            return;
+        }
+
         try {
-            const user = JSON.parse(localStorage.getItem('user'));
+          /*  const user = JSON.parse(localStorage.getItem('user'));
             if (!user || !user.token) {
                 toast.error('Please login first');
                 navigate('/login');
                 return;
-            }
+            }*/
 
-            const submissionData = {
+            const payload = {
                 name: formData.name,
                 surname: formData.surname,
                 idNumber: formData.idNumber,
@@ -62,17 +102,19 @@ function DriverRegistration() {
                 vehicleType: formData.vehicleType,
                 licenseNumber: formData.vehicleType === 'bicycle' ? 'N/A' : formData.licenseNumber,
                 vehicleRegistration: formData.vehicleType === 'bicycle' ? 'BICYCLE' : formData.vehicleRegistration,
+                latitude: formData.coordinates.lat, //send flat
+                longitude: formData.coordinates.lng, //send flat
+                password: formData.password
             };
 
-            console.log('Submitting driver data:', submissionData);
+            console.log('Full payload:', payload);
 
             const response = await fetch('http://localhost:8080/api/driver/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`,
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(submissionData),
+                body: JSON.stringify(payload),
             });
 
             const responseText = await response.text();
@@ -159,6 +201,29 @@ function DriverRegistration() {
                         </div>
 
                         <div className="form-group">
+                            <label>Password *</label>
+                            <input
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                placeholder="Minimum 8 characters"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Confirm Password *</label>
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
                             <label>Phone Number (for contact & deliveries) *</label>
                             <input
                                 type="tel"
@@ -182,6 +247,28 @@ function DriverRegistration() {
                                 placeholder="e.g. Soshanguve West LK Ext 11 Dumileko 2025"
                             />
                         </div>
+
+                        <div className="form-group">
+                            <label>Location Coordinates *</label>
+                            <button
+                                type="button"
+                                onClick={getLocation}
+                                className="location-btn"
+                                disabled={loading || formData.coordinates.lat}
+                            >
+                                📍 Use My Location
+                            </button>
+                            {formData.coordinates.lat ? (
+                                <p className="success">Location captured ✅<br/>
+                                   {/* Lat: {formData.coordinates.lat}, Lng: {formData.coordinates.lng}*/}
+                                </p>
+                            ) : (
+                                errors.general && <span className="error general">{errors.general}</span>
+                            )}
+                            <small>Your delivery area will be based on this location</small>
+                        </div>
+
+
 
                         {/* Vehicle Section */}
                         <div className="form-group">
@@ -272,7 +359,7 @@ function DriverRegistration() {
                             <button
                                 type="submit"
                                 className="btn-submit"
-                               /* disabled={loading}*/
+                                disabled={loading}
                             >
                                 {loading ? 'Submitting...' : 'Submit Application'}
                             </button>

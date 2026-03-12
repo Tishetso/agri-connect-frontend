@@ -194,7 +194,7 @@ function RegisterPage() {
                 <button type="button" onClick={getLocation}>📍 Use My Location</button>
 
                 {formData.coordinates.lat ? (
-                    <p>Location captured</p>
+                    <p>Location captured ✅</p>
                 ) : (
                     errors.general && <span className = "error general">{errors.general}</span>
                 )}

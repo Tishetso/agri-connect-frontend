@@ -6,7 +6,7 @@ function FAQSection() {
         {
             icon: '💰',
             question: 'How much can I earn?',
-            answer: 'Drivers typically earn R10-R15 per delivery depending on distance. Most active drivers complete 5-15 deliveries per day, earning R200+ daily.'
+            answer: 'Drivers typically earn R10-R15 per delivery depending on distance. Most active drivers complete 5-15 deliveries per day, earning daily.'
         },
         {
             icon: '📅',

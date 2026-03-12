@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1741c0e5-c9ac-4a18-afbf-a0f5be361cf1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/utils/Validation.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/BenefitsSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/BenefitsSection.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/FAQSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/FAQSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/RequirementsSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/RequirementsSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/TestimonialsSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverLandingPageComponents/TestimonialsSection.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverRegistration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverRegistration.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Welcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Welcome.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/WelcomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/WelcomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/RegisterPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/RegisterPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +97,10 @@
       <workItem from="1772908466582" duration="4023000" />
       <workItem from="1773041762788" duration="1029000" />
       <workItem from="1773058036471" duration="11915000" />
-      <workItem from="1773087074455" duration="2536000" />
+      <workItem from="1773087074455" duration="3811000" />
+      <workItem from="1773140277846" duration="973000" />
+      <workItem from="1773234283260" duration="2179000" />
+      <workItem from="1773305485105" duration="11660000" />
     </task>
     <servers />
   </component>
