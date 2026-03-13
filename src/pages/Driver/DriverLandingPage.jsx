@@ -32,7 +32,7 @@ function DriverLandingPage() {
                         <h2>🌾 AgriConnect</h2>
                     </div>
                     <div className="header-actions">
-                        <a href="/login" className="link-login">Already a driver? Sign in</a>
+                        <a href="/driver/login" className="link-login">Already a driver? Sign in</a>
                         <a href="/" className="link-home">← Back to Home</a>
                     </div>
                 </div>

@@ -26,6 +26,7 @@ import FarmerOrdersPage from "./pages/Farmer/FarmerOrdersPage";
 import DriverRegistration from "./pages/Driver/DriverRegistration";
 import DriverDashboard from "./pages/Driver/DriverDashboard";
 import DriverLandingPage from "./pages/Driver/DriverLandingPage";
+import DriverLogin from "./pages/Driver/DriverLogin";
 
 function App() {
 
@@ -130,6 +131,7 @@ function App() {
           <Route path="/driver/register" element={<DriverRegistration/>}/>
           <Route path="/driver/dashboard" element={<DriverDashboard/>}/>
           <Route path ="/driver/landing" element={<DriverLandingPage/>}/>
+          <Route path = "/driver/login" element={<DriverLogin/>}/>
 
 
           {/* Auth Routes */}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DriverRegistration.css';
 import toast from 'react-hot-toast';
-import {isValidSouthAfricanID} from "../../utils/Validation";
+//import {isValidSouthAfricanID} from "../../utils/Validation";
 
 function DriverRegistration() {
     const navigate = useNavigate();
@@ -40,16 +40,7 @@ function DriverRegistration() {
         });
     };
 
-    if (formData.password !== formData.confirmPassword) {
-        toast.error('Passwords do not match');
-        setLoading(false);
-        return;
-    }
-    if (formData.password.length < 8) {
-        toast.error('Password must be at least 8 characters');
-        setLoading(false);
-        return;
-    }
+
 
     // ✅ Get current location
     const getLocation = () => {
@@ -71,8 +62,19 @@ function DriverRegistration() {
         e.preventDefault();
         setLoading(true);
 
-        if (!isValidSouthAfricanID(formData.idNumber)){
+        /*if (!isValidSouthAfricanID(formData.idNumber)){
             toast.error('Please enter a valid South African ID Number');
+            return;
+        }*/
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error('Passwords do not match');
+            setLoading(false);
+            return;
+        }
+        if (formData.password.length < 8) {
+            toast.error('Password must be at least 8 characters');
+            setLoading(false);
             return;
         }
 
@@ -85,12 +87,7 @@ function DriverRegistration() {
         }
 
         try {
-          /*  const user = JSON.parse(localStorage.getItem('user'));
-            if (!user || !user.token) {
-                toast.error('Please login first');
-                navigate('/login');
-                return;
-            }*/
+
 
             const payload = {
                 name: formData.name,
@@ -122,7 +119,7 @@ function DriverRegistration() {
 
             if (response.ok) {
                 toast.success('Registration submitted! Awaiting admin verification.');
-                setTimeout(() => navigate('/driver/dashboard'), 2000);
+                setTimeout(() => navigate('/driver/login'), 2000);
             } else {
                 let errorMsg = 'Registration failed';
                 try {
@@ -359,9 +356,9 @@ function DriverRegistration() {
                             <button
                                 type="submit"
                                 className="btn-submit"
-                                disabled={loading}
+
                             >
-                                {loading ? 'Submitting...' : 'Submit Application'}
+                                {'Submit Application'}
                             </button>
                         </div>
                     </form>
