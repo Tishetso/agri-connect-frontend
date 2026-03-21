@@ -19,6 +19,15 @@ function DriverDashboard() {
             setLoading(true);
             const user = JSON.parse(localStorage.getItem('user'));
 
+            console.log("the user is ", user);
+
+            // ADD THIS CHECK
+            if (!user || !user.token) {
+                console.error('No user token found');
+                setLoading(false);
+                return;
+            }
+
             // Fetch driver profile
             const profileRes = await fetch('http://localhost:8080/api/driver/profile', {
                 headers: { 'Authorization': `Bearer ${user.token}` }
@@ -173,7 +182,7 @@ function DriverDashboard() {
             <header className="driver-header">
                 <div className="driver-info">
                     <h1>🚚 Driver Dashboard</h1>
-                    <p>Welcome back, {driver.user.name}!</p>
+                  {/*  <p>Welcome back, {driver.user.name}!</p>*/}<p>hi</p>
                 </div>
 
                 <div className="availability-toggle">

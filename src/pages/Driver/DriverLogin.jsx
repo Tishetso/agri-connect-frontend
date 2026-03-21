@@ -39,11 +39,13 @@ function DriverLogin() {
                 }
 
                 // Store driver session
-                localStorage.setItem('driver', JSON.stringify({
+                localStorage.setItem('user', JSON.stringify({
                     token: data.token,
                     email: formData.email,
                     name: data.name || '',
                     id: data.id || '',
+                    role: 'driver',
+                    isAvailable: data.isAvailable ?? false,
                 }));
 
                 toast.success(`Welcome back${data.name ? ', ' + data.name : ''}! 🚚`);
