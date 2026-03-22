@@ -182,7 +182,7 @@ function DriverDashboard() {
             <header className="driver-header">
                 <div className="driver-info">
                     <h1>🚚 Driver Dashboard</h1>
-                  {/*  <p>Welcome back, {driver.user.name}!</p>*/}<p>hi</p>
+                    <p>Welcome back, {driver.name}!</p>
                 </div>
 
                 <div className="availability-toggle">
