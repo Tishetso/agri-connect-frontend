@@ -38,7 +38,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "<unknown>",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/tishe/agrilink-frontend/src/pages/Driver/DriverLandingPage",
     "node.js.detected.package.eslint": "true",
@@ -106,7 +106,9 @@
       <workItem from="1774035328953" duration="464000" />
       <workItem from="1774035918376" duration="7661000" />
       <workItem from="1774162651311" duration="291000" />
-      <workItem from="1774163028736" duration="15074000" />
+      <workItem from="1774163028736" duration="16364000" />
+      <workItem from="1774273640524" duration="893000" />
+      <workItem from="1774359520637" duration="305000" />
     </task>
     <servers />
   </component>
