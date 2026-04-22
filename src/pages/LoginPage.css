@@ -54,13 +54,27 @@ form input {
 .register-link {
     margin-top: 20px;
     text-align: center;
+
 }
 .forgotPassword-link{
     margin-top: 20px;
     text-align: center;
+}
 
+.register-link a {
+    color:black;
+    text-decoration: none;
+}
+.forgotPassword-link a {
+    color:black;
+    text-decoration: none;
+}
 
-
+.register-link a:hover {
+    color:green;
+}
+.forgotPassword-link a:hover {
+    color:green;
 }
 
 .login-page-wrapper{
