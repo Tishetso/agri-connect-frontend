@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './DriverDashboard.css';
 import toast from 'react-hot-toast';
+import {MdLogout} from "react-icons/md";
+import {NavLink} from "react-router-dom";
 
 function DriverDashboard() {
     const [driver, setDriver] = useState(null);
-    const [availableOrders, setAvailableOrders] = useState([]);
+    /*const [availableOrders, setAvailableOrders] = useState([]);*/
     const [myDeliveries, setMyDeliveries] = useState([]);
     const [earnings, setEarnings] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState('available'); // available, active, completed
+    const [activeTab, setActiveTab] = useState('available'); // , active, completed
 
     useEffect(() => {
         fetchDriverData();
@@ -38,15 +40,7 @@ function DriverDashboard() {
                 setDriver(driverData);
             }
 
-            // Fetch available orders
-            const ordersRes = await fetch('http://localhost:8080/api/driver/available-orders', {
-                headers: { 'Authorization': `Bearer ${user.token}` }
-            });
 
-            if (ordersRes.ok) {
-                const ordersData = await ordersRes.json();
-                setAvailableOrders(ordersData);
-            }
 
             // Fetch my deliveries
             const myDeliveriesRes = await fetch('http://localhost:8080/api/driver/my-deliveries', {
@@ -100,27 +94,41 @@ function DriverDashboard() {
             toast.error('Failed to update availability');
         }
     };
+    //remove order/reject
+    const rejectOrder = async (orderId) => {
+        try{
+            const user = JSON.parse(localStorage.getItem('user'));
+            const response = await fetch(`http://localhost:8080/api/driver/reject/${orderId}`, {
+                method: 'POST',
+                headers: {'Authorization' : `Bearer ${user.token}`}
+            });
+            if (response.ok){
+                toast.success('Order rejected');
+                fetchDriverData();
+            }else {
+                const err = await response.json();
+                toast.error(err || 'Failed to reject order');
+            }
+        }catch(error){
+            toast.error('Failed to reject order');
+        }
+    };
 
-    const acceptOrder = async (orderId) => {
+    const acceptAssignment = async (orderId) => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
-
-            const response = await fetch(`http://localhost:8080/api/driver/accept/${orderId}`, {
+            const response = await fetch(`http://localhost:8080/api/driver/accept-assignment/${orderId}`, {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
+                headers: { 'Authorization': `Bearer ${user.token}` }
             });
-
             if (response.ok) {
                 toast.success('Order accepted!');
-                fetchDriverData(); // Refresh data
+                fetchDriverData();
             } else {
-                const error = await response.json();
-                toast.error(error.error || 'Failed to accept order');
+                const err = await response.json();
+                toast.error(err.error || 'Failed to accept order');
             }
         } catch (error) {
-            console.error('Error accepting order:', error);
             toast.error('Failed to accept order');
         }
     };
@@ -171,8 +179,17 @@ function DriverDashboard() {
     }
 
     const activeDeliveries = myDeliveries.filter(d =>
-        d.deliveryStatus === 'ASSIGNED' || d.deliveryStatus === 'PICKED_UP' || d.deliveryStatus === 'IN_TRANSIT'
+        d.deliveryStatus === 'ASSIGNED' ||
+        d.deliveryStatus === 'ACCEPTED' ||
+        d.deliveryStatus === 'PICKED_UP' ||
+        d.deliveryStatus === 'IN_TRANSIT'
+
     );
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        window.location.href = '/driver/login';
+    };
 
     const completedDeliveries = myDeliveries.filter(d => d.deliveryStatus === 'DELIVERED');
 
@@ -197,6 +214,9 @@ function DriverDashboard() {
                     <span className={`status-text ${driver.isAvailable ? 'online' : 'offline'}`}>
                         {driver.isAvailable ? '🟢 Online' : '🔴 Offline'}
                     </span>
+                    <button className="btn-logout" onClick={handleLogout}>
+                        <MdLogout /> Logout
+                    </button>
                 </div>
             </header>
 
@@ -239,12 +259,6 @@ function DriverDashboard() {
             <section className="tabs-section">
                 <div className="tabs">
                     <button
-                        className={`tab ${activeTab === 'available' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('available')}
-                    >
-                        Available Orders ({availableOrders.length})
-                    </button>
-                    <button
                         className={`tab ${activeTab === 'active' ? 'active' : ''}`}
                         onClick={() => setActiveTab('active')}
                     >
@@ -257,50 +271,6 @@ function DriverDashboard() {
                         Completed ({completedDeliveries.length})
                     </button>
                 </div>
-
-                {/* Available Orders Tab */}
-                {activeTab === 'available' && (
-                    <div className="orders-list">
-                        {availableOrders.length > 0 ? (
-                            availableOrders.map(order => (
-                                <div key={order.id} className="order-card">
-                                    <div className="order-header">
-                                        <h3>Order #{order.id}</h3>
-                                        <span className="delivery-fee">R{order.deliveryFee?.toFixed(2)}</span>
-                                    </div>
-
-                                    <div className="order-details">
-                                        <div className="detail-row">
-                                            <span className="label">📍 Pickup:</span>
-                                            <span>{order.pickupAddress || 'Farmer location'}</span>
-                                        </div>
-                                        <div className="detail-row">
-                                            <span className="label">🏠 Delivery:</span>
-                                            <span>{order.deliveryAddress}</span>
-                                        </div>
-                                        <div className="detail-row">
-                                            <span className="label">📦 Items:</span>
-                                            <span>{order.itemCount || order.items?.length} items</span>
-                                        </div>
-                                    </div>
-
-                                    <button
-                                        className="btn-accept"
-                                        onClick={() => acceptOrder(order.id)}
-                                        disabled={!driver.isAvailable}
-                                    >
-                                        {driver.isAvailable ? 'Accept Order' : 'Go online to accept'}
-                                    </button>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="empty-state">
-                                <p>No available orders at the moment</p>
-                                <p>Check back soon or enable notifications</p>
-                            </div>
-                        )}
-                    </div>
-                )}
 
                 {/* Active Deliveries Tab */}
                 {activeTab === 'active' && (
@@ -331,31 +301,60 @@ function DriverDashboard() {
                                     </div>
 
                                     <div className="status-actions">
+                                        {/* Step 1 — farmer assigned, driver decides */}
                                         {order.deliveryStatus === 'ASSIGNED' && (
-                                            <button
-                                                className="btn-status"
-                                                onClick={() => updateStatus(order.id, 'PICKED_UP')}
-                                            >
+                                            <>
+                                                <p className="assigned-notice">A farmer assigned this order to you</p>
+                                                <button
+                                                    className="btn-accept"
+                                                    onClick={() => acceptAssignment(order.id)}
+                                                >
+                                                    Accept
+                                                </button>
+                                                <button
+                                                    className="btn-reject"
+                                                    onClick={() => rejectOrder(order.id)}
+                                                >
+                                                    Reject
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/*//2.step accepted - go pick  it up*/}
+                                        {order.deliveryStatus === 'ACCEPTED' && (
+                                            <button className="btn-status" onClick={() => updateStatus(order.id, 'PICKED_UP')}>
                                                 Mark as Picked Up
                                             </button>
                                         )}
+
+                                        {/*//3. Picked up - start Driving*/}
                                         {order.deliveryStatus === 'PICKED_UP' && (
-                                            <button
-                                                className="btn-status"
-                                                onClick={() => updateStatus(order.id, 'IN_TRANSIT')}
-                                            >
+                                            <button className = "btn-status" onClick={() => updateStatus(order.id, 'IN_TRANSIT')}>
                                                 Start Delivery
                                             </button>
                                         )}
+
+                                       {/* //4. Delivered*/}
                                         {order.deliveryStatus === 'IN_TRANSIT' && (
-                                            <button
-                                                className="btn-status success"
-                                                onClick={() => updateStatus(order.id, 'DELIVERED')}
-                                            >
+                                            <button className= "btn-status success" onClick={() => updateStatus(order.id, 'DELIVERED')}>
                                                 Mark as Delivered
                                             </button>
+                                            )}
+
+
+                                      {/*  {order.deliveryStatus === 'PICKED_UP' && (
+                                            <button className="btn-status" onClick={() => updateStatus(order.id, 'IN_TRANSIT')}>
+                                                Start Delivery
+                                            </button>
                                         )}
+
+                                        {order.deliveryStatus === 'IN_TRANSIT' && (
+                                            <button className="btn-status success" onClick={() => updateStatus(order.id, 'DELIVERED')}>
+                                                Mark as Delivered
+                                            </button>
+                                        )}*/}
                                     </div>
+
                                 </div>
                             ))
                         ) : (

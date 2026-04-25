@@ -212,7 +212,6 @@ function FarmerOrdersPage(){
                             <div className="order-actions">
                                 {order.status === 'Pending' && (
                                     <>
-                                        {/* ← changed: opens modal instead of direct confirm */}
                                         <button className="btn-confirm" onClick={() => openDriverModal(order.id)}>
                                             ✓ Confirm Order
                                         </button>
@@ -221,17 +220,37 @@ function FarmerOrdersPage(){
                                         </button>
                                     </>
                                 )}
-                                {order.status === 'Confirmed' && (
-                                    <button className="btn-transit" onClick={() => updateOrderStatus(order.id, 'In Transit')}>
-                                        🚚 Mark as In Transit
-                                    </button>
-                                )}
-                                {order.status === 'In Transit' && (
-                                    <button className="btn-deliver" onClick={() => updateOrderStatus(order.id, 'Delivered')}>
-                                        ✓ Mark as Delivered
-                                    </button>
+
+                                {/* ← Replace the old transit/deliver buttons with this */}
+                                {order.driverId && (
+                                    <div className="driver-status-tracker">
+                                        <p className="driver-assigned-label">🚚 Driver handling this delivery</p>
+                                        <div className="status-steps">
+                                            <div className={`step ${['ASSIGNED','ACCEPTED','PICKED_UP','IN_TRANSIT','DELIVERED'].includes(order.deliveryStatus) ? 'done' : ''}`}>
+                                                <span className="step-dot"></span>
+                                                <span className="step-label">Assigned</span>
+                                            </div>
+                                            <div className={`step ${['ACCEPTED','PICKED_UP','IN_TRANSIT','DELIVERED'].includes(order.deliveryStatus) ? 'done' : ''}`}>
+                                                <span className="step-dot"></span>
+                                                <span className="step-label">Accepted</span>
+                                            </div>
+                                            <div className={`step ${['PICKED_UP','IN_TRANSIT','DELIVERED'].includes(order.deliveryStatus) ? 'done' : ''}`}>
+                                                <span className="step-dot"></span>
+                                                <span className="step-label">Picked Up</span>
+                                            </div>
+                                            <div className={`step ${['IN_TRANSIT','DELIVERED'].includes(order.deliveryStatus) ? 'done' : ''}`}>
+                                                <span className="step-dot"></span>
+                                                <span className="step-label">In Transit</span>
+                                            </div>
+                                            <div className={`step ${order.deliveryStatus === 'DELIVERED' ? 'done' : ''}`}>
+                                                <span className="step-dot"></span>
+                                                <span className="step-label">Delivered</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
+
                         </div>
                     ))
                 )}

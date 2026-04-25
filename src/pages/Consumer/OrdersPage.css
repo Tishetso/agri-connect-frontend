@@ -263,6 +263,60 @@
     background: #c0392b;
 }
 
+.delivery-tracker {
+    margin: 12px 0;
+    padding: 12px;
+    background: #f0f7ff;
+    border-radius: 8px;
+}
+
+.tracker-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #185FA5;
+    margin: 0 0 12px;
+}
+
+.status-steps {
+    display: flex;
+    align-items: center;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: #ddd;
+    z-index: 0;
+}
+
+.step.done:not(:last-child)::after { background: #185FA5; }
+
+.step-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ddd;
+    border: 2px solid #ddd;
+    z-index: 1;
+    margin-bottom: 6px;
+}
+
+.step.done .step-dot { background: #185FA5; border-color: #185FA5; }
+.step-label { font-size: 11px; color: #999; text-align: center; }
+.step.done .step-label { color: #185FA5; font-weight: 500; }
+
 /* Responsive */
 @media (max-width: 768px) {
     .orders-page {

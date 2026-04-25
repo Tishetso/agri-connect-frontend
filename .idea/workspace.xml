@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1741c0e5-c9ac-4a18-afbf-a0f5be361cf1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Farmer/FarmerOrdersPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Farmer/FarmerOrdersPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/OrdersPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/OrdersPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/OrdersPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/OrdersPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Driver/DriverDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Driver/DriverDashboard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Farmer/FarmerOrdersPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Farmer/FarmerOrdersPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +130,8 @@
       <workItem from="1774273640524" duration="893000" />
       <workItem from="1774359520637" duration="305000" />
       <workItem from="1776687607671" duration="7645000" />
-      <workItem from="1776844170046" duration="8049000" />
+      <workItem from="1776844170046" duration="10464000" />
+      <workItem from="1777013530061" duration="18815000" />
     </task>
     <servers />
   </component>
