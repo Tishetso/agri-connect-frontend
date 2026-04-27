@@ -183,7 +183,6 @@ function RegisterPage() {
                     <option value="">Select Role</option>
                     <option value="farmer">Farmer</option>
                     <option value="consumer">Consumer</option>
-                    <option value="admin">Admin</option>
                 </select>
 
                 {/* store address*/}
@@ -199,7 +198,7 @@ function RegisterPage() {
                     errors.general && <span className = "error general">{errors.general}</span>
                 )}
 
-                {/*//They finally found the magic*/}
+                {/*//They finally found the magic*/}{/*27 APRIL 2026 */}
                 
                 <button type="submit" className="submit-btn">Register</button>
             </form>

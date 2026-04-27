@@ -161,7 +161,7 @@ function AdminDashboard() {
                     <div className="stat-card success">
                         <div className="stat-icon">💰</div>
                         <div className="stat-details">
-                            <h3>R{stats.totalRevenue.toFixed(2)}</h3>
+                            <h3>R{(stats.totalRevenue ?? 0).toFixed(2)}</h3>
                             <p>Total Revenue</p>
                         </div>
                     </div>
@@ -290,12 +290,21 @@ function AdminDashboard() {
             <section className="quick-actions">
                 <h2>⚡ Quick Actions</h2>
                 <div className="actions-grid">
+
                     <button
                         className="action-btn"
                         onClick={() => window.location.href = '/admin/users'}
                     >
                         <span className="action-icon">👥</span>
                         <span>Manage Users</span>
+                    </button>
+
+                    <button
+                        className="action-btn"
+                        onClick={() => window.location.href = '/admin/drivers'}
+                    >
+                        <span className="action-icon">🚚</span>
+                        <span>Verify Drivers</span>
                     </button>
 
                     <button

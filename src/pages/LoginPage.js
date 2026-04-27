@@ -47,14 +47,23 @@ function LoginPage() {
                         name: data.name,
                         surname: data.surname,
                         region: data.region,
+                        email: formData.email, /*Added 27 April 2026*/
                     })
                 );
 
-
-
-
-                //navigate to role-based dashboard
-                navigate(`/${data.role}`);
+                //role base redirect
+                const role = data.role?.toUpperCase();
+                if (role === 'ADMIN'){
+                    navigate('/admin');
+                }else if (role === 'FARMER'){
+                    navigate('/farmer');
+                } else if (role === 'CONSUMER'){
+                    navigate('/consumer');
+                }else{
+                    navigate('/');
+                }
+                /*//navigate to role-based dashboard                Outdated
+                navigate(`/${data.role}`);*/
 
             }else{
                 //show backend error message

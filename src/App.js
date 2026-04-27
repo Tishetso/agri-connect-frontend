@@ -28,6 +28,7 @@ import DriverDashboard from "./pages/Driver/DriverDashboard";
 import DriverLandingPage from "./pages/Driver/DriverLandingPage";
 import DriverLogin from "./pages/Driver/DriverLogin";
 import DriverKycPage from "./pages/Driver/DriverKycPage";
+import AdminDriverVerification from "./pages/Admin/AdminDriverVerification";
 
 function App() {
 
@@ -127,6 +128,7 @@ function App() {
 
           {/* ADMIN Routes */}
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path = "/admin/drivers" element={<AdminDriverVerification />} />
 
           {/*DRIVER routes*/}
           <Route path="/driver/register" element={<DriverRegistration/>}/>
