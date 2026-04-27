@@ -1,0 +1,148 @@
+.kyc-page {
+    min-height: 100vh;
+    background: #f5f5f5;
+    padding: 2rem 1rem;
+}
+
+.kyc-container {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.kyc-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.kyc-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.kyc-header p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 1.5rem;
+}
+
+.kyc-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #185FA5;
+    font-weight: 500;
+}
+
+.kyc-divider { color: #ccc; }
+
+.kyc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.kyc-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 0.5px solid #e0e0e0;
+}
+
+.kyc-section h2 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 1.25rem;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid #eee;
+}
+
+.upload-field {
+    margin-bottom: 1.25rem;
+}
+
+.upload-field:last-child { margin-bottom: 0; }
+
+.upload-label {
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.required { color: #e24b4a; }
+
+.upload-hint {
+    font-size: 12px;
+    color: #888;
+    margin: 0 0 8px;
+}
+
+.upload-box {
+    border: 1.5px dashed #ccc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-box:hover { border-color: #185FA5; }
+.upload-box.has-preview { padding: 0; overflow: hidden; }
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #999;
+    font-size: 13px;
+}
+
+.upload-icon { font-size: 24px; }
+.upload-sub { font-size: 11px; color: #bbb; }
+
+.preview-img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.file-name {
+    font-size: 12px;
+    color: #0F6E56;
+    margin: 6px 0 0;
+}
+
+.kyc-notice {
+    background: #FFF8E1;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #854F0B;
+    border: 0.5px solid #FAC775;
+}
+
+.kyc-notice p { margin: 0; }
+
+.btn-submit-kyc {
+    width: 100%;
+    padding: 14px;
+    background: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-submit-kyc:hover { background: #0C447C; }
+.btn-submit-kyc:disabled { background: #ccc; cursor: not-allowed; }

@@ -27,6 +27,7 @@ import DriverRegistration from "./pages/Driver/DriverRegistration";
 import DriverDashboard from "./pages/Driver/DriverDashboard";
 import DriverLandingPage from "./pages/Driver/DriverLandingPage";
 import DriverLogin from "./pages/Driver/DriverLogin";
+import DriverKycPage from "./pages/Driver/DriverKycPage";
 
 function App() {
 
@@ -124,14 +125,15 @@ function App() {
           }
           />
 
-          {/* Admin Routes */}
+          {/* ADMIN Routes */}
           <Route path="/admin" element={<AdminPanel />} />
 
-          {/*Driver routes*/}
+          {/*DRIVER routes*/}
           <Route path="/driver/register" element={<DriverRegistration/>}/>
           <Route path="/driver/dashboard" element={<DriverDashboard/>}/>
           <Route path ="/driver/landing" element={<DriverLandingPage/>}/>
           <Route path = "/driver/login" element={<DriverLogin/>}/>
+          <Route path = "/driver/kyc" element={<DriverKycPage />}/>
 
 
           {/* Auth Routes */}
@@ -167,15 +169,3 @@ function App() {
 }
 
 export default App;
-/*
-  <Toaster
-      position = "top-right"
-      toastOptions={{
-        duration: 3000,
-        style: {
-          borderRadius: '10px',
-          background: '#333',
-          color: '#fff',
-        },
-      }}
-  />*/

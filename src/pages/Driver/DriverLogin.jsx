@@ -46,10 +46,21 @@ function DriverLogin() {
                     id: data.id || '',
                     role: 'driver',
                     isAvailable: data.isAvailable ?? false,
+                    vehicleType: data.vehicleType || '',
+                    kycSubmitted: data.kycSubmitted || false,
                 }));
 
                 toast.success(`Welcome back${data.name ? ', ' + data.name : ''}! 🚚`);
-                setTimeout(() => navigate('/driver/dashboard'), 1500);
+
+                //redirects to kyc else dashboard
+                setTimeout(() => {
+                    if (!data.kycSubmitted){
+                        navigate('/driver/kyc');
+                    }else{
+                        navigate('/driver/dashboard');
+                    }
+                }, 1500);
+
             } else {
                 let errorMsg = 'Login failed';
                 try {
