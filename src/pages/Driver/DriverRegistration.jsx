@@ -118,7 +118,7 @@ function DriverRegistration() {
             console.log('Response:', response.status, responseText);
 
             if (response.ok) {
-                toast.success('Registration submitted! Awaiting admin verification.');
+                toast.success('Registration submitted!.');
                 setTimeout(() => navigate('/driver/login'), 2000);
             } else {
                 let errorMsg = 'Registration failed';
