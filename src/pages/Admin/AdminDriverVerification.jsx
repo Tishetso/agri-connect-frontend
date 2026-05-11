@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import './AdminDriverVerification.css';
+import { requestJson } from '../../utils/requestJson';
 
 function AdminDriverVerification() {
     const [drivers, setDrivers] = useState([]);
@@ -28,7 +29,11 @@ function AdminDriverVerification() {
             ]);
 
             if (pendingRes.ok) setDrivers(await pendingRes.json());
-            if (allRes.ok) setAllDrivers(await allRes.json());
+           /* if (allRes.ok) setAllDrivers(await allRes.json());*/
+            if (allRes.ok){
+                const data = await allRes.json();
+                setAllDrivers(data.content || []);
+            }
         } catch (err) {
             toast.error('Failed to load drivers');
         } finally {
@@ -36,41 +41,42 @@ function AdminDriverVerification() {
         }
     };
 
+
     const approveDriver = async (driverId) => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
-            const res = await fetch(`http://localhost:8080/api/admin/drivers/${driverId}/approve`, {
+            await requestJson(`http://localhost:8080/api/admin/drivers/${driverId}/approve`, {
                 method: 'PUT',
-                headers: { 'Authorization': `Bearer ${user.token}` }
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
             });
-            if (res.ok) {
-                toast.success('Driver approved!');
-                setSelectedDriver(null);
-                fetchData();
-            }
+
+            toast.success('Driver approved!');
+            setSelectedDriver(null);
+            await fetchData();
         } catch (err) {
-            toast.error('Failed to approve driver');
+            toast.error(err.message);
         }
     };
 
     const rejectDriver = async (driverId) => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
-            const res = await fetch(`http://localhost:8080/api/admin/drivers/${driverId}/reject`, {
+            await requestJson(`http://localhost:8080/api/admin/drivers/${driverId}/reject`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${user.token}`,
+                    Authorization: `Bearer ${user.token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ reason: 'Documents unclear or invalid' })
             });
-            if (res.ok) {
-                toast.success('Driver rejected — they will be asked to resubmit');
-                setSelectedDriver(null);
-                fetchData();
-            }
+
+            toast.success('Driver rejected — they will be asked to resubmit');
+            setSelectedDriver(null);
+            await fetchData();
         } catch (err) {
-            toast.error('Failed to reject driver');
+            toast.error(err.message);
         }
     };
 
@@ -95,7 +101,7 @@ function AdminDriverVerification() {
 
     const displayDrivers = activeTab === 'pending'
         ? drivers
-        : allDrivers.filter(d => d.isVerified);
+        : allDrivers.filter(d => d.verificationStatus === 'VERIFIED');
 
     if (loading) return <div className="avd-page"><div className="loading-state">Loading...</div></div>;
 
@@ -117,7 +123,7 @@ function AdminDriverVerification() {
                     className={`avd-tab ${activeTab === 'verified' ? 'active' : ''}`}
                     onClick={() => setActiveTab('verified')}
                 >
-                    Verified ({allDrivers.filter(d => d.isVerified).length})
+                    Verified ({allDrivers.filter(d => d.verificationStatus === 'VERIFIED').length})
                 </button>
             </div>
 
@@ -151,8 +157,8 @@ function AdminDriverVerification() {
                                         <p className="avd-meta">{driver.vehicleType} · {driver.email}</p>
                                     </div>
                                 </div>
-                                <span className={`avd-badge ${driver.isVerified ? 'verified' : 'pending'}`}>
-                                    {driver.isVerified ? 'Verified' : 'Pending'}
+                                <span className={`avd-badge ${driver.verificationStatus === 'VERIFIED' ? 'verified' : 'pending'}`}>
+                                    {driver.verificationStatus === 'VERIFIED' ? 'Verified' : 'Pending'}
                                 </span>
                             </div>
                         ))
@@ -187,7 +193,7 @@ function AdminDriverVerification() {
                             </div>
                         </div>
 
-                        {!selectedDriver.isVerified && (
+                        {selectedDriver.verificationStatus !== 'VERIFIED' && (
                             <div className="avd-actions">
                                 <button
                                     className="btn-reject"
@@ -204,7 +210,7 @@ function AdminDriverVerification() {
                             </div>
                         )}
 
-                        {selectedDriver.isVerified && (
+                        {selectedDriver.verificationStatus === 'VERIFIED' && (
                             <div className="avd-verified-notice">
                                 ✅ This driver has been verified and approved
                             </div>

@@ -29,7 +29,7 @@ import DriverLandingPage from "./pages/Driver/DriverLandingPage";
 import DriverLogin from "./pages/Driver/DriverLogin";
 import DriverKycPage from "./pages/Driver/DriverKycPage";
 import AdminDriverVerification from "./pages/Admin/AdminDriverVerification";
-import AdminUsers from "./pages/Driver/AdminUsers";
+import AdminUsers from "./pages/Admin/AdminUsers";
 
 function App() {
 

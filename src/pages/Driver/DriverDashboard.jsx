@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DriverDashboard.css';
 import toast from 'react-hot-toast';
 import {MdLogout} from "react-icons/md";
+import { requestJson } from '../../utils/requestJson';
 import {NavLink} from "react-router-dom";
 
 function DriverDashboard() {
@@ -70,30 +71,24 @@ function DriverDashboard() {
         }
     };
 
-    const toggleAvailability = async () => {
+    const toggleAvailability = async (available) => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
-            const newStatus = !driver.isAvailable;
-
-            const response = await fetch('http://localhost:8080/api/driver/availability', {
+            await requestJson('http://localhost:8080/api/driver/availability', {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+                    Authorization: `Bearer ${user.token}`,
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ available: newStatus })
+                body: JSON.stringify({ available })
             });
 
-            if (response.ok) {
-                const updatedDriver = await response.json();
-                setDriver(updatedDriver);
-                toast.success(newStatus ? 'You are now available for deliveries' : 'You are now offline');
-            }
-        } catch (error) {
-            console.error('Error toggling availability:', error);
-            toast.error('Failed to update availability');
+            toast.success(available ? 'You are now online' : 'You are now offline');
+        } catch (err) {
+            toast.error(err.message);
         }
     };
+
     //remove order/reject
     const rejectOrder = async (orderId) => {
         try{
@@ -207,7 +202,7 @@ function DriverDashboard() {
                         <input
                             type="checkbox"
                             checked={driver.isAvailable}
-                            onChange={toggleAvailability}
+                            onChange={(e) => toggleAvailability(e.target.checked)}
                         />
                         <span className="slider"></span>
                     </label>

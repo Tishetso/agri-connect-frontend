@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
+import { FaHome } from "react-icons/fa";
+
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -97,6 +99,11 @@ function LoginPage() {
             <p className="forgotPassword-link">
                 Forgot Password? <a href="/forgot-password">Reset it here</a>
             </p>
+            <div className="home-link">
+                <a href="/">
+                    <FaHome size={20} /> Home
+                </a>
+            </div>
         </div>
         </div>
     );
