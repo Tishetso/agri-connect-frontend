@@ -168,7 +168,54 @@ function AdminDashboard() {
                 </div>
             </section>
 
-            {/* Recent Listings */}
+            {/* Quick Actions */}
+            <section className="quick-actions">
+                <h2>⚡ Quick Actions</h2>
+                <div className="actions-grid">
+
+                    <button
+                        className="action-btn"
+                        onClick={() => window.location.href = '/admin/users'}
+                    >
+                        <span className="action-icon">👥</span>
+                        <span>Manage Users</span>
+                    </button>
+
+                    <button
+                        className="action-btn"
+                        onClick={() => window.location.href = '/admin/drivers'}
+                    >
+                        <span className="action-icon">🚚</span>
+                        <span>Verify Drivers</span>
+                    </button>
+
+                    <button
+                        className="action-btn"
+                        onClick={() => window.location.href = '/admin/listings'}
+                    >
+                        <span className="action-icon">📦</span>
+                        <span>Manage Listings</span>
+                    </button>
+
+                    <button
+                        className="action-btn"
+                        onClick={() => window.location.href = '/admin/orders'}
+                    >
+                        <span className="action-icon">📋</span>
+                        <span>Manage Orders</span>
+                    </button>
+
+                    <button
+                        className="action-btn"
+                        onClick={() => window.location.href = '/admin/reports'}
+                    >
+                        <span className="action-icon">📊</span>
+                        <span>View Reports</span>
+                    </button>
+                </div>
+            </section>
+
+            {/* Recent Listings
             <section className="listings-section">
                 <div className="section-header">
                     <h2>📦 Recent Listings</h2>
@@ -230,9 +277,9 @@ function AdminDashboard() {
                         </tbody>
                     </table>
                 </div>
-            </section>
+            </section>*/}
 
-            {/* Recent Orders */}
+            {/* Recent Orders
             <section className="orders-section">
                 <div className="section-header">
                     <h2>📋 Recent Orders</h2>
@@ -284,54 +331,7 @@ function AdminDashboard() {
                         </tbody>
                     </table>
                 </div>
-            </section>
-
-            {/* Quick Actions */}
-            <section className="quick-actions">
-                <h2>⚡ Quick Actions</h2>
-                <div className="actions-grid">
-
-                    <button
-                        className="action-btn"
-                        onClick={() => window.location.href = '/admin/users'}
-                    >
-                        <span className="action-icon">👥</span>
-                        <span>Manage Users</span>
-                    </button>
-
-                    <button
-                        className="action-btn"
-                        onClick={() => window.location.href = '/admin/drivers'}
-                    >
-                        <span className="action-icon">🚚</span>
-                        <span>Verify Drivers</span>
-                    </button>
-
-                    <button
-                        className="action-btn"
-                        onClick={() => window.location.href = '/admin/listings'}
-                    >
-                        <span className="action-icon">📦</span>
-                        <span>Manage Listings</span>
-                    </button>
-
-                    <button
-                        className="action-btn"
-                        onClick={() => window.location.href = '/admin/orders'}
-                    >
-                        <span className="action-icon">📋</span>
-                        <span>Manage Orders</span>
-                    </button>
-
-                    <button
-                        className="action-btn"
-                        onClick={() => window.location.href = '/admin/reports'}
-                    >
-                        <span className="action-icon">📊</span>
-                        <span>View Reports</span>
-                    </button>
-                </div>
-            </section>
+            </section>*/}
         </div>
     );
 }

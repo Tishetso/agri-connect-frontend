@@ -1,0 +1,457 @@
+/* AdminOrders.css — consistent with au- admin style conventions */
+
+.ao-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ── Header ── */
+.ao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.ao-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #1a1a1a;
+}
+
+.ao-header p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.ao-back-btn {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #374151;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    font-family: inherit;
+}
+.ao-back-btn:hover { background: #f3f4f6; }
+
+/* ── Stats ── */
+.ao-stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.ao-stat {
+    flex: 1;
+    min-width: 100px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.ao-stat-green  { background: #f0fdf4; border-color: #bbf7d0; }
+.ao-stat-yellow { background: #fffbeb; border-color: #fde68a; }
+.ao-stat-red    { background: #fef2f2; border-color: #fecaca; }
+.ao-stat-blue   { background: #eff6ff; border-color: #bfdbfe; }
+.ao-stat-purple { background: #f5f3ff; border-color: #ddd6fe; }
+
+.ao-stat-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.ao-stat-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.ao-stat-val-sm {
+    font-size: 1.1rem;
+}
+
+/* ── Toolbar ── */
+.ao-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ao-search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.ao-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+}
+
+.ao-search {
+    width: 100%;
+    padding: 8px 12px 8px 34px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #111;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+.ao-search:focus { border-color: #16a34a; }
+
+.ao-select {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #111;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.ao-search-btn {
+    padding: 8px 18px;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+}
+.ao-search-btn:hover { background: #15803d; }
+
+.ao-refresh-btn {
+    background: #fff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+.ao-refresh-btn:hover { background: #f3f4f6; }
+
+/* ── Table ── */
+.ao-table-wrap {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.ao-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.ao-table thead { background: #f9fafb; }
+
+.ao-table th {
+    text-align: left;
+    padding: 11px 16px;
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.ao-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #111827;
+    vertical-align: middle;
+}
+
+.ao-table tbody tr:last-child td { border-bottom: none; }
+.ao-table tbody tr:hover td { background: #f9fafb; }
+
+/* Order ID */
+.ao-order-id {
+    font-family: monospace;
+    font-weight: 700;
+    color: #374151;
+    font-size: 0.85rem;
+}
+
+/* User cell */
+.ao-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ao-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.ao-avatar-consumer { background: #dbeafe; color: #1d4ed8; }
+.ao-avatar-farmer   { background: #dcfce7; color: #15803d; }
+
+/* ── Badges ── */
+.ao-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.status-pending    { background: #fef9c3; color: #a16207;  }
+.status-confirmed  { background: #dbeafe; color: #1d4ed8;  }
+.status-processing { background: #ede9fe; color: #6d28d9;  }
+.status-shipped    { background: #e0f2fe; color: #0369a1;  }
+.status-delivered  { background: #dcfce7; color: #15803d;  }
+.status-cancelled  { background: #fee2e2; color: #dc2626;  }
+.status-inactive   { background: #f3f4f6; color: #6b7280;  }
+
+/* ── Row Actions ── */
+.ao-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.ao-action-btn {
+    background: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 5px 9px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.15s, border-color 0.15s;
+    line-height: 1;
+    font-family: inherit;
+}
+.ao-action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ao-action-approve:hover { background: #dcfce7; border-color: #86efac; color: #15803d; }
+.ao-action-danger:hover  { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+.ao-action-blue:hover    { background: #dbeafe; border-color: #93c5fd; color: #1d4ed8; }
+.ao-action-purple:hover  { background: #ede9fe; border-color: #c4b5fd; color: #6d28d9; }
+
+/* ── Empty ── */
+.ao-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #9ca3af;
+    font-size: 0.95rem;
+}
+
+/* ── Pagination ── */
+.ao-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.85rem;
+    color: #6b7280;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ao-page-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.ao-page-btn {
+    padding: 5px 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    color: #374151;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit;
+}
+.ao-page-btn:hover    { background: #f3f4f6; }
+.ao-page-btn.active   { background: #16a34a; color: #fff; border-color: #16a34a; }
+.ao-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Modal ── */
+.ao-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: aoFadeIn 0.2s ease;
+}
+
+@keyframes aoFadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+.ao-modal {
+    background: #fff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: aoSlideUp 0.22s ease;
+}
+
+@keyframes aoSlideUp { from { transform: translateY(16px); opacity: 0 } to { transform: none; opacity: 1 } }
+
+.ao-modal-body { padding: 1.5rem; }
+
+.ao-modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+}
+
+.ao-modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.ao-modal-close {
+    background: #f3f4f6;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    color: #374151;
+}
+.ao-modal-close:hover { background: #e5e7eb; }
+
+.ao-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+}
+
+.ao-modal-field label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.ao-modal-field span {
+    font-size: 0.9rem;
+    color: #111827;
+    font-weight: 500;
+}
+
+/* Items list in modal */
+.ao-modal-items {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 1.25rem;
+}
+
+.ao-modal-items-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 10px;
+}
+
+.ao-modal-item-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #374151;
+    padding: 6px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+.ao-modal-item-row:last-child { border-bottom: none; }
+
+/* Modal actions */
+.ao-modal-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ao-modal-btn {
+    flex: 1;
+    min-width: 90px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.18s, opacity 0.18s;
+    font-family: inherit;
+}
+.ao-modal-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ao-modal-approve { background: #16a34a; color: #fff; }
+.ao-modal-approve:hover:not(:disabled) { background: #15803d; }
+
+.ao-modal-blue    { background: #3b82f6; color: #fff; }
+.ao-modal-blue:hover:not(:disabled)    { background: #2563eb; }
+
+.ao-modal-purple  { background: #7c3aed; color: #fff; }
+.ao-modal-purple:hover:not(:disabled)  { background: #6d28d9; }
+
+.ao-modal-cancel  { background: #fff; color: #dc2626; border: 1px solid #fca5a5; }
+.ao-modal-cancel:hover:not(:disabled)  { background: #fee2e2; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .ao-page { padding: 1rem; }
+    .ao-modal-grid { grid-template-columns: 1fr; }
+    .ao-table th:nth-child(3),
+    .ao-table td:nth-child(3),
+    .ao-table th:nth-child(4),
+    .ao-table td:nth-child(4) { display: none; }
+}

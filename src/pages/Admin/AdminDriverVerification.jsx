@@ -110,6 +110,9 @@ function AdminDriverVerification() {
             <div className="avd-header">
                 <h1>Driver Verification</h1>
                 <p>{drivers.length} driver{drivers.length !== 1 ? 's' : ''} pending review</p>
+                <button className="au-back-btn" onClick={() => window.location.href = '/admin'}>
+                    ← Back to Dashboard
+                </button>
             </div>
 
             <div className="avd-tabs">

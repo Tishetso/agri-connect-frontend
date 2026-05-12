@@ -30,6 +30,8 @@ import DriverLogin from "./pages/Driver/DriverLogin";
 import DriverKycPage from "./pages/Driver/DriverKycPage";
 import AdminDriverVerification from "./pages/Admin/AdminDriverVerification";
 import AdminUsers from "./pages/Admin/AdminUsers";
+import AdminListings from "./pages/Admin/AdminListing";
+import AdminOrders from "./pages/Admin/AdminOrders";
 
 function App() {
 
@@ -131,7 +133,8 @@ function App() {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path = "/admin/drivers" element={<AdminDriverVerification />} />
           <Route path = "/admin/users" element = {<AdminUsers/>}/>
-          {/*<Route path="/admin/users"   element={<AdminUsers />} />*/}
+          <Route path="/admin/listings"   element={<AdminListings />} />
+          <Route path="/admin/orders"   element={<AdminOrders />} />
 
           {/*DRIVER routes*/}
           <Route path="/driver/register" element={<DriverRegistration/>}/>

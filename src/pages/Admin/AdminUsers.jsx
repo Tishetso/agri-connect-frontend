@@ -66,6 +66,8 @@ function AdminUsers() {
             if (!res.ok) throw new Error('Failed to fetch users');
             const data = await res.json();
 
+            console.log(data);
+
             setUsers(data.content || data.users || []);
             setTotalPages(data.totalPages || Math.ceil((data.total || 0) / PAGE_SIZE));
             setStats({

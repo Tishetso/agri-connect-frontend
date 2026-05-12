@@ -12,6 +12,7 @@ function DriverDashboard() {
     const [earnings, setEarnings] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('available'); // , active, completed
+    const [togglingAvailability, setTogglingAvailability] = useState(false);
 
     useEffect(() => {
         fetchDriverData();
@@ -72,7 +73,9 @@ function DriverDashboard() {
     };
 
     const toggleAvailability = async (available) => {
+        if (togglingAvailability) return; //prevents double fire🛡️
         try {
+            setTogglingAvailability(true);
             const user = JSON.parse(localStorage.getItem('user'));
             await requestJson('http://localhost:8080/api/driver/availability', {
                 method: 'PUT',
@@ -83,9 +86,14 @@ function DriverDashboard() {
                 body: JSON.stringify({ available })
             });
 
+            //update local state so checkbox reflects the new value
+            setDriver(prev => ({...prev, isAvailable: available}));
+
             toast.success(available ? 'You are now online' : 'You are now offline');
         } catch (err) {
             toast.error(err.message);
+        }finally{
+            setTogglingAvailability(false); //always release the lock
         }
     };
 
@@ -202,6 +210,7 @@ function DriverDashboard() {
                         <input
                             type="checkbox"
                             checked={driver.isAvailable}
+                            disabled={togglingAvailability} // prevent clicks in-flight
                             onChange={(e) => toggleAvailability(e.target.checked)}
                         />
                         <span className="slider"></span>

@@ -18,12 +18,12 @@
 .au-header h1 {
     font-size: 1.6rem;
     font-weight: 700;
-    margin-bottom: 0.25rem;
-    color: #1a1a1a;
+    color: white;
+    margin-left: -140px;
 }
 
 .au-header p {
-    color: #666;
+    color: silver;
     font-size: 0.95rem;
 }
 
