@@ -18,8 +18,12 @@
 .env.test.local
 .env.production.local
 
-.env
+AgriConnect-Docker/.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.docker-compose.yml
+
+.dockerfile
