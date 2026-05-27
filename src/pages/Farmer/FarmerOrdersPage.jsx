@@ -42,9 +42,9 @@ function FarmerOrdersPage(){
         setShowDriverModal(true);
         try {
             const user = JSON.parse(localStorage.getItem('user'));
-            const res = await fetch('http://localhost:8080/api/driver/available-orders', {
+           /* const res = await fetch('http://localhost:8080/api/driver/available-orders', {
                 headers: { 'Authorization': `Bearer ${user.token}` }
-            });
+            });*/
             // fetch all drivers who are available
             const driversRes = await fetch('http://localhost:8080/api/driver/available-drivers', {
                 headers: { 'Authorization': `Bearer ${user.token}` }
@@ -95,24 +95,7 @@ function FarmerOrdersPage(){
         }
     };
 
-    const updateOrderStatus = async(orderId, newStatus) => {
-        try {
-            const user = JSON.parse(localStorage.getItem('user'));
-            const response = await fetch(`http://localhost:8080/api/orders/${orderId}/status`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
-                },
-                body: JSON.stringify({status: newStatus})
-            });
-            if (!response.ok) throw new Error("Failed to update order status");
-            toast.success(`Order marked as ${newStatus}`);
-            fetchOrders();
-        } catch(err) {
-            toast.error('Failed to update order status.');
-        }
-    };
+
 
     const rejectOrder = async (orderId) => {
         const confirmed = await confirmAction({

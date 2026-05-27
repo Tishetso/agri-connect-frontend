@@ -203,7 +203,7 @@ function AdminUsers() {
                 ) : (
                     <table className="au-table">
                         <thead>
-                        <tr>
+                        <tr >
                             <th>User</th>
                             <th>Role</th>
                             <th>Status</th>
@@ -220,7 +220,7 @@ function AdminUsers() {
                             const isAdmin     = user.role === 'ADMIN';
 
                             return (
-                                <tr key={user.id}>
+                                <tr key={`${user.role}-${user.id}`}>
                                     <td>
                                         <div className="au-user-cell">
                                             <div className="au-avatar" style={{ background: avatarStyle.bg, color: avatarStyle.color }}>
