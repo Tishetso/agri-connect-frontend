@@ -1,0 +1,6 @@
+version: "3.8"
+services:
+  backend:
+    # Override backend service to disable it when running locally
+    deploy:
+      replicas: 0

@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1741c0e5-c9ac-4a18-afbf-a0f5be361cf1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgriConnect-Docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/AgriConnect-Docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,6 +144,8 @@
       <workItem from="1778518731265" duration="7792000" />
       <workItem from="1778576182316" duration="6326000" />
       <workItem from="1778605562923" duration="4742000" />
+      <workItem from="1779734874621" duration="3351000" />
+      <workItem from="1779876055590" duration="10536000" />
     </task>
     <servers />
   </component>
