@@ -122,12 +122,12 @@ function AdminDriverVerification() {
                 >
                     Pending ({drivers.length})
                 </button>
-                <button
+               {/* <button
                     className={`avd-tab ${activeTab === 'verified' ? 'active' : ''}`}
                     onClick={() => setActiveTab('verified')}
                 >
                     Verified ({allDrivers.filter(d => d.verificationStatus === 'VERIFIED').length})
-                </button>
+                </button>*/}
             </div>
 
             <div className="avd-layout">

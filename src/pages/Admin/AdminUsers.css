@@ -48,15 +48,16 @@
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
     text-align: center;
+    padding:4px 6px;
 }
 
 .au-stat {
     flex: 1;
-    min-width: 110px;
+    min-width: 80px;
     background: #f9fafb;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
-    padding: 14px 16px;
+    padding: 2px 4px;
 }
 
 .au-stat-label {
@@ -95,7 +96,7 @@
 }
 
 .au-search {
-    width: 100%;
+    width: 95%;
     padding: 8px 12px 8px 34px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
