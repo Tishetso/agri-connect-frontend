@@ -41,10 +41,12 @@ function LoginPage() {
                 //save user info to localstorage
                 localStorage.clear();
 
+                //save token separately (Fix)
+                localStorage.setItem('token', data.token);
+
                 localStorage.setItem(
                     "user",
                     JSON.stringify({
-                        token: data.token,
                         role: data.role,
                         name: data.name,
                         surname: data.surname,

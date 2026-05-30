@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ConsumerSettings.css';
+import toast from "react-hot-toast";
+
+const BASE_URL = 'http://localhost:8080';
 
 function Avatar({ src, initials, size = 80 }) {
     return (
@@ -40,6 +43,14 @@ function ReadOnlyField({ label, value, badge }) {
     );
 }
 
+// Build full image URL from stored filename
+function buildAvatarUrl(filename) {
+    if (!filename) return null;
+    // If it's already a full URL (http...), use as-is
+    if (filename.startsWith('http')) return filename;
+    return `${BASE_URL}/uploads/${filename}`;
+}
+
 function ConsumerSettings() {
     const [user, setUser] = useState(null);
     const [formData, setFormData] = useState({
@@ -47,11 +58,10 @@ function ConsumerSettings() {
         notifications: true, emailUpdates: true,
     });
     const [avatarSrc, setAvatarSrc] = useState(null);
-    const [avatarFile, setAvatarFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
-    const [saveMessage, setSaveMessage] = useState(null);
+    const [uploadingAvatar, setUploadingAvatar] = useState(false);
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -67,6 +77,8 @@ function ConsumerSettings() {
                 notifications: true,
                 emailUpdates:  true,
             });
+            // Load persisted avatar from DB (filename stored at login)
+            setAvatarSrc(buildAvatarUrl(parsed.avatarUrl));
         }
         setLoading(false);
     }, []);
@@ -76,10 +88,44 @@ function ConsumerSettings() {
         setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     };
 
-    const applyAvatarFile = (file) => {
+    // ── Avatar upload ─────────────────────────────────────────────────────────
+    const applyAvatarFile = async (file) => {
         if (!file || !file.type.startsWith('image/')) return;
-        setAvatarFile(file);
+
+        // Show preview immediately
         setAvatarSrc(URL.createObjectURL(file));
+        setUploadingAvatar(true);
+
+        try {
+            const token = localStorage.getItem('token');
+            const form = new FormData();
+            form.append('avatar', file);
+
+            const res = await fetch(`${BASE_URL}/api/users/avatar`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: form,
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                // Update localStorage with new filename so it persists across sessions
+                const updated = { ...user, avatarUrl: data.avatarUrl };
+                localStorage.setItem('user', JSON.stringify(updated));
+                setUser(updated);
+                setAvatarSrc(buildAvatarUrl(data.avatarUrl));
+                toast.success('Profile photo updated');
+            } else {
+                toast.error('Failed to upload photo');
+                // Revert preview to previous avatar
+                setAvatarSrc(buildAvatarUrl(user?.avatarUrl));
+            }
+        } catch {
+            toast.error('Network error uploading photo');
+            setAvatarSrc(buildAvatarUrl(user?.avatarUrl));
+        } finally {
+            setUploadingAvatar(false);
+        }
     };
 
     const handleDrop = (e) => {
@@ -88,20 +134,37 @@ function ConsumerSettings() {
         applyAvatarFile(e.dataTransfer.files[0]);
     };
 
-    const handleRemoveAvatar = () => {
-        setAvatarSrc(null);
-        setAvatarFile(null);
-        if (fileInputRef.current) fileInputRef.current.value = '';
+    const handleRemoveAvatar = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const res = await fetch(`${BASE_URL}/api/users/avatar`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` },
+            });
+
+            if (res.ok) {
+                const updated = { ...user, avatarUrl: '' };
+                localStorage.setItem('user', JSON.stringify(updated));
+                setUser(updated);
+                setAvatarSrc(null);
+                if (fileInputRef.current) fileInputRef.current.value = '';
+                toast.success('Profile photo removed');
+            } else {
+                toast.error('Failed to remove photo');
+            }
+        } catch {
+            toast.error('Network error removing photo');
+        }
     };
 
+    // ── Profile save ──────────────────────────────────────────────────────────
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSaving(true);
-        setSaveMessage(null);
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8080/api/users/profile', {
+            const response = await fetch(`${BASE_URL}/api/users/profile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,13 +182,12 @@ function ConsumerSettings() {
                 const updated = { ...user, ...formData };
                 localStorage.setItem('user', JSON.stringify(updated));
                 setUser(updated);
-                setSaveMessage({ type: 'success', text: 'Settings saved successfully!' });
+                toast.success('Settings saved!');
             } else {
-                const err = await response.json();
-                setSaveMessage({ type: 'error', text: err.error ?? 'Failed to save settings.' });
+                toast.error('Failed to save settings');
             }
-        } catch (err) {
-            setSaveMessage({ type: 'error', text: 'Network error. Please try again.' });
+        } catch {
+            toast.error('Network error. Please try again.');
         } finally {
             setSaving(false);
         }
@@ -148,7 +210,19 @@ function ConsumerSettings() {
                     <h3>Personal Information</h3>
 
                     <div className="avatar-row">
-                        <Avatar src={avatarSrc} initials={getInitials(formData.name, formData.surname)} size={80} />
+                        <div style={{ position: 'relative' }}>
+                            <Avatar src={avatarSrc} initials={getInitials(formData.name, formData.surname)} size={80} />
+                            {uploadingAvatar && (
+                                <div style={{
+                                    position: 'absolute', inset: 0, borderRadius: '50%',
+                                    background: 'rgba(255,255,255,0.7)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    fontSize: 12, color: '#3b5bdb', fontWeight: 600,
+                                }}>
+                                    Uploading...
+                                </div>
+                            )}
+                        </div>
                         <div className="avatar-actions">
                             <div
                                 className={`avatar-drop-zone${isDragging ? ' dragging' : ''}`}
@@ -161,7 +235,7 @@ function ConsumerSettings() {
                                 aria-label="Upload profile photo"
                             >
                                 <span className="drop-icon">📷</span>
-                                <span>Click or drag to upload photo</span>
+                                <span>{uploadingAvatar ? 'Uploading...' : 'Click or drag to upload photo'}</span>
                                 <span className="drop-hint">JPG, PNG, or WebP · Max 5 MB</span>
                             </div>
                             <input
@@ -171,7 +245,7 @@ function ConsumerSettings() {
                                 onChange={(e) => applyAvatarFile(e.target.files[0])}
                                 style={{ display: 'none' }}
                             />
-                            {avatarSrc && (
+                            {avatarSrc && !uploadingAvatar && (
                                 <button type="button" className="btn-remove-avatar" onClick={handleRemoveAvatar}>
                                     Remove photo
                                 </button>
@@ -203,42 +277,19 @@ function ConsumerSettings() {
                     <div className="form-group">
                         <label htmlFor="phone">Phone Number</label>
                         <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
+                            type="tel" id="phone" name="phone"
                             placeholder="+27 82 000 0000"
-                            value={formData.phone}
-                            onChange={handleChange}
+                            value={formData.phone} onChange={handleChange}
                         />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="region">Address / Region</label>
                         <input
-                            type="text"
-                            id="region"
-                            name="region"
+                            type="text" id="region" name="region"
                             placeholder="e.g. Soshanguve East, Pretoria"
-                            value={formData.region}
-                            onChange={handleChange}
+                            value={formData.region} onChange={handleChange}
                         />
-                    </div>
-                </section>
-
-                {/* ── Notifications ── */}
-                <section className="settings-section">
-                    <h3>Notifications</h3>
-                    <div className="form-group checkbox-group">
-                        <label>
-                            <input type="checkbox" name="notifications" checked={formData.notifications} onChange={handleChange} />
-                            <span>Enable push notifications</span>
-                        </label>
-                    </div>
-                    <div className="form-group checkbox-group">
-                        <label>
-                            <input type="checkbox" name="emailUpdates" checked={formData.emailUpdates} onChange={handleChange} />
-                            <span>Receive email updates about new produce</span>
-                        </label>
                     </div>
                 </section>
 
@@ -250,12 +301,6 @@ function ConsumerSettings() {
                         <button type="button" className="btn-danger">Delete Account</button>
                     </div>
                 </section>
-
-                {saveMessage && (
-                    <div className={`save-message ${saveMessage.type}`}>
-                        {saveMessage.text}
-                    </div>
-                )}
 
                 <div className="form-actions">
                     <button type="submit" className="btn-primary" disabled={saving}>
