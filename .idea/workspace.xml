@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1741c0e5-c9ac-4a18-afbf-a0f5be361cf1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Admin/AdminDriverVerification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Admin/AdminDriverVerification.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Admin/AdminUsers.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Admin/AdminUsers.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/RegisterPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/RegisterPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +151,8 @@
       <workItem from="1778605562923" duration="4742000" />
       <workItem from="1779734874621" duration="3351000" />
       <workItem from="1779876055590" duration="17552000" />
-      <workItem from="1779947743385" duration="5624000" />
+      <workItem from="1779947743385" duration="5928000" />
+      <workItem from="1780143642429" duration="7792000" />
     </task>
     <servers />
   </component>

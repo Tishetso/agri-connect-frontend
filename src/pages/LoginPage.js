@@ -49,7 +49,10 @@ function LoginPage() {
                         name: data.name,
                         surname: data.surname,
                         region: data.region,
-                        email: formData.email, /*Added 27 April 2026*/
+                        email: data.email, /*Added 27 April 2026*/
+                        status: data.status,
+                        phone: data.phone,
+                        createdAt: data.createdAt
                     })
                 );
 
