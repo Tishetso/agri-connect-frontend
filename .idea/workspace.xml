@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1741c0e5-c9ac-4a18-afbf-a0f5be361cf1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerDashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSidebar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +49,10 @@
     &quot;accountId&quot;: &quot;c23a39cb-e7c6-419a-bd46-6785b0ed3aed&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
@@ -60,7 +66,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;30May2026&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/tishe/agrilink-frontend/public&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -150,7 +156,10 @@
       <workItem from="1779734874621" duration="3351000" />
       <workItem from="1779876055590" duration="17552000" />
       <workItem from="1779947743385" duration="5928000" />
-      <workItem from="1780143642429" duration="13886000" />
+      <workItem from="1780143642429" duration="14296000" />
+      <workItem from="1780293533592" duration="170000" />
+      <workItem from="1780423628593" duration="185000" />
+      <workItem from="1780424030136" duration="5240000" />
     </task>
     <servers />
   </component>
@@ -165,7 +174,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

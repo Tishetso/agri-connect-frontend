@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
 import {
     MdStore,
@@ -20,6 +20,29 @@ function ConsumerSidebar() {
 
     // Combine name and surname for full name display
     const fullName = user.surname ? `${user.name} ${user.surname}` : user.name;
+
+    //Avatar
+    const [avatarUrl, setAvatarUrl] = useState(() => {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        return user.avatarUrl
+            ? (user.avatarUrl.startsWith('http') ? user.avatarUrl : `http://localhost:8080/uploads/${user.avatarUrl}`)
+            : null;
+    });
+
+    useEffect(() => {
+        const handleUserUpdate = () => {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            setAvatarUrl(
+                user.avatarUrl
+                    ? (user.avatarUrl.startsWith('http') ? user.avatarUrl : `http://localhost:8080/uploads/${user.avatarUrl}`)
+                    : null
+            );
+        };
+
+        window.addEventListener('userUpdated', handleUserUpdate);
+        return () => window.removeEventListener('userUpdated', handleUserUpdate);
+    }, []);
+
 
     return (
         <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
@@ -86,7 +109,17 @@ function ConsumerSidebar() {
 
                 {/* User profile section */}
                 <div className="user-profile">
-                    <img src="/farmer.png" alt="User" className="profile-pic" />
+                    {avatarUrl ? (
+                        <img src={avatarUrl} alt="User" className="profile-pic" />
+                    ) : (
+                        <div className="profile-pic" style={{
+                            background: '#e8f0fe',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontWeight: 600, color: '#3b5bdb', fontSize: 18,
+                        }}>
+                            {`${user.name?.[0] ?? ''}${user.surname?.[0] ?? ''}`.toUpperCase()}
+                        </div>
+                    )}
 
 
                     {!collapsed && (
