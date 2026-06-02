@@ -83,6 +83,9 @@ function ConsumerSettings() {
         setLoading(false);
     }, []);
 
+    // Helper — call this whenever localStorage user changes
+    const syncUserEvent = () => window.dispatchEvent(new Event('userUpdated'));
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
@@ -114,6 +117,7 @@ function ConsumerSettings() {
                 localStorage.setItem('user', JSON.stringify(updated));
                 setUser(updated);
                 setAvatarSrc(buildAvatarUrl(data.avatarUrl));
+                syncUserEvent(); //syncs profiles avatars between components
                 toast.success('Profile photo updated');
             } else {
                 toast.error('Failed to upload photo');
@@ -147,6 +151,7 @@ function ConsumerSettings() {
                 localStorage.setItem('user', JSON.stringify(updated));
                 setUser(updated);
                 setAvatarSrc(null);
+                syncUserEvent();
                 if (fileInputRef.current) fileInputRef.current.value = '';
                 toast.success('Profile photo removed');
             } else {
