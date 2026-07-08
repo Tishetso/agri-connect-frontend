@@ -43,10 +43,7 @@ function AdminUsers() {
         fetchUsers();
     }, [page, roleFilter, statusFilter]);
 
-    const getToken = () => {
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        return user.token;
-    };
+    const getToken = () => localStorage.getItem('token');
 
     const fetchUsers = async () => {
         try {
@@ -209,6 +206,7 @@ function AdminUsers() {
                             <th>Status</th>
                             <th>Joined</th>
                             <th>Actions</th>
+                            <th>Location</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -223,9 +221,14 @@ function AdminUsers() {
                                 <tr key={`${user.role}-${user.id}`}>
                                     <td>
                                         <div className="au-user-cell">
-                                            <div className="au-avatar" style={{ background: avatarStyle.bg, color: avatarStyle.color }}>
-                                                {getInitials(user.name)}
-                                            </div>
+                                            {user.image ? (
+                                                <img src={user.image} alt={user.name} className="au-avatar-img" />
+                                            ) : (
+                                                <div className="au-avatar" style={{ background: avatarStyle.bg, color: avatarStyle.color }}>
+                                                    {getInitials(user.name)}
+                                                </div>
+                                            )}
+
                                             <div>
                                                 <div className="au-name">{user.name}</div>
                                                 <div className="au-email">{user.email}</div>

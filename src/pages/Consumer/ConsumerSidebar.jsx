@@ -1,16 +1,10 @@
 import React, {useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
-import {
-    MdStore,
-    MdLocalFlorist,
-    MdShoppingCart,
-    MdChat,
-    MdSettings,
-    MdLogout,
-    MdMenu,
-    MdClose,
-    MdDashboard
+import {MdStore, MdLocalFlorist,MdShoppingCart,MdChat, MdSettings, MdLogout, MdMenu, MdClose, MdDashboard
 } from "react-icons/md";
+import { getAvatarUrl } from '../../utils/avatarUrl';
+
+
 
 function ConsumerSidebar() {
     const [collapsed, setCollapsed] = useState(false);
@@ -24,19 +18,13 @@ function ConsumerSidebar() {
     //Avatar
     const [avatarUrl, setAvatarUrl] = useState(() => {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
-        return user.avatarUrl
-            ? (user.avatarUrl.startsWith('http') ? user.avatarUrl : `http://localhost:8080/uploads/${user.avatarUrl}`)
-            : null;
+        return getAvatarUrl(user);
     });
 
     useEffect(() => {
         const handleUserUpdate = () => {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
-            setAvatarUrl(
-                user.avatarUrl
-                    ? (user.avatarUrl.startsWith('http') ? user.avatarUrl : `http://localhost:8080/uploads/${user.avatarUrl}`)
-                    : null
-            );
+            setAvatarUrl(getAvatarUrl(user));
         };
 
         window.addEventListener('userUpdated', handleUserUpdate);

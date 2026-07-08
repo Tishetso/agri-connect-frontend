@@ -11,7 +11,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ListingsPage from "./pages/Farmer/ListingsPage";
 import Alerts from "./components/Alerts";
 import Chatroom from "./components/Chatroom";
-import SettingsPage from "./components/SettingsPage";
+import SettingsPage from "./pages/Farmer/SettingsPage";
 import FarmerLayout from "./layouts/FarmerLayout";
 import ConsumerLayout from "./layouts/ConsumerLayout";
 import ConsumerSettings from "./pages/Consumer/ConsumerSettings";

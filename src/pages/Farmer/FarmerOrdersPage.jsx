@@ -16,6 +16,9 @@ function FarmerOrdersPage(){
     const [selectedDriverId, setSelectedDriverId] = useState(null);
     const [assigningDriver, setAssigningDriver] = useState(false);
 
+    const getToken = () => {
+        return localStorage.getItem("token");
+    };
     useEffect(() => { fetchOrders(); }, []);
 
     const fetchOrders = async () => {
@@ -23,7 +26,7 @@ function FarmerOrdersPage(){
             setLoading(true);
             const user = JSON.parse(localStorage.getItem('user'));
             const response = await fetch('http://localhost:8080/api/orders/farmer', {
-                headers: { 'Authorization': `Bearer ${user.token}` }
+                headers: { 'Authorization': `Bearer ${getToken()}` }
             });
             if (!response.ok) throw new Error("Failed to fetch orders");
             setOrders(await response.json());
@@ -47,7 +50,7 @@ function FarmerOrdersPage(){
             });*/
             // fetch all drivers who are available
             const driversRes = await fetch('http://localhost:8080/api/driver/available-drivers', {
-                headers: { 'Authorization': `Bearer ${user.token}` }
+                headers: { 'Authorization': `Bearer ${getToken()}` }
             });
             if (driversRes.ok) {
                 setAvailableDrivers(await driversRes.json());
@@ -70,7 +73,7 @@ function FarmerOrdersPage(){
             // 1. Confirm the order
             const confirmRes = await fetch(`http://localhost:8080/api/orders/${pendingOrderId}/confirm`, {
                 method: 'PUT',
-                headers: { 'Authorization': `Bearer ${user.token}` }
+                headers: { 'Authorization': `Bearer ${getToken()}` }
             });
             if (!confirmRes.ok) throw new Error('Failed to confirm order');
 
@@ -79,7 +82,7 @@ function FarmerOrdersPage(){
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify({ driverId: selectedDriverId })
             });
@@ -111,7 +114,7 @@ function FarmerOrdersPage(){
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify({status: 'cancelled'})
             });

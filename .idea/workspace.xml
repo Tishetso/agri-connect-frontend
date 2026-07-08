@@ -5,11 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1741c0e5-c9ac-4a18-afbf-a0f5be361cf1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/Farmer/SettingsPage.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/avatarUrl.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerDashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSettings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/listingApi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/listingApi.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SettingsPage.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Admin/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Admin/AdminDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Admin/AdminDriverVerification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Admin/AdminDriverVerification.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Admin/AdminUsers.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Admin/AdminUsers.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Admin/AdminUsers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Admin/AdminUsers.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Consumer/ConsumerSidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Farmer/FarmerOrdersPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Farmer/FarmerOrdersPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Farmer/SettingsPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Farmer/SettingsPage.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +41,7 @@
     </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="30May2026" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,10 +58,10 @@
     &quot;accountId&quot;: &quot;c23a39cb-e7c6-419a-bd46-6785b0ed3aed&quot;
   }
 }</component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
@@ -85,6 +94,7 @@
       <recent name="C:\Users\tishe\agrilink-frontend\src\pages\Driver\DriverLandingPage" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tishe\agrilink-frontend\src\pages\Farmer" />
       <recent name="C:\Users\tishe\agrilink-frontend\AgriConnect-Docker" />
       <recent name="C:\Users\tishe\agrilink-frontend\src\pages\Admin" />
       <recent name="C:\Users\tishe\agrilink-frontend\src\pages" />
@@ -160,6 +170,14 @@
       <workItem from="1780293533592" duration="170000" />
       <workItem from="1780423628593" duration="185000" />
       <workItem from="1780424030136" duration="5240000" />
+      <workItem from="1780758242043" duration="20000" />
+      <workItem from="1780758968107" duration="2469000" />
+      <workItem from="1781280869980" duration="366000" />
+      <workItem from="1781281611097" duration="7912000" />
+      <workItem from="1781408007902" duration="5041000" />
+      <workItem from="1781680677911" duration="5190000" />
+      <workItem from="1783491790417" duration="839000" />
+      <workItem from="1783506035411" duration="9294000" />
     </task>
     <servers />
   </component>

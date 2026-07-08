@@ -17,14 +17,14 @@ function AdminDriverVerification() {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const user = JSON.parse(localStorage.getItem('user'));
+            const token = localStorage.getItem('token');
 
             const [pendingRes, allRes] = await Promise.all([
                 fetch('http://localhost:8080/api/admin/drivers/pending', {
-                    headers: { 'Authorization': `Bearer ${user.token}` }
+                    headers: { 'Authorization': `Bearer ${token}` }
                 }),
                 fetch('http://localhost:8080/api/admin/drivers', {
-                    headers: { 'Authorization': `Bearer ${user.token}` }
+                    headers: { 'Authorization': `Bearer ${token}` }
                 })
             ]);
 
@@ -44,11 +44,11 @@ function AdminDriverVerification() {
 
     const approveDriver = async (driverId) => {
         try {
-            const user = JSON.parse(localStorage.getItem('user'));
+            const token = localStorage.getItem('token');
             await requestJson(`http://localhost:8080/api/admin/drivers/${driverId}/approve`, {
                 method: 'PUT',
                 headers: {
-                    Authorization: `Bearer ${user.token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
 
@@ -62,11 +62,11 @@ function AdminDriverVerification() {
 
     const rejectDriver = async (driverId) => {
         try {
-            const user = JSON.parse(localStorage.getItem('user'));
+            const token = localStorage.getItem('token');
             await requestJson(`http://localhost:8080/api/admin/drivers/${driverId}/reject`, {
                 method: 'PUT',
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ reason: 'Documents unclear or invalid' })

@@ -1,8 +1,7 @@
 const API_URL = "http://localhost:8080/api/listings";
 
 const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    return user?.token;
+    return localStorage.getItem("token");
 };
 
 export const fetchMyListings = async () => {

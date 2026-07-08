@@ -191,6 +191,14 @@
     font-weight: 700;
     flex-shrink: 0;
 }
+.au-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+}
 
 .au-name  { font-weight: 600; font-size: 0.875rem; }
 .au-email { font-size: 0.78rem; color: #6b7280; }

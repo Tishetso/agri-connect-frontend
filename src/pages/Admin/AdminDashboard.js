@@ -7,6 +7,7 @@ function AdminDashboard() {
         totalUsers: 0,
         totalFarmers: 0,
         totalConsumers: 0,
+        totalDrivers: 0,
         totalListings: 0,
         activeListings: 0,
         pendingListings: 0,
@@ -24,32 +25,43 @@ function AdminDashboard() {
     const fetchDashboardData = async () => {
         try {
             setLoading(true);
-            const user = JSON.parse(localStorage.getItem('user'));
+            const token = localStorage.getItem('token');
 
             // Fetch analytics/stats
-            const statsResponse = await fetch('http://localhost:8080/api/admin/stats', {
+           /* const statsResponse = await fetch('http://localhost:8080/api/admin/stats', {
                 headers: {
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${token}`
                 }
+            });*/
+            // Fetch user stats from the same endpoint as AdminUsers
+            const usersRes = await fetch('http://localhost:8080/api/admin/users?size=1&page=0', {
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             // Fetch recent listings
             const listingsResponse = await fetch('http://localhost:8080/api/admin/listings/recent', {
                 headers: {
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
             // Fetch recent orders
             const ordersResponse = await fetch('http://localhost:8080/api/admin/orders/recent', {
                 headers: {
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
-            if (statsResponse.ok) {
-                const statsData = await statsResponse.json();
-                setStats(statsData);
+            if (usersRes.ok) {
+                const usersData = await usersRes.json();
+                setStats(prev => ({
+                    ...prev,
+                    totalUsers: usersData.totalUsers ?? usersData.total ?? 0,
+                    totalFarmers: usersData.totalFarmers ?? 0,
+                    totalConsumers: usersData.totalConsumers ?? 0,
+                    totalDrivers: usersData.totalDrivers ?? 0,
+                    totalAdmins: usersData.totalAdmins ?? 0,
+                }));
             }
 
             if (listingsResponse.ok) {
@@ -61,6 +73,7 @@ function AdminDashboard() {
                 const ordersData = await ordersResponse.json();
                 setRecentOrders(ordersData);
             }
+
 
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
@@ -123,6 +136,20 @@ function AdminDashboard() {
                         <div className="stat-details">
                             <h3>{stats.totalConsumers}</h3>
                             <p>Consumers</p>
+                        </div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-icon">🚚</div>
+                        <div className="stat-details">
+                            <h3>{stats.totalDrivers}</h3>
+                            <p>Drivers</p>
+                        </div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-icon">🛡️</div>
+                        <div className="stat-details">
+                            <h3>{stats.totalAdmins}</h3>
+                            <p>Admin</p>
                         </div>
                     </div>
 
@@ -215,123 +242,7 @@ function AdminDashboard() {
                 </div>
             </section>
 
-            {/* Recent Listings
-            <section className="listings-section">
-                <div className="section-header">
-                    <h2>📦 Recent Listings</h2>
-                    <button
-                        className="btn-view-all"
-                        onClick={() => window.location.href = '/admin/listings'}
-                    >
-                        View All
-                    </button>
-                </div>
 
-                <div className="listings-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Farmer</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {recentListings.length > 0 ? (
-                            recentListings.map(listing => (
-                                <tr key={listing.id}>
-                                    <td>
-                                        <div className="product-cell">
-                                            <img
-                                                src={listing.imageUrls?.[0]
-                                                    ? `http://localhost:8080/uploads/${listing.imageUrls[0]}`
-                                                    : '/placeholder-produce.png'
-                                                }
-                                                alt={listing.product}
-                                                onError={(e) => e.target.src = '/placeholder-produce.png'}
-                                            />
-                                            <span>{listing.product}</span>
-                                        </div>
-                                    </td>
-                                    <td>{listing.farmerName}</td>
-                                    <td>{listing.quantity}</td>
-                                    <td>R{listing.price}</td>
-                                    <td>
-                                            <span className={`status-badge ${listing.status.toLowerCase()}`}>
-                                                {listing.status}
-                                            </span>
-                                    </td>
-                                    <td>{new Date(listing.createdAt).toLocaleDateString()}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="6" style={{ textAlign: 'center' }}>
-                                    No recent listings
-                                </td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-            </section>*/}
-
-            {/* Recent Orders
-            <section className="orders-section">
-                <div className="section-header">
-                    <h2>📋 Recent Orders</h2>
-                    <button
-                        className="btn-view-all"
-                        onClick={() => window.location.href = '/admin/orders'}
-                    >
-                        View All
-                    </button>
-                </div>
-
-                <div className="orders-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Consumer</th>
-                            <th>Farmer</th>
-                            <th>Items</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {recentOrders.length > 0 ? (
-                            recentOrders.map(order => (
-                                <tr key={order.id}>
-                                    <td>#{order.id}</td>
-                                    <td>{order.consumerName}</td>
-                                    <td>{order.farmerName}</td>
-                                    <td>{order.itemCount} items</td>
-                                    <td>R{order.totalAmount.toFixed(2)}</td>
-                                    <td>
-                                            <span className={`status-badge ${order.status.toLowerCase()}`}>
-                                                {order.status}
-                                            </span>
-                                    </td>
-                                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="7" style={{ textAlign: 'center' }}>
-                                    No recent orders
-                                </td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-            </section>*/}
         </div>
     );
 }
