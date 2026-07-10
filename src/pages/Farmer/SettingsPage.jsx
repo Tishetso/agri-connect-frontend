@@ -185,7 +185,7 @@ function SettingsPage() {
         try {
             const token = localStorage.getItem('token');
             console.log("The token is ", token);
-            const response = await fetch(`${BASE_URL}/api/users/farmer/profile`, {
+            const response = await fetch(`${BASE_URL}/api/users/profile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -196,10 +196,10 @@ function SettingsPage() {
                     surname:   formData.surname,
                     phone:     formData.phone,
                     region:    formData.region,
-                    farmName:  formData.farmName,
+                    /*farmName:  formData.farmName,
                     farmSize:  formData.farmSize,
                     cropTypes: formData.cropTypes,
-                    bio:       formData.bio,
+                    bio:       formData.bio,*/
                 }),
             });
 
